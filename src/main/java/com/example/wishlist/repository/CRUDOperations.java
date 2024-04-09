@@ -2,5 +2,5 @@ package com.example.wishlist.repository;
 
 public interface CRUDOperations {
 
-    void createWishlist();
+    boolean createWishlist(String wishlistTitle, String pictureLink);
 }
