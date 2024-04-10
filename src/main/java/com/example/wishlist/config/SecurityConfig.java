@@ -25,6 +25,11 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/user/login")
+                        .failureUrl("/user/login?error")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/user/logout")
+                        .logoutSuccessUrl("/user/login?logout")
                         .permitAll());
         return http.build();
     }
