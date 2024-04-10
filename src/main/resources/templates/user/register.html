@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-  <form action="/register" method="post" th:object="${user}">
+  <form action="/user/register" method="post" th:object="${user}">
     <label for="username">Username:</label>
     <input id="username" type="text" th:field="*{username}">
     <label for="password">Password:</label>
