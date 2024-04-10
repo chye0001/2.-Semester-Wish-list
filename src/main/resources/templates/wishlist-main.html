@@ -6,6 +6,23 @@
 </head>
 <body>
 
+<table>
+    <thead>
+    <tr>
+        <th>Wishlist</th>
+        <th>Picture</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="wishlist : ${wishlists}">
+        <td th:text="${wishlist.name}"></td>
+        <td th:text="${wishlist.picture}"></td>
+        <td> <a th:href="@{/wishlist/view/{name} (name=${wishlist.name})}"> <button>view</button> </a> </td>
+    </tr>
+    </tbody>
+</table>
+
 <a href="wishlist/create">
     <button type="button">Create new wishlist</button>
 </a>
