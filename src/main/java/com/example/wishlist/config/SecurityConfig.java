@@ -20,11 +20,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/wishlists").hasRole("USER")
+                        .requestMatchers("/settings").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/user/login")
                         .permitAll());
         return http.build();
     }
