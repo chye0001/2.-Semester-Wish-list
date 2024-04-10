@@ -7,5 +7,49 @@
 </head>
 <body>
 
+<form action="/wishlist/addWish" method="post" th:object="${addWish}">
+
+    <p>
+        <label for="wishName">Name: </label>
+        <input id="wishName" type="text" th:field="*{name}" required>
+    </p>
+
+    <p>
+        <label for="wishDescription">Description: </label>
+        <input id="wishDescription" type="text" th:field="*{description}" required>
+    </p>
+
+    <p>
+        <label for="wishPrice">Price: </label>
+        <input id="wishPrice" type="number" th:field="*{price}" required>
+    </p>
+
+    <p>
+        <label for="wishLink">Link: </label>
+        <input id="wishLink" type="text" th:field="*{link}" required>
+    </p>
+
+    <p>
+        <label for="wishPictureLink">Picture Link: </label>
+        <input id="wishPictureLink" type="text" th:field="*{picture}" required>
+    </p>
+
+    <p><button type="submit">Add wish</button></p>
+</form>
+
+    <p>
+        <a href="/wishlist/addWish">
+            <button>Add Another Wish</button>
+        </a>
+    </p>
+
+<!--TODO lav et endpoint som viser samtlige ønskelister-->
+<!--TODO cancel knappen skal fører en hen på endpoint hvor man står på den given ønskeliste man ønsker at tilføje ønsker til-->
+    <p>
+        <a href="/wishlist">
+            <button>Cancel</button>
+        </a>
+    </p>
+
 </body>
 </html>
