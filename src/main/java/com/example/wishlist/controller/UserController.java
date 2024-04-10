@@ -2,6 +2,7 @@ package com.example.wishlist.controller;
 
 import com.example.wishlist.dto.UserDto;
 import com.example.wishlist.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,12 @@ public class UserController {
     public String register(UserDto user) {
         userService.registerUser(user);
         return "redirect:/user/login";
+    }
+
+    @GetMapping("/settings")
+    public String settings(Authentication authentication, Model model) {
+        model.addAttribute("user", authentication.getName());
+        return "user/settings";
     }
 
 
