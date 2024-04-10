@@ -9,4 +9,6 @@ public interface CRUDOperations {
     boolean createWishlist(String wishlistTitle, String pictureLink);
 
     List<Wish> getWishes (String wishlistName);
+
+    boolean addWish(Wish newWish, String wishlistName);
 }
