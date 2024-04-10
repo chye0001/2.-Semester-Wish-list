@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Wishlist {
 
-    private String wishlistId;
+    private int wishlistId;
     private String name;
     private String picture;
     private List<Wish> wishes;
 
 
-    public Wishlist(String wishlistId, String name, String picture, List<Wish> wishes) {
+    public Wishlist(int wishlistId, String name, String picture, List<Wish> wishes) {
         this.wishlistId = wishlistId;
         this.name = name;
         this.picture = picture;
@@ -18,10 +18,10 @@ public class Wishlist {
     }
 
 
-    public String getWishlistId() {
+    public int getWishlistId() {
         return wishlistId;
     }
-    public void setWishlistId(String wishlistId) {
+    public void setWishlistId(int wishlistId) {
         this.wishlistId = wishlistId;
     }
 

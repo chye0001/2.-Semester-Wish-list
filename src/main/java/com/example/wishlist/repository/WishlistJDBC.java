@@ -1,6 +1,7 @@
 package com.example.wishlist.repository;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.model.Wishlist;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -80,6 +81,40 @@ public class WishlistJDBC implements CRUDOperations {
         }
 
         return wishes;
+    }
+
+    @Override
+    public List<Wishlist> getAllWishlists() {
+
+        List<Wishlist> wishlists = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String getAllWishlists =
+                    "SELECT * FROM wishlist_db.wishlist;";
+
+            PreparedStatement pstmt = connection.prepareStatement(getAllWishlists);
+
+
+            ResultSet wishesResultSet = pstmt.executeQuery();
+
+            while (wishesResultSet.next()) {
+
+                int wishlistId = wishesResultSet.getInt(1);
+                String wishlistName = wishesResultSet.getString(2);
+                String picture = wishesResultSet.getString(3);
+                List<Wish> wishes = getWishes(wishlistName);
+
+                Wishlist wishlist = new Wishlist(wishlistId, wishlistName, picture, wishes);
+                wishlists.add(wishlist);
+            }
+
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return wishlists;
+
     }
 
     @Override
