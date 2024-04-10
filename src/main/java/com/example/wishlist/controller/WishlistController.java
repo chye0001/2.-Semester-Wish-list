@@ -13,14 +13,16 @@ import java.util.List;
 @RequestMapping("/wishlist")
 public class WishlistController {
 
-    private WishlistService wishlistService;
+    private final WishlistService wishlistService;
 
     public WishlistController(WishlistService wishlistService) {
         this.wishlistService = wishlistService;
     }
 
     @GetMapping("")
-    public String wishlistMainPage(){
+    public String wishlistMainPage(Model model) {
+//        List<Wishlist> wishlistList = wishlistService.getAllWishlists();
+//        model.addAttribute("wishlists", wishlistList);
         return "wishlist-main";
     }
 
@@ -35,11 +37,7 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    //Dette burde have sit eget endpoint f.eks. viewWishlist:
-//    List<Wish> wishlist = wishlistService.getWishes(wishlistName);
-//    model.addAttribute("wishes", wishlist);
-
-    @GetMapping("/{wishlistName}/addWish")
+    @GetMapping("/addWish/{wishlistName}")
     public String showPageForAddingWish(Model model, @PathVariable String wishlistName) {
         Wish newWish = new Wish();
 
@@ -62,8 +60,5 @@ public class WishlistController {
         model.addAttribute("wishlistName", name);
 
         return "viewWishlist";
-
     }
-
-
 }
