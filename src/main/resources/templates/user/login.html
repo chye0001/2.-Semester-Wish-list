@@ -2,9 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
+<div>
+    <form action="/login" method="post">
+        <label for="username" class="col-sm-2 col-form-label">Username</label>
+        <input type="text" id="username" name="username" class="form-control"
+               placeholder="Username" autofocus="autofocus">
 
+
+        <label for="password" class="col-sm-2 col-form-label">Password</label>
+        <input type="password" id="password" name="password" class="form-control"
+               placeholder="Password">
+
+        <button type="submit">Log in</button>
+    </form>
+</div>
 </body>
 </html>
