@@ -24,7 +24,6 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(UserDto user) {
-        System.out.println("user: " + user);
         return "redirect:/user/settings";
     }
 
