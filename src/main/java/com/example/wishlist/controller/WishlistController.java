@@ -29,15 +29,22 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
+    //Dette burde have sit eget endpoint f.eks. viewWishlist:
+//    List<Wish> wishlist = wishlistService.getWishes(wishlistName);
+//    model.addAttribute("wishes", wishlist);
+
     @GetMapping("/{wishlistName}/addWish")
     public String showPageForAddingWish(Model model, @PathVariable String wishlistName) {
-        List<Wish> wishlist = wishlistService.getWishes(wishlistName);
-        model.addAttribute("wishes", wishlist);
+        Wish newWish = new Wish();
+
+        model.addAttribute("addWish", newWish);
+        model.addAttribute("wishlistTitle", wishlistName);
         return "addWish";
     }
 
     @PostMapping("/addWish")
-    public String addWishToWishlist() {
+    public String addWishToWishlist(@ModelAttribute Wish newWish, @RequestParam String wishlistTitle) {
+        wishlistService.addWish(newWish, wishlistTitle);
 
         return "redirect:/wishlist";
     }
