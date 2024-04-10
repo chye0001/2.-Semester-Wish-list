@@ -19,7 +19,11 @@ public class WishlistService {
         wishlistJDBC.createWishlist(wishlistTitle, pictureLink);
     }
 
-    public List<Wish> getWishes(String name) {
-        return null;
+    public List<Wish> getWishes(String wishlistName) {
+        return wishlistJDBC.getWishes(wishlistName);
+    }
+
+    public void addWish(Wish newWish, String wishlistTitle) {
+        wishlistJDBC.addWish(newWish, wishlistTitle);
     }
 }

@@ -15,7 +15,7 @@ public class WishlistController {
 
     private WishlistService wishlistService;
 
-    public WishlistController(WishlistService wishlistService){
+    public WishlistController(WishlistService wishlistService) {
         this.wishlistService = wishlistService;
     }
 
@@ -25,13 +25,33 @@ public class WishlistController {
     }
 
     @GetMapping("/create")
-    public String createWishlist(){
+    public String createWishlist() {
         return "wishlist-create";
     }
 
     @PostMapping("/create")
-    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink){
+    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink) {
         wishlistService.createWishlist(wishlistTitle, pictureLink);
+        return "redirect:/wishlist";
+    }
+
+    //Dette burde have sit eget endpoint f.eks. viewWishlist:
+//    List<Wish> wishlist = wishlistService.getWishes(wishlistName);
+//    model.addAttribute("wishes", wishlist);
+
+    @GetMapping("/{wishlistName}/addWish")
+    public String showPageForAddingWish(Model model, @PathVariable String wishlistName) {
+        Wish newWish = new Wish();
+
+        model.addAttribute("addWish", newWish);
+        model.addAttribute("wishlistTitle", wishlistName);
+        return "addWish";
+    }
+
+    @PostMapping("/addWish")
+    public String addWishToWishlist(@ModelAttribute Wish newWish, @RequestParam String wishlistTitle) {
+        wishlistService.addWish(newWish, wishlistTitle);
+
         return "redirect:/wishlist";
     }
 

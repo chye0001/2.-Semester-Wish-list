@@ -9,6 +9,8 @@ public class Wish {
     private String picture;
     private boolean isReserved;
 
+    public Wish(){}
+
     public Wish(String name, String description, double price, String link, String picture) {
         this.name = name;
         this.description = description;
