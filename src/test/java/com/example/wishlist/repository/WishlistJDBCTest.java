@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@ActiveProfiles("prod")
+@ActiveProfiles("dev")
 class WishlistJDBCTest {
 
     @Autowired
@@ -34,6 +34,16 @@ class WishlistJDBCTest {
     }
 
     @Test
+    void addWishToANoneExistingWishlist() {
+        boolean expectedResult = false;
+        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
+
+        boolean actualResult = wishlistJDBC.addWish(testWish, "addingToWishlistThatDoesNotExist");
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void getWishes() {
         int expectedLength = 1;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
@@ -41,6 +51,15 @@ class WishlistJDBCTest {
         wishlistJDBC.addWish(testWish, "test1");
 
         int actualLength = wishlistJDBC.getWishes("test1").size();
+
+        assertEquals(expectedLength, actualLength);
+    }
+
+    @Test
+    void getWishesFromNotExistingWishlist() {
+        int expectedLength = 0;
+
+        int actualLength = wishlistJDBC.getWishes("getWishesFromNotExistingWishlist").size();
 
         assertEquals(expectedLength, actualLength);
     }
