@@ -17,6 +17,11 @@ public class WishlistController {
         this.wishlistService = wishlistService;
     }
 
+    @GetMapping("")
+    public String wishlistMainPage(){
+        return "wishlist-main";
+    }
+
     @GetMapping("/create")
     public String createWishlist(){
         return "wishlist-create";
@@ -27,4 +32,6 @@ public class WishlistController {
         wishlistService.createWishlist(wishlistTitle, pictureLink);
         return "redirect:/wishlist";
     }
+
+
 }
