@@ -21,8 +21,8 @@ public class WishlistController {
 
     @GetMapping("")
     public String wishlistMainPage(Model model) {
-//        List<Wishlist> wishlistList = wishlistService.getAllWishlists();
-//        model.addAttribute("wishlists", wishlistList);
+        List<Wishlist> wishlistList = wishlistService.getAllWishlists();
+        model.addAttribute("wishlists", wishlistList);
         return "wishlist-main";
     }
 

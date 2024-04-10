@@ -1,6 +1,7 @@
 package com.example.wishlist.service;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.repository.CRUDOperations;
 import com.example.wishlist.repository.WishlistJDBC;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,9 @@ public class WishlistService {
 
     public void addWish(Wish newWish, String wishlistTitle) {
         wishlistJDBC.addWish(newWish, wishlistTitle);
+    }
+
+    public List<Wishlist> getAllWishlists() {
+        return wishlistJDBC.getAllWishlists();
     }
 }
