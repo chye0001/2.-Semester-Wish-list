@@ -3,7 +3,7 @@ SET SCHEMA wishlist_db;
 
 CREATE TABLE users(
                       username VARCHAR(50) NOT NULL PRIMARY KEY,
-                      password VARCHAR(50) NOT NULL,
+                      password VARCHAR(500) NOT NULL,
                       enabled BOOLEAN NOT NULL
 );
 
