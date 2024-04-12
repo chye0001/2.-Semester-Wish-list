@@ -61,4 +61,11 @@ public class WishlistController {
 
         return "viewWishlist";
     }
+
+    @GetMapping("/delete/{wish}")
+    public String deleteWishFromWishlistOnName(@PathVariable("wish") String wishName) {
+        wishlistService.deleteWish(wishName);
+
+        return "redirect:/wishlist";
+    }
 }
