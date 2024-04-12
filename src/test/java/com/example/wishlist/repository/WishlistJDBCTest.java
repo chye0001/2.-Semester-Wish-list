@@ -83,10 +83,11 @@ class WishlistJDBCTest {
         Wish wish = new Wish("item","desc",20,"link","pic-link");
         wishlistJDBC.createWishlist("test", "link");
         wishlistJDBC.addWish(wish, "test");
+
         String addedWishlistName = wishlistJDBC.getAllWishlists().get(0).getName();
-        //String addedWishlistsWishName = wishlistJDBC.getAllWishlists().get(0).getWishes().get(0).getName();
-        int size = wishlistJDBC.getWishes("test").size();
-        //assertEquals("test", addedWishlistName);
-        assertEquals(1, size);
+        assertEquals("test", addedWishlistName);
+
+        String addedWishlistsWishName = wishlistJDBC.getAllWishlists().get(0).getWishes().get(0).getName();
+        assertEquals("item", addedWishlistsWishName);
     }
 }
