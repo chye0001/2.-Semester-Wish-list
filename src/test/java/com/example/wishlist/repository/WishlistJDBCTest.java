@@ -63,4 +63,30 @@ class WishlistJDBCTest {
 
         assertEquals(expectedLength, actualLength);
     }
+
+
+    @Test
+    void getAllWishlistsSize() {
+
+        int numberOfWishlistsBeforeAdd = wishlistJDBC.getAllWishlists().size();
+        wishlistJDBC.createWishlist("test1", "link1");
+        wishlistJDBC.createWishlist("test2", "link2");
+        int numberOfWishlistsAfterAdd = wishlistJDBC.getAllWishlists().size();
+
+        int expectedResult = numberOfWishlistsBeforeAdd + 2;
+        int actualResult = numberOfWishlistsAfterAdd;
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void getAllWishlistsData() {
+        Wish wish = new Wish("item","desc",20,"link","pic-link");
+        wishlistJDBC.createWishlist("test", "link");
+        wishlistJDBC.addWish(wish, "test");
+        String addedWishlistName = wishlistJDBC.getAllWishlists().get(0).getName();
+        //String addedWishlistsWishName = wishlistJDBC.getAllWishlists().get(0).getWishes().get(0).getName();
+        int size = wishlistJDBC.getWishes("test").size();
+        //assertEquals("test", addedWishlistName);
+        assertEquals(1, size);
+    }
 }
