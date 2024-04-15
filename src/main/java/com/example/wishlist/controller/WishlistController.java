@@ -40,25 +40,26 @@ public class WishlistController {
         return "redirect:/wishlist/"+wishlistId;
     }
 
-    @GetMapping("/addWish/{wishlistName}")
-    public String showPageForAddingWish(Model model, @PathVariable String wishlistName) {
+    @GetMapping("/{wishlistId}/addwish")
+    public String showPageForAddingWish(Model model, @PathVariable long wishlistId) {
         Wish newWish = new Wish();
 
         model.addAttribute("addWish", newWish);
-        model.addAttribute("wishlistTitle", wishlistName);
+        model.addAttribute("wishlisttitle", "TODO;FIX");
+        model.addAttribute("wishlistId", wishlistId);
         return "addWish";
     }
 
-    @PostMapping("/addWish")
-    public String addWishToWishlist(@ModelAttribute Wish newWish, @RequestParam String wishlistTitle) {
-        wishlistService.addWish(newWish, wishlistTitle);
+    @PostMapping("{wishlistId}/addwish")
+    public String addWishToWishlist(@ModelAttribute Wish newWish) {
+        wishlistService.addWish(newWish);
 
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/{id}")
-    public String viewWishlistByName(@PathVariable long id, Model model) {
-        List<Wish> wishes = wishlistService.getWishes(id);
+    @GetMapping("/{wishlistId}")
+    public String viewWishlistByName(@PathVariable long wishlistId, Model model) {
+        List<Wish> wishes = wishlistService.getWishes(wishlistId);
         model.addAttribute("wishes", wishes);
         model.addAttribute("wishlistName", "TODO; FIX");
 
