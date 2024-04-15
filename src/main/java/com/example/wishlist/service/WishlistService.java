@@ -32,11 +32,11 @@ public class WishlistService {
         return wishlistJDBC.getAllWishlists(username);
     }
 
-    public void deleteWish(String wishName) {
-        wishlistJDBC.deleteWish(wishName);
+    public void deleteWish(long wishId) {
+        wishlistJDBC.deleteWish(wishId);
     }
 
-    public void editWish(long wishId, Wish editedWish) {
-        wishlistJDBC.editWish(wishId, editedWish);
+    public void editWish(Wish editedWish) {
+        wishlistJDBC.editWish(editedWish);
     }
 }
