@@ -28,7 +28,7 @@ public class WishlistService {
         wishlistJDBC.addWish(newWish, wishlistTitle);
     }
 
-    public List<Wishlist> getAllWishlists() {
-        return wishlistJDBC.getAllWishlists();
+    public List<Wishlist> getAllWishlists(String username) {
+        return wishlistJDBC.getAllWishlists(username);
     }
 }
