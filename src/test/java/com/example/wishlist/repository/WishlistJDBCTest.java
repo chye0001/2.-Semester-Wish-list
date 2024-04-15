@@ -25,9 +25,10 @@ class WishlistJDBCTest {
     void addWish() {
         boolean expectedResult = true;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
+        testWish.setWishlistId(1);
         wishlistJDBC.createWishlist("test", "picturelink","test");
 
-        boolean actualResult = wishlistJDBC.addWish(testWish, "test");
+        boolean actualResult = wishlistJDBC.addWish(testWish);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -37,7 +38,7 @@ class WishlistJDBCTest {
         boolean expectedResult = false;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
 
-        boolean actualResult = wishlistJDBC.addWish(testWish, "addingToWishlistThatDoesNotExist");
+        boolean actualResult = wishlistJDBC.addWish(testWish);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -45,9 +46,10 @@ class WishlistJDBCTest {
     @Test
     void getWishes() {
         int expectedLength = 1;
-        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         long wishlistId = wishlistJDBC.createWishlist("test1", "picturelink","test");
-        wishlistJDBC.addWish(testWish, "test1");
+        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
+        testWish.setWishlistId(wishlistId);
+        wishlistJDBC.addWish(testWish);
         int actualLength = wishlistJDBC.getWishes(wishlistId).size();
 
         assertEquals(expectedLength, actualLength);
@@ -67,7 +69,7 @@ class WishlistJDBCTest {
         boolean expectedResult = true;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         wishlistJDBC.createWishlist("test1", "picturelink", "testUser");
-        wishlistJDBC.addWish(testWish, "test1");
+        wishlistJDBC.addWish(testWish);
 
         boolean actualResult = wishlistJDBC.deleteWish("name");
 
@@ -101,7 +103,7 @@ class WishlistJDBCTest {
     void getAllWishlistsData() {
         Wish wish = new Wish("item","desc",20,"link","pic-link");
         wishlistJDBC.createWishlist("test", "link","test");
-        wishlistJDBC.addWish(wish, "test");
+        wishlistJDBC.addWish(wish);
 
         String addedWishlistName = wishlistJDBC.getAllWishlists("test").get(0).getName();
         assertEquals("test", addedWishlistName);
