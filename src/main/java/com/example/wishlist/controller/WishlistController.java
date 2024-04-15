@@ -72,4 +72,10 @@ public class WishlistController {
 
         return "redirect:/wishlist";
     }
+    @GetMapping("/delete/{wishlistId}")
+    public String deleteWishlistOnId(@PathVariable("wishlistId") int wishlistId) {
+        wishlistService.deleteWishlist(wishlistId);
+
+        return "redirect:/wishlist";
+    }
 }
