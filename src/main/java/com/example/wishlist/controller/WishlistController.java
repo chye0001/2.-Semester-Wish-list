@@ -3,6 +3,7 @@ package com.example.wishlist.controller;
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,9 @@ public class WishlistController {
     }
 
     @GetMapping("")
-    public String wishlistMainPage(Model model) {
-        List<Wishlist> wishlistList = wishlistService.getAllWishlists();
+    public String wishlistMainPage(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        List<Wishlist> wishlistList = wishlistService.getAllWishlists(username);
         model.addAttribute("wishlists", wishlistList);
         return "wishlist-main";
     }
