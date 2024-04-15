@@ -193,6 +193,29 @@ public class WishlistJDBC implements CRUDOperations {
         return isDeleted;
     }
 
+    public boolean deleteSelectedWishes(List<Integer> wishIdList) {
+        boolean madeChanges = false;
+        if (wishIdList.isEmpty()) {return madeChanges;}
+
+        String idsString = wishIdList.get(0).toString();
+        for (int i = 1; i < wishIdList.size(); i++) {
+            idsString += ("," + wishIdList.get(i).toString());
+        }
+        try (Connection connection = dataSource.getConnection()) {
+            String deleteWish = "DELETE FROM wish WHERE wish_id IN (?)";
+            PreparedStatement pstmt = connection.prepareStatement(deleteWish);
+            pstmt.setString(1, idsString);
+
+            madeChanges = pstmt.executeUpdate() > 0;
+
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return madeChanges;
+    }
+
     public boolean checkIdAndUsernameMatches(long id,String username) {
         String SQL = """
                 SELECT wishlist.*, wish.*

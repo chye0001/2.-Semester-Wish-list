@@ -18,4 +18,6 @@ public interface CRUDOperations {
     boolean deleteWish(String wishName);
 
     boolean editWish(long wishId, Wish editedWish);
+
+    boolean deleteSelectedWishes(List<Integer> wishIdList);
 }
