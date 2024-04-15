@@ -34,8 +34,9 @@ public class WishlistController {
     }
 
     @PostMapping("/create")
-    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink) {
-        wishlistService.createWishlist(wishlistTitle, pictureLink);
+    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink, Authentication authentication) {
+        String username = authentication.getName();
+        wishlistService.createWishlist(wishlistTitle, pictureLink, username);
         return "redirect:/wishlist";
     }
 
