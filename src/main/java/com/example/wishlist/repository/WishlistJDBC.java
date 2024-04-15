@@ -5,10 +5,7 @@ import com.example.wishlist.model.Wishlist;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +21,20 @@ public class WishlistJDBC implements CRUDOperations {
     @Override
     public boolean createWishlist(String wishlistTitle, String pictureLink, String username) {
         int affectedRows = 0;
+        long wishlistId = -1;
 
         try (Connection connection = dataSource.getConnection()) {
             String createWishlist = "INSERT INTO wishlist(name, picture, username) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(createWishlist);
+            PreparedStatement pstmt = connection.prepareStatement(createWishlist, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, wishlistTitle);
             pstmt.setString(2, pictureLink);
             pstmt.setString(3, username);
 
             affectedRows = pstmt.executeUpdate();
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                wishlistId = generatedKeys.getLong(1);
+            }
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
