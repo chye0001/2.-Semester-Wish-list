@@ -197,4 +197,27 @@ public class WishlistJDBC implements CRUDOperations {
 
         return isDeleted;
     }
+
+    public boolean checkIdAndUsernameMatches(long id,String username) {
+        String SQL = """
+                SELECT wishlist.*, wish.*
+                FROM wishlist
+                LEFT JOIN wish ON wish.wishlist_id = wish.wishlist_id
+                WHERE wishlist.username = ?
+                AND (wish.wish_id = ? OR wishlist.wishlist_id = ?)
+                """;
+        try(Connection con = dataSource.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, username);
+            pstmt.setLong(2, id);
+            pstmt.setLong(3, id);
+            ResultSet rs = pstmt.executeQuery();
+            if(!rs.isBeforeFirst()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
 }
