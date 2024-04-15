@@ -48,7 +48,7 @@ public class WishlistJDBC implements CRUDOperations {
 
         try (Connection connection = dataSource.getConnection()) {
             String getWishesOnWishlistName = """
-                    SELECT wish.name, wish.description, wish.link, wish.price, wish.picture, wish.reserved
+                    SELECT wish.*, wishlist.wishlist_id
                     FROM wishlist
                     JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                     WHERE wishlist.wishlist_id = ?
@@ -121,6 +121,7 @@ public class WishlistJDBC implements CRUDOperations {
             String picture = rs.getString("wish.picture");
             String description = rs.getString("description");
             String link = rs.getString("link");
+            long wishId = rs.getLong("wish_id");
             boolean reserved = rs.getBoolean("reserved");
 
             if (current != wishlistId) {
@@ -137,6 +138,7 @@ public class WishlistJDBC implements CRUDOperations {
                 if (wishName != null) {
                     Wish newWish = new Wish(wishName, description, price, link, picture);
                     newWish.setReserved(reserved);
+                    newWish.setWishId(wishId);
                     wishes.add(newWish);
                 }
             }
@@ -144,6 +146,7 @@ public class WishlistJDBC implements CRUDOperations {
             if (wishName != null) {
                 Wish newWish = new Wish(wishName, description, price, link, picture);
                 newWish.setReserved(reserved);
+                newWish.setWishId(wishId);
                 assert wishes != null;
                 wishes.add(newWish);
             }
@@ -158,8 +161,8 @@ public class WishlistJDBC implements CRUDOperations {
         System.out.println("WISH ID IN ADDWISH JDBC " + newWish.getWishId());
         System.out.println("WishlistId in JDBC: " + newWish.getWishlistId());
         try (Connection connection = dataSource.getConnection()) {
-            String insertNewWish = "INSERT INTO wish (name, description, link, price, picture, wishlist_id) VALUES (?, ? ,? ,? ,? ,?)";
-            PreparedStatement pstmt = connection.prepareStatement(insertNewWish);
+            String insertNewWish = "INSERT INTO wish (wishlist_id, name, description, link, price, picture) VALUES (?, ? ,? ,? ,? ,?);";
+            PreparedStatement pstmt = connection.prepareStatement(insertNewWish,Statement.RETURN_GENERATED_KEYS);
             pstmt.setLong(1, newWish.getWishlistId());
             pstmt.setString(2, newWish.getName());
             pstmt.setString(3, newWish.getDescription());
