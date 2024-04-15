@@ -16,12 +16,12 @@ public class WishlistService {
         this.wishlistJDBC = wishlistJDBC;
     }
 
-    public void createWishlist(String wishlistTitle, String pictureLink, String username){
-        wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
+    public long createWishlist(String wishlistTitle, String pictureLink, String username){
+        return wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
     }
 
-    public List<Wish> getWishes(String wishlistName) {
-        return wishlistJDBC.getWishes(wishlistName);
+    public List<Wish> getWishes(long id) {
+        return wishlistJDBC.getWishes(id);
     }
 
     public void addWish(Wish newWish, String wishlistTitle) {
