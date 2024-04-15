@@ -151,16 +151,16 @@ public class WishlistJDBC implements CRUDOperations {
 
 
     @Override
-    public boolean addWish(Wish newWish, String wishlistName) {
+    public boolean addWish(Wish newWish) {
         boolean isAdded = false;
 
         try (Connection connection = dataSource.getConnection()) {
-            String getWishlistIDOnWishlistName = "SELECT wishlist_id FROM wishlist WHERE name = ?";
-            PreparedStatement pstmtGetWishlistID = connection.prepareStatement(getWishlistIDOnWishlistName);
-            pstmtGetWishlistID.setString(1, wishlistName);
-            ResultSet wishlistIDResultSet = pstmtGetWishlistID.executeQuery();
-            wishlistIDResultSet.next();
-            int wishlistID = wishlistIDResultSet.getInt(1);
+//            String getWishlistIDOnWishlistName = "SELECT wishlist_id FROM wishlist WHERE name = ?";
+//            PreparedStatement pstmtGetWishlistID = connection.prepareStatement(getWishlistIDOnWishlistName);
+//            pstmtGetWishlistID.setString(1, wishlistName);
+//            ResultSet wishlistIDResultSet = pstmtGetWishlistID.executeQuery();
+//            wishlistIDResultSet.next();
+//            int wishlistID = wishlistIDResultSet.getInt(1);
 
             String insertNewWish = "INSERT INTO wish (name, description, link, price, picture, wishlist_id) VALUES (?, ? ,? ,? ,? ,?)";
             PreparedStatement pstmt = connection.prepareStatement(insertNewWish);
@@ -169,7 +169,7 @@ public class WishlistJDBC implements CRUDOperations {
             pstmt.setString(3, newWish.getLink());
             pstmt.setDouble(4, newWish.getPrice());
             pstmt.setString(5, newWish.getPicture());
-            pstmt.setInt(6, wishlistID);
+            pstmt.setLong(6, newWish.getWishlistId());
             int affectedRows = pstmt.executeUpdate();
 
             isAdded = affectedRows > 0;
