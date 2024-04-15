@@ -3,6 +3,7 @@ package com.example.wishlist.model;
 public class Wish {
 
     private long wishlistId;
+    private long wishId;
     private String name;
     private String description;
     private double price;
@@ -34,6 +35,14 @@ public class Wish {
     }
     public void setWishlistId(long wishlistId) {
         this.wishlistId = wishlistId;
+    }
+
+    public long getWishId() {
+        return wishId;
+    }
+
+    public void setWishId(long wishId) {
+        this.wishId = wishId;
     }
 
     public String getName() {
