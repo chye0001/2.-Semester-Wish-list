@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CRUDOperations {
 
-    boolean createWishlist(String wishlistTitle, String pictureLink, String username);
+    long createWishlist(String wishlistTitle, String pictureLink, String username);
 
-    List<Wish> getWishes (String wishlistName);
+    List<Wish> getWishes (long id);
 
     List<Wishlist> getAllWishlists (String username);
 
