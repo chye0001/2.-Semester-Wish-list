@@ -20,6 +20,7 @@
         <td th:text="${wishlist.picture}"></td>
         <td th:text="${wishlist.wishlistId}"></td>
         <td> <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}"> <button>view</button> </a> </td>
+        <td> <a th:href="@{/wishlist/{wishlistId}/delete (wishlistId=${wishlist.wishlistId})}"> <button>delete</button> </a> </td>
     </tr>
     </tbody>
 </table>

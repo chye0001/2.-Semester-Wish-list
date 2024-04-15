@@ -17,5 +17,7 @@ public interface CRUDOperations {
 
     boolean deleteWish(String wishName);
 
+    boolean deleteWishlist(int wishlistId);
+
     boolean deleteSelectedWishes(List<Integer> wishIdList);
 }
