@@ -20,7 +20,6 @@ public class WishlistJDBC implements CRUDOperations {
 
     @Override
     public long createWishlist(String wishlistTitle, String pictureLink, String username) {
-        int affectedRows = 0;
         long wishlistId = -1;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -30,7 +29,7 @@ public class WishlistJDBC implements CRUDOperations {
             pstmt.setString(2, pictureLink);
             pstmt.setString(3, username);
 
-            affectedRows = pstmt.executeUpdate();
+            pstmt.executeUpdate();
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             if (generatedKeys.next()) {
                 wishlistId = generatedKeys.getLong(1);
@@ -112,7 +111,7 @@ public class WishlistJDBC implements CRUDOperations {
     private List<Wishlist> resultSetToWishlistList(ResultSet rs) throws SQLException {
         List<Wishlist> wishlists = new ArrayList<>();
         int current = -1;
-        Wishlist wishlist = null;
+        Wishlist newWishlist = null;
         List<Wish> wishes = null;
         while (rs.next()) {
             int wishlistId = rs.getInt("wishlist.wishlist_id");
@@ -125,11 +124,13 @@ public class WishlistJDBC implements CRUDOperations {
 
             if (current != wishlistId) {
                 current = wishlistId;
-                wishlist = new Wishlist();
-                wishlist.setName(rs.getString("wishlist.name"));
-                wishlist.setPicture(wishListPicture);
+
+                newWishlist = new Wishlist();
+                newWishlist.setName(rs.getString("wishlist.name"));
+                newWishlist.setPicture(wishListPicture);
+
                 wishes = new ArrayList<>();
-                wishlists.add(wishlist);
+                wishlists.add(newWishlist);
                 int price = rs.getInt("price");
                 if (wishName != null) {
                     Wish newWish = new Wish(wishName, description, price, link, picture);
@@ -196,5 +197,29 @@ public class WishlistJDBC implements CRUDOperations {
         }
 
         return isDeleted;
+    }
+    @Override
+    public boolean editWish(long wishId, Wish editedWish) {
+        boolean isEdited = false;
+
+        try (Connection connection = dataSource.getConnection()){
+            String editWish = "UPDATE wish SET name = ?, description = ?, link = ?, price = ?, picture = ? " +
+                    "WHERE wish_id = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(editWish);
+            preparedStatement.setLong(6 , wishId);
+            preparedStatement.setString(1, editedWish.getName());
+            preparedStatement.setString(2, editedWish.getDescription());
+            preparedStatement.setString(3, editedWish.getLink());
+            preparedStatement.setDouble(4, editedWish.getPrice());
+            preparedStatement.setString(5, editedWish.getPicture());
+            int affectedRows = preparedStatement.executeUpdate();
+            isEdited = affectedRows > 0;
+
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isEdited;
     }
 }
