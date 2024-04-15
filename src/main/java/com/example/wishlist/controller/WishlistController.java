@@ -34,9 +34,10 @@ public class WishlistController {
     }
 
     @PostMapping("/create")
-    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink, Authentication authentication) {
+    public String createWishlist(@RequestParam String wishName, @RequestParam String pictureLink, Authentication authentication) {
         String username = authentication.getName();
-        long wishlistId = wishlistService.createWishlist(wishlistTitle, pictureLink, username);
+        long wishlistId = wishlistService.createWishlist(wishName, pictureLink, username);
+
         return "redirect:/wishlist/"+wishlistId;
     }
 
@@ -45,7 +46,7 @@ public class WishlistController {
         Wish newWish = new Wish();
 
         model.addAttribute("addWish", newWish);
-        model.addAttribute("wishlisttitle", "TODO;FIX");
+        model.addAttribute("wishlistName", "TODO;FIX");
         model.addAttribute("wishlistId", wishlistId);
         return "addWish";
     }
