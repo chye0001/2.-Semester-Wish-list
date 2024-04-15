@@ -1,6 +1,7 @@
 package com.example.wishlist.repository;
 
 import com.example.wishlist.model.Wish;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +14,6 @@ class WishlistJDBCTest {
 
     @Autowired
     WishlistJDBC wishlistJDBC;
-
     @Test
     void createWishlist() {
         boolean expectedResult = true;
@@ -48,7 +48,6 @@ class WishlistJDBCTest {
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         wishlistJDBC.createWishlist("test1", "picturelink");
         wishlistJDBC.addWish(testWish, "test1");
-
         int actualLength = wishlistJDBC.getWishes("test1").size();
 
         assertEquals(expectedLength, actualLength);
@@ -61,6 +60,27 @@ class WishlistJDBCTest {
         int actualLength = wishlistJDBC.getWishes("getWishesFromNotExistingWishlist").size();
 
         assertEquals(expectedLength, actualLength);
+    }
+
+    @Test
+    void deleteWishFromWishlistOnWishlistName() {
+        boolean expectedResult = true;
+        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
+        wishlistJDBC.createWishlist("test1", "picturelink");
+        wishlistJDBC.addWish(testWish, "test1");
+
+        boolean actualResult = wishlistJDBC.deleteWish("name");
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void deleteWishThatDoesNotExist() {
+        boolean expectedResult = false;
+
+        boolean actualResult = wishlistJDBC.deleteWish("Not Existing Wish");
+
+        assertEquals(expectedResult, actualResult);
     }
 
 

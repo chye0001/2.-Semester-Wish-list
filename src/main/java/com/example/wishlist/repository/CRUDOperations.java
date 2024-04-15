@@ -15,4 +15,5 @@ public interface CRUDOperations {
 
     boolean addWish(Wish newWish, String wishlistName);
 
+    boolean deleteWish(String wishName);
 }

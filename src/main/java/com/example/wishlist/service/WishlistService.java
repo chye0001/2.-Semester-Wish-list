@@ -31,4 +31,8 @@ public class WishlistService {
     public List<Wishlist> getAllWishlists() {
         return wishlistJDBC.getAllWishlists();
     }
+
+    public void deleteWish(String wishName) {
+        wishlistJDBC.deleteWish(wishName);
+    }
 }
