@@ -178,4 +178,23 @@ public class WishlistJDBC implements CRUDOperations {
 
         return isAdded;
     }
+
+    @Override
+    public boolean deleteWish(String wishName) {
+        boolean isDeleted = false;
+
+        try (Connection connection = dataSource.getConnection()) {
+            String deleteWish = "DELETE FROM wish WHERE name = ?";
+            PreparedStatement pstmt = connection.prepareStatement(deleteWish);
+            pstmt.setString(1, wishName);
+            int affectedRows = pstmt.executeUpdate();
+
+            isDeleted = affectedRows > 0;
+
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isDeleted;
+    }
 }
