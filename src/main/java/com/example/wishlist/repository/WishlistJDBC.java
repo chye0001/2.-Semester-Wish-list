@@ -19,7 +19,7 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public boolean createWishlist(String wishlistTitle, String pictureLink, String username) {
+    public long createWishlist(String wishlistTitle, String pictureLink, String username) {
         int affectedRows = 0;
         long wishlistId = -1;
 
@@ -40,29 +40,23 @@ public class WishlistJDBC implements CRUDOperations {
             sqlException.printStackTrace();
         }
 
-        return affectedRows > 0;
+        return wishlistId;
     }
 
     @Override
-    public List<Wish> getWishes(String wishlistName) {
+    public List<Wish> getWishes(long id) {
         List<Wish> wishes = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String getWishesOnWishlistName =
-                    "SELECT " +
-                            "w.name, " +
-                            "w.description, " +
-                            "w.link, " +
-                            "w.price, " +
-                            "w.picture, " +
-                            "w.reserved " +
-                            "FROM wishlist wl " +
-                            "JOIN wish w " +
-                            "ON wl.wishlist_id = w.wishlist_id " +
-                            "WHERE wl.name = ?";
+            String getWishesOnWishlistName = """
+                    SELECT wish.name, wish.description, wish.link, wish.price, wish.picture, wish.reserved
+                    FROM wishlist
+                    JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
+                    WHERE wishlist.wishlist_id = ?
+                    """;
 
             PreparedStatement pstmt = connection.prepareStatement(getWishesOnWishlistName);
-            pstmt.setString(1, wishlistName);
+            pstmt.setLong(1, id);
 
             ResultSet wishesResultSet = pstmt.executeQuery();
 
