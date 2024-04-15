@@ -24,6 +24,10 @@ public class WishlistService {
         return wishlistJDBC.getWishes(wishlistId);
     }
 
+    public Wish getWishFromWishId(long wishId) {
+        return wishlistJDBC.getWishFromWishId(wishId);
+    }
+
     public void addWish(Wish newWish) {
         wishlistJDBC.addWish(newWish);
     }
