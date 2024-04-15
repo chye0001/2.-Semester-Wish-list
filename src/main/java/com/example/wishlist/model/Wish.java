@@ -2,13 +2,15 @@ package com.example.wishlist.model;
 
 public class Wish {
 
+    private long wishlistId;
+
     private String name;
+
     private String description;
     private double price;
     private String link;
     private String picture;
     private boolean isReserved;
-
     public Wish(){}
 
     public Wish(String name, String description, double price, String link, String picture) {
@@ -27,6 +29,13 @@ public class Wish {
         this.link = link;
         this.picture = picture;
         this.isReserved = isReserved;
+    }
+
+    public long getWishlistId() {
+        return wishlistId;
+    }
+    public void setWishlistId(long wishlistId) {
+        this.wishlistId = wishlistId;
     }
 
     public String getName() {
