@@ -22,14 +22,15 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public boolean createWishlist(String wishlistTitle, String pictureLink) {
+    public boolean createWishlist(String wishlistTitle, String pictureLink, String username) {
         int affectedRows = 0;
 
         try (Connection connection = dataSource.getConnection()) {
-            String createWishlist = "INSERT INTO wishlist (name, picture) VALUES (?, ?)";
+            String createWishlist = "INSERT INTO wishlist(name, picture, username) VALUES (?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(createWishlist);
             pstmt.setString(1, wishlistTitle);
             pstmt.setString(2, pictureLink);
+            pstmt.setString(3, username);
 
             affectedRows = pstmt.executeUpdate();
 
@@ -90,9 +91,9 @@ public class WishlistJDBC implements CRUDOperations {
 
         try (Connection connection = dataSource.getConnection()) {
             String getAllWishlists = """
-                    SELECT wl.*,w.* FROM wishlist wl
-                    JOIN wish w ON wl.wishlist_id = w.wishlist_id
-                    WHERE wl.username = ?;
+                    SELECT wishlist.*,wish.* FROM wishlist
+                    LEFT JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
+                    WHERE wishlist.username = ?;
                     """;
 
             PreparedStatement pstmt = connection.prepareStatement(getAllWishlists);
@@ -101,16 +102,7 @@ public class WishlistJDBC implements CRUDOperations {
 
             ResultSet wishesResultSet = pstmt.executeQuery();
 
-            while (wishesResultSet.next()) {
-
-                int wishlistId = wishesResultSet.getInt(1);
-                String wishlistName = wishesResultSet.getString(2);
-                String picture = wishesResultSet.getString(3);
-                List<Wish> wishes = getWishes(wishlistName);
-
-                Wishlist wishlist = new Wishlist(wishlistId, wishlistName, picture, wishes);
-                wishlists.add(wishlist);
-            }
+            wishlists = resultSetToWishlistList(wishesResultSet);
 
 
         } catch (SQLException sqlException) {
@@ -120,6 +112,46 @@ public class WishlistJDBC implements CRUDOperations {
         return wishlists;
 
     }
+
+    private List<Wishlist> resultSetToWishlistList(ResultSet rs) throws SQLException {
+        List<Wishlist> wishlists = new ArrayList<>();
+        int current = -1;
+        Wishlist wishlist = null;
+        List<Wish> wishes = null;
+        while (rs.next()) {
+            int wishlistId = rs.getInt("wishlist.wishlist_id");
+            String wishListPicture = rs.getString("wishlist.picture");
+            String wishName = rs.getString("wish.name");
+            String picture = rs.getString("wish.picture");
+            String description = rs.getString("description");
+            String link = rs.getString("link");
+            boolean reserved = rs.getBoolean("reserved");
+
+            if (current != wishlistId) {
+                current = wishlistId;
+                wishlist = new Wishlist();
+                wishlist.setName(rs.getString("wishlist.name"));
+                wishlist.setPicture(wishListPicture);
+                wishes = new ArrayList<>();
+                wishlists.add(wishlist);
+                int price = rs.getInt("price");
+                if (wishName != null) {
+                    Wish newWish = new Wish(wishName, description, price, link, picture);
+                    newWish.setReserved(reserved);
+                    wishes.add(newWish);
+                }
+            }
+            int price = rs.getInt("price");
+            if (wishName != null) {
+                Wish newWish = new Wish(wishName, description, price, link, picture);
+                newWish.setReserved(reserved);
+                assert wishes != null;
+                wishes.add(newWish);
+            }
+        }
+        return wishlists;
+    }
+
 
     @Override
     public boolean addWish(Wish newWish, String wishlistName) {
