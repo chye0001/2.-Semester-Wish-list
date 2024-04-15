@@ -36,8 +36,8 @@ public class WishlistController {
     @PostMapping("/create")
     public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink, Authentication authentication) {
         String username = authentication.getName();
-        wishlistService.createWishlist(wishlistTitle, pictureLink, username);
-        return "redirect:/wishlist";
+        long wishlistId = wishlistService.createWishlist(wishlistTitle, pictureLink, username);
+        return "redirect:/wishlist/"+wishlistId;
     }
 
     @GetMapping("/addWish/{wishlistName}")
@@ -56,11 +56,11 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/view/{name}")
-    public String viewWishlistByName(@PathVariable("name") String name, Model model) {
-        List<Wish> wishes = wishlistService.getWishes(name);
+    @GetMapping("/{id}")
+    public String viewWishlistByName(@PathVariable long id, Model model) {
+        List<Wish> wishes = wishlistService.getWishes(id);
         model.addAttribute("wishes", wishes);
-        model.addAttribute("wishlistName", name);
+        model.addAttribute("wishlistName", "TODO; FIX");
 
         return "viewWishlist";
     }
