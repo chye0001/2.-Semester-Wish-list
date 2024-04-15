@@ -3,9 +3,7 @@ package com.example.wishlist.model;
 public class Wish {
 
     private long wishlistId;
-
     private String name;
-
     private String description;
     private double price;
     private String link;
