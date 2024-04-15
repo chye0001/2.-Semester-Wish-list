@@ -13,11 +13,11 @@ public interface CRUDOperations {
 
     List<Wishlist> getAllWishlists (String username);
 
-    boolean addWish(Wish newWish);
+    long addWish(Wish newWish);
 
-    boolean deleteWish(String wishName);
+    boolean deleteWish(long wishId);
 
-    boolean editWish(long wishId, Wish editedWish);
+    boolean editWish(Wish editedWish);
 
     boolean deleteSelectedWishes(List<Integer> wishIdList);
 }
