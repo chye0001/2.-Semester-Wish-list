@@ -65,7 +65,7 @@ public class WishlistController {
 
         return "viewWishlist";
     }
-
+    //@GetMapping("/{wishlistId}/wish/{wishId}/delete")
     @GetMapping("/delete/{wish}")
     public String deleteWishFromWishlistOnName(@PathVariable("wish") String wishName) {
         wishlistService.deleteWish(wishName);
