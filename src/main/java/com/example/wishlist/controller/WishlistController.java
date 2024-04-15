@@ -50,7 +50,7 @@ public class WishlistController {
         return "addWish";
     }
 
-    @PostMapping("{wishlistId}/addwish")
+    @PostMapping("/{wishlistId}/addwish")
     public String addWishToWishlist(@ModelAttribute Wish newWish) {
         wishlistService.addWish(newWish);
 
