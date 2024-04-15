@@ -155,13 +155,6 @@ public class WishlistJDBC implements CRUDOperations {
         boolean isAdded = false;
 
         try (Connection connection = dataSource.getConnection()) {
-//            String getWishlistIDOnWishlistName = "SELECT wishlist_id FROM wishlist WHERE name = ?";
-//            PreparedStatement pstmtGetWishlistID = connection.prepareStatement(getWishlistIDOnWishlistName);
-//            pstmtGetWishlistID.setString(1, wishlistName);
-//            ResultSet wishlistIDResultSet = pstmtGetWishlistID.executeQuery();
-//            wishlistIDResultSet.next();
-//            int wishlistID = wishlistIDResultSet.getInt(1);
-
             String insertNewWish = "INSERT INTO wish (name, description, link, price, picture, wishlist_id) VALUES (?, ? ,? ,? ,? ,?)";
             PreparedStatement pstmt = connection.prepareStatement(insertNewWish);
             pstmt.setString(1, newWish.getName());
