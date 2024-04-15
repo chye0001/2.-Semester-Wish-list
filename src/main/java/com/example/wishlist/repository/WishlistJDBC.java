@@ -81,6 +81,37 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
+    public Wish getWishFromId(long wishId) {
+        Wish wish = null;
+
+        try (Connection connection = dataSource.getConnection()) {
+            String getWishOnId = """
+                    SELECT * FROM wish
+                    WHERE wish_id = ?;
+                    """;
+
+            PreparedStatement pstmt = connection.prepareStatement(getWishOnId);
+            pstmt.setLong(1, wishId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                wish = new Wish(
+                        rs.getLong("wishlist_id"),
+                        rs.getInt("wish_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getString("link"),
+                        rs.getString("picture"));
+            }
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return wish;
+    }
+
+    @Override
     public List<Wishlist> getAllWishlists(String username) {
 
         List<Wishlist> wishlists = new ArrayList<>();
