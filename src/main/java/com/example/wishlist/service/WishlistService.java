@@ -16,8 +16,8 @@ public class WishlistService {
         this.wishlistJDBC = wishlistJDBC;
     }
 
-    public void createWishlist(String wishlistTitle, String pictureLink){
-        wishlistJDBC.createWishlist(wishlistTitle, pictureLink);
+    public void createWishlist(String wishlistTitle, String pictureLink, String username){
+        wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
     }
 
     public List<Wish> getWishes(String wishlistName) {
