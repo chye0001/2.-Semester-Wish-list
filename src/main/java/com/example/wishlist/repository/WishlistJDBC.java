@@ -126,6 +126,7 @@ public class WishlistJDBC implements CRUDOperations {
                 current = wishlistId;
 
                 newWishlist = new Wishlist();
+                newWishlist.setWishlistId(wishlistId);
                 newWishlist.setName(rs.getString("wishlist.name"));
                 newWishlist.setPicture(wishListPicture);
 
@@ -157,12 +158,12 @@ public class WishlistJDBC implements CRUDOperations {
         try (Connection connection = dataSource.getConnection()) {
             String insertNewWish = "INSERT INTO wish (name, description, link, price, picture, wishlist_id) VALUES (?, ? ,? ,? ,? ,?)";
             PreparedStatement pstmt = connection.prepareStatement(insertNewWish);
-            pstmt.setString(1, newWish.getName());
-            pstmt.setString(2, newWish.getDescription());
-            pstmt.setString(3, newWish.getLink());
-            pstmt.setDouble(4, newWish.getPrice());
-            pstmt.setString(5, newWish.getPicture());
-            pstmt.setLong(6, newWish.getWishlistId());
+            pstmt.setLong(1, newWish.getWishlistId());
+            pstmt.setString(2, newWish.getName());
+            pstmt.setString(3, newWish.getDescription());
+            pstmt.setString(4, newWish.getLink());
+            pstmt.setDouble(5, newWish.getPrice());
+            pstmt.setString(6, newWish.getPicture());
             int affectedRows = pstmt.executeUpdate();
 
             isAdded = affectedRows > 0;
@@ -190,6 +191,29 @@ public class WishlistJDBC implements CRUDOperations {
         }
 
         return isDeleted;
+    }
+
+    public boolean checkIdAndUsernameMatches(long id,String username) {
+        String SQL = """
+                SELECT wishlist.*, wish.*
+                FROM wishlist
+                LEFT JOIN wish ON wish.wishlist_id = wish.wishlist_id
+                WHERE wishlist.username = ?
+                AND (wish.wish_id = ? OR wishlist.wishlist_id = ?)
+                """;
+        try(Connection con = dataSource.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, username);
+            pstmt.setLong(2, id);
+            pstmt.setLong(3, id);
+            ResultSet rs = pstmt.executeQuery();
+            if(!rs.isBeforeFirst()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
     @Override
     public boolean editWish(long wishId, Wish editedWish) {

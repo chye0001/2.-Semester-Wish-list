@@ -50,7 +50,7 @@ public class WishlistController {
         return "addWish";
     }
 
-    @PostMapping("{wishlistId}/addwish") //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
+    @PostMapping("/{wishlistId}/addwish") //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
     public String addWishToWishlist(@ModelAttribute Wish newWish) {
         wishlistService.addWish(newWish);
 

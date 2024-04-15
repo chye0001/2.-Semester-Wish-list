@@ -26,4 +26,5 @@ public class UserService {
         userDetailsManager.createUser(userToRegister);
     }
 
+
 }
