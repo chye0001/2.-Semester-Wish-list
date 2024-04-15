@@ -11,7 +11,7 @@ public interface CRUDOperations {
 
     List<Wish> getWishes (long wishlistId);
 
-    Wish getWishFromId(long wishId);
+    Wish getWishFromWishId(long wishId);
 
     List<Wishlist> getAllWishlists (String username);
 

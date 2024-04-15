@@ -81,7 +81,7 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public Wish getWishFromId(long wishId) {
+    public Wish getWishFromWishId(long wishId) {
         Wish wish = null;
 
         try (Connection connection = dataSource.getConnection()) {
