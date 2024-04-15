@@ -25,12 +25,12 @@ public class WishlistController {
         String username = authentication.getName();
         List<Wishlist> wishlistList = wishlistService.getAllWishlists(username);
         model.addAttribute("wishlists", wishlistList);
-        return "wishlist-main";
+        return "wishlist/wishlistOverview";
     }
 
     @GetMapping("/create")
     public String createWishlist() {
-        return "wishlist-create";
+        return "wishlist/createWishlist";
     }
 
     @PostMapping("/create")
@@ -47,7 +47,7 @@ public class WishlistController {
         model.addAttribute("addWish", newWish);
         model.addAttribute("wishlisttitle", "TODO;FIX");
         model.addAttribute("wishlistId", wishlistId);
-        return "addWish";
+        return "wishlist/addWish";
     }
 
     @PostMapping("/{wishlistId}/addwish")
@@ -63,7 +63,7 @@ public class WishlistController {
         model.addAttribute("wishes", wishes);
         model.addAttribute("wishlistName", "TODO; FIX");
 
-        return "viewWishlist";
+        return "wishlist/viewWishlist";
     }
     //@GetMapping("/{wishlistId}/wish/{wishId}/delete")
     @GetMapping("/delete/{wish}")
