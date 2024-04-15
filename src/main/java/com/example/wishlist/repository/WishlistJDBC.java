@@ -43,7 +43,7 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public List<Wish> getWishes(long id) {
+    public List<Wish> getWishes(long wishlistId) {
         List<Wish> wishes = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
@@ -55,7 +55,7 @@ public class WishlistJDBC implements CRUDOperations {
                     """;
 
             PreparedStatement pstmt = connection.prepareStatement(getWishesOnWishlistName);
-            pstmt.setLong(1, id);
+            pstmt.setLong(1, wishlistId);
 
             ResultSet wishesResultSet = pstmt.executeQuery();
 
