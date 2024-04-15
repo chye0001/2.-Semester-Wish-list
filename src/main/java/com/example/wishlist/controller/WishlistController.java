@@ -72,7 +72,7 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/{wishId}/edit")
+    @GetMapping("/wish/{wishId}/edit")
     public String editWish(@ModelAttribute Wish editedWish, @PathVariable long wishId, @RequestParam long wishlistId) {
         wishlistService.editWish(wishId, editedWish);
 
