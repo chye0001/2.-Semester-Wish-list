@@ -84,15 +84,19 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public List<Wishlist> getAllWishlists() {
+    public List<Wishlist> getAllWishlists(String username) {
 
         List<Wishlist> wishlists = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String getAllWishlists =
-                    "SELECT * FROM wishlist_db.wishlist;";
+            String getAllWishlists = """
+                    SELECT wl.*,w.* FROM wishlist wl
+                    JOIN wish w ON wl.wishlist_id = w.wishlist_id
+                    WHERE wl.username = ?;
+                    """;
 
             PreparedStatement pstmt = connection.prepareStatement(getAllWishlists);
+            pstmt.setString(1, username);
 
 
             ResultSet wishesResultSet = pstmt.executeQuery();
@@ -121,7 +125,7 @@ public class WishlistJDBC implements CRUDOperations {
     public boolean addWish(Wish newWish, String wishlistName) {
         boolean isAdded = false;
 
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             String getWishlistIDOnWishlistName = "SELECT wishlist_id FROM wishlist WHERE name = ?";
             PreparedStatement pstmtGetWishlistID = connection.prepareStatement(getWishlistIDOnWishlistName);
             pstmtGetWishlistID.setString(1, wishlistName);
@@ -140,7 +144,7 @@ public class WishlistJDBC implements CRUDOperations {
             int affectedRows = pstmt.executeUpdate();
 
             isAdded = affectedRows > 0;
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
