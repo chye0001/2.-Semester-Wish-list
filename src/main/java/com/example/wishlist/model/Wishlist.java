@@ -9,6 +9,7 @@ public class Wishlist {
     private String picture;
     private List<Wish> wishes;
 
+    public Wishlist() {}
 
     public Wishlist(int wishlistId, String name, String picture, List<Wish> wishes) {
         this.wishlistId = wishlistId;

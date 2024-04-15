@@ -3,6 +3,7 @@ package com.example.wishlist.controller;
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,9 @@ public class WishlistController {
     }
 
     @GetMapping("")
-    public String wishlistMainPage(Model model) {
-        List<Wishlist> wishlistList = wishlistService.getAllWishlists();
+    public String wishlistMainPage(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        List<Wishlist> wishlistList = wishlistService.getAllWishlists(username);
         model.addAttribute("wishlists", wishlistList);
         return "wishlist-main";
     }
@@ -32,9 +34,10 @@ public class WishlistController {
     }
 
     @PostMapping("/create")
-    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink) {
-        wishlistService.createWishlist(wishlistTitle, pictureLink);
-        return "redirect:/wishlist";
+    public String createWishlist(@RequestParam("title") String wishlistTitle, @RequestParam String pictureLink, Authentication authentication) {
+        String username = authentication.getName();
+        long wishlistId = wishlistService.createWishlist(wishlistTitle, pictureLink, username);
+        return "redirect:/wishlist/"+wishlistId;
     }
 
     @GetMapping("/addWish/{wishlistName}")
@@ -53,11 +56,11 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/view/{name}")
-    public String viewWishlistByName(@PathVariable("name") String name, Model model) {
-        List<Wish> wishes = wishlistService.getWishes(name);
+    @GetMapping("/{id}")
+    public String viewWishlistByName(@PathVariable long id, Model model) {
+        List<Wish> wishes = wishlistService.getWishes(id);
         model.addAttribute("wishes", wishes);
-        model.addAttribute("wishlistName", name);
+        model.addAttribute("wishlistName", "TODO; FIX");
 
         return "viewWishlist";
     }
