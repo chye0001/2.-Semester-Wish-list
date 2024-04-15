@@ -18,7 +18,7 @@
     <tr th:each="wishlist : ${wishlists}">
         <td th:text="${wishlist.name}"></td>
         <td th:text="${wishlist.picture}"></td>
-        <td> <a th:href="@{/wishlist/view/{name} (name=${wishlist.name})}"> <button>view</button> </a> </td>
+        <td> <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}"> <button>view</button> </a> </td>
     </tr>
     </tbody>
 </table>

@@ -21,6 +21,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/user/settings").hasRole("USER")
+                        .requestMatchers("/wishlist/**").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form

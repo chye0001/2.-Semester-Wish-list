@@ -24,8 +24,8 @@ public class WishlistService {
         return wishlistJDBC.getWishes(id);
     }
 
-    public void addWish(Wish newWish, String wishlistTitle) {
-        wishlistJDBC.addWish(newWish, wishlistTitle);
+    public void addWish(Wish newWish) {
+        wishlistJDBC.addWish(newWish);
     }
 
     public List<Wishlist> getAllWishlists(String username) {
