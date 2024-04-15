@@ -17,7 +17,7 @@ class WishlistJDBCTest {
     @Test
     void createWishlist() {
         boolean expectedResult = true;
-        boolean actualResult = wishlistJDBC.createWishlist("test", "picturelink","test");
+        boolean actualResult = 0 < wishlistJDBC.createWishlist("test", "picturelink","test");
         assertEquals(expectedResult, actualResult);
     }
 
@@ -46,9 +46,9 @@ class WishlistJDBCTest {
     void getWishes() {
         int expectedLength = 1;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
-        wishlistJDBC.createWishlist("test1", "picturelink","test");
+        long wishlistId = wishlistJDBC.createWishlist("test1", "picturelink","test");
         wishlistJDBC.addWish(testWish, "test1");
-        int actualLength = wishlistJDBC.getWishes("test1").size();
+        int actualLength = wishlistJDBC.getWishes(wishlistId).size();
 
         assertEquals(expectedLength, actualLength);
     }
@@ -57,7 +57,7 @@ class WishlistJDBCTest {
     void getWishesFromNotExistingWishlist() {
         int expectedLength = 0;
 
-        int actualLength = wishlistJDBC.getWishes("getWishesFromNotExistingWishlist").size();
+        int actualLength = wishlistJDBC.getWishes(-1).size();
 
         assertEquals(expectedLength, actualLength);
     }
@@ -66,7 +66,7 @@ class WishlistJDBCTest {
     void deleteWishFromWishlistOnWishlistName() {
         boolean expectedResult = true;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
-        wishlistJDBC.createWishlist("test1", "picturelink");
+        wishlistJDBC.createWishlist("test1", "picturelink", "testUser");
         wishlistJDBC.addWish(testWish, "test1");
 
         boolean actualResult = wishlistJDBC.deleteWish("name");
