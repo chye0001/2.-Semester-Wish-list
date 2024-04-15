@@ -11,7 +11,7 @@ public interface CRUDOperations {
 
     List<Wish> getWishes (String wishlistName);
 
-    List<Wishlist> getAllWishlists ();
+    List<Wishlist> getAllWishlists (String username);
 
     boolean addWish(Wish newWish, String wishlistName);
 
