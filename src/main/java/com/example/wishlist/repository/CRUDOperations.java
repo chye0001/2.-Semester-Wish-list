@@ -13,7 +13,7 @@ public interface CRUDOperations {
 
     List<Wishlist> getAllWishlists (String username);
 
-    boolean addWish(Wish newWish, String wishlistName);
+    boolean addWish(Wish newWish);
 
     boolean deleteWish(String wishName);
 }
