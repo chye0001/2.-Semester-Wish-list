@@ -1,6 +1,6 @@
 package com.example.wishlist.controller;
 
-import com.example.wishlist.repository.WishlistJDBC;
+import com.example.wishlist.repository.JdbcWishlistRepository;
 import com.example.wishlist.service.WishlistService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class WishlistControllerTest {
     private WishlistService wishlistService;
 
     @MockBean
-    private WishlistJDBC wishlistJDBC;
+    private JdbcWishlistRepository wishlistJDBC;
 
     @Test
     @WithMockUser(username = "user1")
