@@ -42,7 +42,7 @@ public class WishController {
     public String addWishToWishlist(@ModelAttribute Wish newWish) {
         wishService.addWish(newWish);
 
-        return "redirect:/wishlist";
+        return "redirect:/wishlist/"+newWish.getWishlistId();
     }
 
     @GetMapping("/{wishId}/delete")
