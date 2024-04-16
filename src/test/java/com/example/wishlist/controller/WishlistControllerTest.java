@@ -71,7 +71,7 @@ class WishlistControllerTest {
     void showPageForAddingWish() throws Exception {
         mockMvc.perform(get("/wishlist/1/wish/add"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("wishlist/addWish"));
+                .andExpect(view().name("wish/addWish"));
     }
 
 
@@ -112,7 +112,7 @@ class WishlistControllerTest {
                 .thenReturn(new Wish("testName", "testDescription", 0, "testLink", "testPicture"));
         mockMvc.perform(get("/wishlist/1/wish/1/edit"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/wishlist/editWish"));
+                .andExpect(view().name("/wish/editWish"));
     }
 
     @Test
