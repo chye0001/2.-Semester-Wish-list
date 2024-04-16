@@ -2,14 +2,12 @@ package com.example.wishlist.controller;
 
 import com.example.wishlist.repository.WishlistJDBC;
 import com.example.wishlist.service.WishlistService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,5 +84,17 @@ class WishlistControllerTest {
         mockMvc.perform(get("/wishlist/delete/...")) //database er tom for data derfor kan vi ikke showPage for en ønskeliste da den ikke findes i database. Derfor fejler test også?
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist-main"));
+    }
+
+    @Test
+    void deleteWishlistOnId() {
+    }
+
+    @Test
+    void createEditWishForm() {
+    }
+
+    @Test
+    void editWish() {
     }
 }
