@@ -36,6 +36,20 @@ public class WishlistService {
         return wishlistJDBC.getAllWishlists(username);
     }
 
+    public String getWishlistFromWishlistId (String username, long wishlistId) {
+        String wishlistName = "";
+
+        List<Wishlist> wishlists = wishlistJDBC.getAllWishlists(username);
+        for (Wishlist wishlist : wishlists) {
+            if (wishlist.getWishlistId() == wishlistId) {
+                wishlistName = wishlist.getName();
+                break;
+            }
+        }
+
+        return wishlistName;
+    }
+
     public void deleteWish(long wishId) {
         wishlistJDBC.deleteWish(wishId);
     }
