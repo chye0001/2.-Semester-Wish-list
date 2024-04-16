@@ -1,14 +1,14 @@
 package com.example.wishlist.config;
 
-import com.example.wishlist.repository.WishlistJDBC;
+import com.example.wishlist.repository.JdbcWishlistRepository;
 import org.springframework.stereotype.Component;
 
 @Component("authz")
 public class AuthorizationLogic {
 
-    private WishlistJDBC wishlistJDBC;
+    private JdbcWishlistRepository wishlistJDBC;
 
-    public AuthorizationLogic(WishlistJDBC wishlistJDBC) {
+    public AuthorizationLogic(JdbcWishlistRepository wishlistJDBC) {
         this.wishlistJDBC = wishlistJDBC;
     }
 
