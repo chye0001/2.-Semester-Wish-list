@@ -59,7 +59,8 @@ public class WishlistController {
         return "wishlist/addWish";
     }
 
-    @PostMapping("/{wishlistId}/addwish") //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
+    @PostMapping("/{wishlistId}/addwish")
+    //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
     public String addWishToWishlist(@ModelAttribute Wish newWish, @PathVariable long wishlistId) {
         wishlistService.addWish(newWish);
 
@@ -72,8 +73,23 @@ public class WishlistController {
 
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
+        model.addAttribute("wishlist", wishlist);
+
+        boolean isPublic = wishlist.getIsPublic();
+
+        if (isPublic) {
+            String wishlistLink = "/wishlist/" + wishlistId + "/share";
+            model.addAttribute("wishlistLink", wishlistLink);
+        }
 
         return "wishlist/viewWishlist";
+    }
+
+    @PostMapping("/wishlist/{wishlistId}/share")
+    public String buildWishlistLink(@PathVariable long wishlistId) {
+        wishlistService.setWishlistToPublic(wishlistId);
+
+        return "redirect:/wishlist/wishlist/" + wishlistId;
     }
 
     @GetMapping("/{wishlistId}/wish/{wishId}/delete")
