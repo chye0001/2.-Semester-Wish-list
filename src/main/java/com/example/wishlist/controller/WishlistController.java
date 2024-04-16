@@ -66,7 +66,7 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/{wishlistId}/view")
+    @GetMapping("/{wishlistId}")
     public String viewWishlistByName(@PathVariable long wishlistId, Model model, Authentication authentication) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         String username = authentication.getName();
