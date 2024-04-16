@@ -20,8 +20,12 @@ public class WishlistService {
         return wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
     }
 
-    public List<Wish> getWishes(long id) {
-        return wishlistJDBC.getWishes(id);
+    public List<Wish> getWishes(long wishlistId) {
+        return wishlistJDBC.getWishes(wishlistId);
+    }
+
+    public Wish getWishFromWishId(long wishId) {
+        return wishlistJDBC.getWishFromWishId(wishId);
     }
 
     public void addWish(Wish newWish) {
@@ -32,8 +36,26 @@ public class WishlistService {
         return wishlistJDBC.getAllWishlists(username);
     }
 
-    public void deleteWish(String wishName) {
-        wishlistJDBC.deleteWish(wishName);
+    public String getWishlistNameFromWishlistId(String username, long wishlistId) {
+        String wishlistName = "";
+
+        List<Wishlist> wishlists = wishlistJDBC.getAllWishlists(username);
+        for (Wishlist wishlist : wishlists) {
+            if (wishlist.getWishlistId() == wishlistId) {
+                wishlistName = wishlist.getName();
+                break;
+            }
+        }
+
+        return wishlistName;
+    }
+
+    public void deleteWish(long wishId) {
+        wishlistJDBC.deleteWish(wishId);
+    }
+
+    public void editWish(Wish editedWish) {
+        wishlistJDBC.editWish(editedWish);
     }
     public void deleteWishlist(int wishlistId) {
         wishlistJDBC.deleteWishlist(wishlistId);
