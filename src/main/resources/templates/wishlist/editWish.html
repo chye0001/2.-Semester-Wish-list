@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit}" method="post" th:object="${wishToEdit}">
+<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
 
     <p>
         <label for="wishName">Name:</label>
-        <input id="wishName" type="text" th:field="${name}">
+        <input id="wishName" type="text" th:field="*{name}">
     </p>
 
     <p>
