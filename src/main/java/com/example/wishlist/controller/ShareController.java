@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/wishlist")
 public class ShareController {
 
     private WishlistService wishlistService;
@@ -15,7 +17,7 @@ public class ShareController {
         this.wishlistService = wishlistService;
     }
 
-    @GetMapping("/{wishlistId}/shared")
+    @GetMapping("/{wishlistId}/share")
     public String viewSharedWishlist(Model model, @PathVariable long wishlistId) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         String wishlistName = wishlist.getName();
