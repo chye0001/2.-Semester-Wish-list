@@ -45,7 +45,7 @@ public class WishlistController {
     public String showPageForAddingWish(Model model, @PathVariable long wishlistId, Authentication authentication) {
         Wish newWish = new Wish();
         String username = authentication.getName();
-        String wishlistName = wishlistService.getWishlistFromWishlistId(username, wishlistId);
+        String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
 
         model.addAttribute("addWish", newWish);
         model.addAttribute("wishlistName", wishlistName);
@@ -61,10 +61,12 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}")
-    public String viewWishlistByName(@PathVariable long wishlistId, Model model) {
+    public String viewWishlistByName(@PathVariable long wishlistId, Model model, Authentication authentication) {
         List<Wish> wishes = wishlistService.getWishes(wishlistId);
+        String username = authentication.getName();
+        String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
         model.addAttribute("wishes", wishes);
-        model.addAttribute("wishlistName", "TODO; FIX");
+        model.addAttribute("wishlistName", wishlistName);
 
         return "wishlist/viewWishlist";
     }
@@ -86,7 +88,7 @@ public class WishlistController {
         Wish wish = wishlistService.getWishFromWishId(wishId);
         model.addAttribute("wishToEdit", wish);
 
-        return "editWish";
+        return "/wishlist/editWish";
     }
 
     @PostMapping("/{wishlistId}/wish/{wishId}/edit")
