@@ -104,4 +104,13 @@ public class WishlistController {
 
         return "redirect:/wishlist/" + wishlistId;
     }
+
+    @GetMapping("/{wishlistId}/shared")
+    public String viewSharedWishlist(Model model, @PathVariable long wishlistId) {
+        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        String wishlistName = wishlist.getName();
+        model.addAttribute("wishlistName", wishlistName);
+
+        return "/wishlist/sharedWishlist";
+    }
 }
