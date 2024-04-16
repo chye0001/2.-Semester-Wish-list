@@ -1,6 +1,7 @@
 package com.example.wishlist.controller;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.repository.WishlistJDBC;
 import com.example.wishlist.service.WishlistService;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.springframework.security.test.context.support.WithMockUser;
+
+import java.util.ArrayList;
 
 
 @WebMvcTest(WishlistController.class)
@@ -74,7 +77,9 @@ class WishlistControllerTest {
 
     @Test
     @WithMockUser(username = "user1")
-    void viewWishlistByName() throws Exception {
+    void viewWishlistById() throws Exception {
+        when(wishlistService.getWishlistById(1))
+                .thenReturn(new Wishlist(1, "testName", "testPicture", new ArrayList<>()));
         mockMvc.perform(get("/wishlist/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/viewWishlist"));
