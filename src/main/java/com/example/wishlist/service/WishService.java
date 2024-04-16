@@ -14,11 +14,6 @@ public class WishService {
     public WishService(WishRepository wishRepository) {
         this.wishRepository = wishRepository;
     }
-//    long addWish(Wish wish);
-//    Wish getWish(long id);
-//    boolean deleteWish(long id);
-//    boolean editWish(Wish wish);
-//    boolean deleteSelectedWishes(List<Integer> wishIdList);
 
     public long addWish(Wish wish) {
         return wishRepository.addWish(wish);
