@@ -11,9 +11,7 @@ public class Wish {
     private String link;
     private String picture;
     private boolean isReserved;
-
-    public Wish() {
-    }
+    public Wish(){}
 
     public Wish(String name, String description, double price, String link, String picture) {
         this.name = name;
@@ -34,6 +32,17 @@ public class Wish {
         this.isReserved = isReserved;
     }
 
+    public Wish(long wishlistId, long wishId, String name, String description, double price, String link, String picture) {
+        this.wishlistId = wishlistId;
+        this.wishId = wishId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.link = link;
+        this.picture = picture;
+        this.isReserved = false;
+    }
+
     public long getWishlistId() {
         return wishlistId;
     }
@@ -42,20 +51,20 @@ public class Wish {
         this.wishlistId = wishlistId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public long getWishId() {
         return wishId;
     }
 
     public void setWishId(long wishId) {
         this.wishId = wishId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
