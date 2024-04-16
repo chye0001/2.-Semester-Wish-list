@@ -115,5 +115,4 @@ public class JdbcWishRepository implements WishRepository {
         return isEdited;
     }
 
-
 }
