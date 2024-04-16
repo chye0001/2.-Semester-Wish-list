@@ -146,7 +146,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
         String SQL = """
                 SELECT wishlist.*, wish.*
                 FROM wishlist
-                LEFT JOIN wish ON wish.wishlist_id = wish.wishlist_id
+                LEFT JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                 WHERE wishlist.username = ?
                 AND (wish.wish_id = ? OR wishlist.wishlist_id = ?)
                 """;
