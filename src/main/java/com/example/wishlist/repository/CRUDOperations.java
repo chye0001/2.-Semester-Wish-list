@@ -9,9 +9,10 @@ public interface CRUDOperations {
 
     long createWishlist(String wishlistTitle, String pictureLink, String username);
 
-    List<Wish> getWishes (long wishlistId);
+    Wishlist getWishlistById(long wishlistId);
 
     Wish getWishFromWishId(long wishId);
+
 
     List<Wishlist> getAllWishlists (String username);
 
