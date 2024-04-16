@@ -167,6 +167,7 @@ public class WishlistJDBC implements CRUDOperations {
                 newWishlist.setWishlistId(wishlistId);
                 newWishlist.setName(rs.getString("wishlist.name"));
                 newWishlist.setPicture(wishListPicture);
+                newWishlist.setPublic(rs.getBoolean("wishlist.isPublic"));
 
                 wishes = new ArrayList<>();
                 wishlists.add(newWishlist);
