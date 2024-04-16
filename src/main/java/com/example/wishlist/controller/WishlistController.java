@@ -1,5 +1,6 @@
 package com.example.wishlist.controller;
 
+import com.example.wishlist.dto.WishlistFormDto;
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
@@ -29,16 +30,21 @@ public class WishlistController {
     }
 
     @GetMapping("/create")
-    public String createWishlist() {
+    public String createWishlist(Model model) {
+        WishlistFormDto emptyWishlist = new WishlistFormDto("wishlistName", "pictureLink");
+        model.addAttribute("wishlist", emptyWishlist);
+
         return "wishlist/createWishlist";
     }
 
     @PostMapping("/create")
-    public String createWishlist(@RequestParam String wishName, @RequestParam String pictureLink, Authentication authentication) {
+    public String createWishlist(@ModelAttribute WishlistFormDto wishlistFormDto, Authentication authentication) {
         String username = authentication.getName();
-        long wishlistId = wishlistService.createWishlist(wishName, pictureLink, username);
+        String wishlistName = wishlistFormDto.wishlistName();
+        String pictureLink = wishlistFormDto.pictureLink();
+        long wishlistId = wishlistService.createWishlist(wishlistName, pictureLink, username);
 
-        return "redirect:/wishlist/"+wishlistId;
+        return "redirect:/wishlist/" + wishlistId;
     }
 
     @GetMapping("/{wishlistId}/addwish")
@@ -86,15 +92,16 @@ public class WishlistController {
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
         Wish wish = wishlistService.getWishFromWishId(wishId);
+        System.out.println("WishID " + wish.getWishId());
         model.addAttribute("wishToEdit", wish);
 
         return "/wishlist/editWish";
     }
 
     @PostMapping("/{wishlistId}/wish/{wishId}/edit")
-    public String editWish(@ModelAttribute Wish editedWish) {
+    public String editWish(@ModelAttribute Wish editedWish, @PathVariable long wishlistId) {
         wishlistService.editWish(editedWish);
 
-        return "redirect:/wishlist/"+editedWish.getWishlistId();
+        return "redirect:/wishlist/" + wishlistId;
     }
 }

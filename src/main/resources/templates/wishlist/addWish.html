@@ -39,14 +39,13 @@
     <p>
         <button type="submit">Add wish</button>
     </p>
-
-    <p>
-        <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
-            <button>Cancel</button>
-        </a>
-    </p>
 </form>
 
+<p>
+    <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
+        <button>Cancel</button>
+    </a>
+</p>
 <!--TODO lav et endpoint som viser samtlige ønskelister-->
 <!--TODO cancel knappen skal fører en hen på endpoint hvor man står på den given ønskeliste man ønsker at tilføje ønsker til-->
 
