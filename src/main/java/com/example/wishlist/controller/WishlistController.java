@@ -59,9 +59,9 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}")
     public String viewWishlistByName(@PathVariable long wishlistId, Model model) {
-        List<Wish> wishes = wishlistService.getWishes(wishlistId);
-        model.addAttribute("wishes", wishes);
-        model.addAttribute("wishlistName", "TODO; FIX");
+        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        model.addAttribute("wishes", wishlist.getWishes());
+        model.addAttribute("wishlistName", wishlist.getName());
 
         return "wishlist/viewWishlist";
     }

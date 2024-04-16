@@ -1,11 +1,9 @@
 package com.example.wishlist.repository;
 
 import com.example.wishlist.model.Wish;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,12 +41,12 @@ class WishlistJDBCTest {
     }
 
     @Test
-    void getWishes() {
+    void getWishlistById() {
         int expectedLength = 1;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         wishlistJDBC.createWishlist("test1", "picturelink","test");
         wishlistJDBC.addWish(testWish, "test1");
-        int actualLength = wishlistJDBC.getWishes("test1").size();
+        int actualLength = wishlistJDBC.getWishlistById("test1").size();
 
         assertEquals(expectedLength, actualLength);
     }
@@ -57,7 +55,7 @@ class WishlistJDBCTest {
     void getWishesFromNotExistingWishlist() {
         int expectedLength = 0;
 
-        int actualLength = wishlistJDBC.getWishes("getWishesFromNotExistingWishlist").size();
+        int actualLength = wishlistJDBC.getWishlistById("getWishesFromNotExistingWishlist").size();
 
         assertEquals(expectedLength, actualLength);
     }
@@ -101,7 +99,7 @@ class WishlistJDBCTest {
     void getAllWishlistsData() {
         Wish wish = new Wish("item","desc",20,"link","pic-link");
         wishlistJDBC.createWishlist("test", "link","test");
-        wishlistJDBC.addWish(wish, "test");
+        wishlistJDBC.addWish(wish);
 
         String addedWishlistName = wishlistJDBC.getAllWishlists("test").get(0).getName();
         assertEquals("test", addedWishlistName);

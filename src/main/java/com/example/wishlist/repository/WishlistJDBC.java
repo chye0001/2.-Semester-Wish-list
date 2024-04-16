@@ -44,40 +44,46 @@ public class WishlistJDBC implements CRUDOperations {
     }
 
     @Override
-    public List<Wish> getWishes(long id) {
+    public Wishlist getWishlistById(long wishlistId) {
+        Wishlist wishlist = null;
         List<Wish> wishes = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
             String getWishesOnWishlistName = """
-                    SELECT wish.name, wish.description, wish.link, wish.price, wish.picture, wish.reserved
+                    SELECT wishlist.name as wl_name, wishlist.picture as wl_pic, wish.name as w_name, wish.wish_id as w_id, wish.description as w_desc, wish.link as w_link, wish.price as w_price, wish.picture as w_pic, wish.reserved as w_res
                     FROM wishlist
                     JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                     WHERE wishlist.wishlist_id = ?
                     """;
 
             PreparedStatement pstmt = connection.prepareStatement(getWishesOnWishlistName);
-            pstmt.setLong(1, id);
+            pstmt.setLong(1, wishlistId);
 
             ResultSet wishesResultSet = pstmt.executeQuery();
 
-            while (wishesResultSet.next()) {
-                Wish newWish = new Wish(
-                        wishesResultSet.getString(1),
-                        wishesResultSet.getString(2),
-                        wishesResultSet.getDouble(4),
-                        wishesResultSet.getString(3),
-                        wishesResultSet.getString(5),
-                        wishesResultSet.getBoolean(6));
+            String wlName = null;
+            String wlPic = null;
 
+            while (wishesResultSet.next()) {
+                if (wlName == null) {wlName = wishesResultSet.getString("wl_name");}
+                if (wlPic == null) {wlPic = wishesResultSet.getString("wl_pic");}
+                Wish newWish = new Wish(
+                        wishesResultSet.getInt("w_id"),
+                        wishesResultSet.getString("w_name"),
+                        wishesResultSet.getString("w_desc"),
+                        wishesResultSet.getDouble("w_price"),
+                        wishesResultSet.getString("w_link"),
+                        wishesResultSet.getString("w_pic"),
+                        wishesResultSet.getBoolean("w_res"));
                 wishes.add(newWish);
             }
-
+            wishlist = new Wishlist(wishlistId, wlName, wlPic, wishes);
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
-        return wishes;
+        return wishlist;
     }
 
     @Override
