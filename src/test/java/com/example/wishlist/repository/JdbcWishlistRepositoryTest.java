@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class WishlistJDBCTest {
+class JdbcWishlistRepositoryTest {
 
     @Autowired
-    WishlistJDBC wishlistJDBC;
+    JdbcWishlistRepository wishlistJDBC;
     @Test
     void createWishlist() {
         boolean expectedResult = true;
