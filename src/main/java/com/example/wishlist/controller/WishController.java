@@ -1,6 +1,7 @@
 package com.example.wishlist.controller;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.service.WishService;
 import com.example.wishlist.service.WishlistService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -11,16 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wishlist/{wishlistId}/wish")
 public class WishController {
 
+    private WishService wishService;
     private WishlistService wishlistService;
 
-    public WishController(WishlistService wishlistService) {
+    public WishController(WishService wishService, WishlistService wishlistService) {
+        this.wishService = wishService;
         this.wishlistService = wishlistService;
     }
 
     @GetMapping("")
-    public String wish(Model model, @PathVariable int id) {
-        System.out.println("id: " + id);
-        return "This is a tesT: " + id;
+    public String wish(Model model, @PathVariable int wishlistId) {
+        System.out.println("id: " + wishlistId);
+        return "This is a tesT: " + wishlistId;
     }
 
     @GetMapping("/add")
@@ -37,21 +40,21 @@ public class WishController {
 
     @PostMapping("/add") //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
     public String addWishToWishlist(@ModelAttribute Wish newWish) {
-        wishlistService.addWish(newWish);
+        wishService.addWish(newWish);
 
         return "redirect:/wishlist";
     }
 
     @GetMapping("/{wishId}/delete")
     public String deleteWishFromWishlistOnWishId(@PathVariable long wishId) {
-        wishlistService.deleteWish(wishId);
+        wishService.deleteWish(wishId);
 
         return "redirect:/wishlist";
     }
 
     @GetMapping("/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
-        Wish wish = wishlistService.getWishFromWishId(wishId);
+        Wish wish = wishService.getWishFromWishId(wishId);
         System.out.println("WishID " + wish.getWishId());
         model.addAttribute("wishToEdit", wish);
 
@@ -60,7 +63,7 @@ public class WishController {
 
     @PostMapping("/{wishId}/edit")
     public String editWish(@ModelAttribute Wish editedWish, @PathVariable long wishlistId) {
-        wishlistService.editWish(editedWish);
+        wishService.editWish(editedWish);
 
         return "redirect:/wishlist/" + wishlistId;
     }
