@@ -1,5 +1,6 @@
 package com.example.wishlist.controller;
 
+import com.example.wishlist.model.Wish;
 import com.example.wishlist.repository.WishlistJDBC;
 import com.example.wishlist.service.WishlistService;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,18 +64,18 @@ class WishlistControllerTest {
     }
 
 
-//    @Test
-//    @WithMockUser(username = "user1")
-//    void addWishToWishlist() throws Exception {
-//        mockMvc.perform(post("/wishlist/1/addWish").with(csrf()))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(view().name("redirect:/wishlist/1"));
-//    }
+    @Test
+    @WithMockUser(username = "user1")
+    void addWishToWishlist() throws Exception {
+        mockMvc.perform(post("/wishlist/1/addwish").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/wishlist/1"));
+    }
 
     @Test
     @WithMockUser(username = "user1")
     void viewWishlistByName() throws Exception {
-        mockMvc.perform(get("/wishlist/1/view"))
+        mockMvc.perform(get("/wishlist/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/viewWishlist"));
     }
@@ -91,13 +92,15 @@ class WishlistControllerTest {
     void deleteWishlistOnId() {
     }
 
-//    @Test
-//    @WithMockUser(username = "user1")
-//    void createEditWishForm() throws Exception {
-//        mockMvc.perform(get("/wishlist/1/wish/1/edit"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("/wishlist/editWish"));
-//    }
+    @Test
+    @WithMockUser(username = "user1")
+    void createEditWishForm() throws Exception {
+        when(wishlistService.getWishFromWishId(1))
+                .thenReturn(new Wish("testName", "testDescription", 0, "testLink", "testPicture"));
+        mockMvc.perform(get("/wishlist/1/wish/1/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/wishlist/editWish"));
+    }
 
     @Test
     @WithMockUser(username = "user1")
