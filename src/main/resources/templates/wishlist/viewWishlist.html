@@ -10,6 +10,16 @@
 <body>
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
+
+<form th:action="@{/wishlist/{wishlistId}/share (wishlistId=${wishlistId})}" method="post" th:object="${wishlist}">
+    <button type="submit">Share wishlist</button>
+</form>
+    <label for="wishlistLink">WishlistLink</label>
+    <input id="wishlistLink" th:text="wishlistLink">
+
+
+
+
 <table>
     <thead>
     <tr>
