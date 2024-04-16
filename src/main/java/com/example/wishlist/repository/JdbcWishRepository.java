@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
+
 @Repository
 public class JdbcWishRepository implements WishRepository {
 
@@ -45,7 +46,33 @@ public class JdbcWishRepository implements WishRepository {
 
     @Override
     public Wish getWish(long wishId) {
-        return null;
+        Wish wish = null;
+
+        try (Connection connection = dataSource.getConnection()) {
+            String getWishOnId = """
+                    SELECT * FROM wish
+                    WHERE wish_id = ?;
+                    """;
+
+            PreparedStatement pstmt = connection.prepareStatement(getWishOnId);
+            pstmt.setLong(1, wishId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                wish = new Wish(
+                        rs.getLong("wishlist_id"),
+                        rs.getInt("wish_id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getString("link"),
+                        rs.getString("picture"));
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return wish;
     }
 
     @Override
@@ -60,7 +87,7 @@ public class JdbcWishRepository implements WishRepository {
 
             isDeleted = affectedRows > 0;
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
@@ -70,7 +97,9 @@ public class JdbcWishRepository implements WishRepository {
     @Override
     public boolean deleteSelectedWishes(List<Integer> wishIdList) {
         boolean madeChanges = false;
-        if (wishIdList.isEmpty()) {return madeChanges;}
+        if (wishIdList.isEmpty()) {
+            return madeChanges;
+        }
 
         String idsString = wishIdList.get(0).toString();
         for (int i = 1; i < wishIdList.size(); i++) {
@@ -90,16 +119,17 @@ public class JdbcWishRepository implements WishRepository {
 
         return madeChanges;
     }
+
     @Override
     public boolean editWish(Wish editedWish) {
         boolean isEdited = false;
 
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             String editWish = "UPDATE wish SET name = ?, description = ?, link = ?, price = ?, picture = ? " +
                     "WHERE wish_id = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(editWish);
-            preparedStatement.setLong(6 , editedWish.getWishId());
+            preparedStatement.setLong(6, editedWish.getWishId());
             preparedStatement.setString(1, editedWish.getName());
             preparedStatement.setString(2, editedWish.getDescription());
             preparedStatement.setString(3, editedWish.getLink());
@@ -108,7 +138,7 @@ public class JdbcWishRepository implements WishRepository {
             int affectedRows = preparedStatement.executeUpdate();
             isEdited = affectedRows > 0;
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
