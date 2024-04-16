@@ -42,11 +42,13 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}/addwish")
-    public String showPageForAddingWish(Model model, @PathVariable long wishlistId) {
+    public String showPageForAddingWish(Model model, @PathVariable long wishlistId, Authentication authentication) {
         Wish newWish = new Wish();
+        String username = authentication.getName();
+        String wishlistName = wishlistService.getWishlistFromWishlistId(username, wishlistId);
 
         model.addAttribute("addWish", newWish);
-        model.addAttribute("wishlistName", "TODO;FIX");
+        model.addAttribute("wishlistName", wishlistName);
         model.addAttribute("wishlistId", wishlistId);
         return "addWish";
     }
