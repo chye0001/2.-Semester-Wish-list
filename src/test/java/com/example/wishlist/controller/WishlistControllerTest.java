@@ -3,7 +3,6 @@ package com.example.wishlist.controller;
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.repository.JdbcWishRepository;
-import com.example.wishlist.repository.JdbcWishRepositoryTest;
 import com.example.wishlist.repository.JdbcWishlistRepository;
 import com.example.wishlist.service.WishService;
 import com.example.wishlist.service.WishlistService;
