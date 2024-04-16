@@ -48,7 +48,7 @@ public class Wishlist {
         this.wishes = wishes;
     }
 
-    public boolean isPublic() {
+    public boolean getIsPublic() {
         return isPublic;
     }
 
