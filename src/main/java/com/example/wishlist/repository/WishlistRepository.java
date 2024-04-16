@@ -5,7 +5,7 @@ import com.example.wishlist.model.Wishlist;
 
 import java.util.List;
 
-public interface CRUDOperations {
+public interface WishlistRepository {
 
     long createWishlist(String wishlistTitle, String pictureLink, String username);
 
