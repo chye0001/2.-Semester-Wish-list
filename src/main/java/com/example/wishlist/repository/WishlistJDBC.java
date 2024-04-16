@@ -337,4 +337,20 @@ public class WishlistJDBC implements CRUDOperations {
 
         return isEdited;
     }
+
+    @Override
+    public boolean setWishlistToPublic(long wishlistId) {
+        boolean isUpdated = false;
+        try (Connection connection = dataSource.getConnection()){
+            String setWishlistToPublic = "UPDATE wishlist SET isPublic = TRUE WHERE wishlist_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(setWishlistToPublic);
+            int affectedRows = preparedStatement.executeUpdate();
+
+            isUpdated = affectedRows > 0;
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isUpdated;
+    }
 }
