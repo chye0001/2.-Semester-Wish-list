@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-@WebMvcTest(WishlistController.class)
+@WebMvcTest({WishlistController.class, WishController.class})
 class WishlistControllerTest {
 
     @Autowired
@@ -69,7 +69,7 @@ class WishlistControllerTest {
     @Test
     @WithMockUser(username = "user1")
     void showPageForAddingWish() throws Exception {
-        mockMvc.perform(get("/wishlist/1/addwish"))
+        mockMvc.perform(get("/wishlist/1/wish/add"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/addWish"));
     }
@@ -78,7 +78,7 @@ class WishlistControllerTest {
     @Test
     @WithMockUser(username = "user1")
     void addWishToWishlist() throws Exception {
-        mockMvc.perform(post("/wishlist/{wishlistId}/wish/add",1).with(csrf()))
+        mockMvc.perform(post("/wishlist/{wishlistId}/wish/add", 1).with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/wishlist/1"));
     }
