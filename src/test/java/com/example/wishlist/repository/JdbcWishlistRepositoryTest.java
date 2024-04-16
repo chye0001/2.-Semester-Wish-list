@@ -12,6 +12,10 @@ class JdbcWishlistRepositoryTest {
 
     @Autowired
     JdbcWishlistRepository wishlistJDBC;
+
+    @Autowired
+    JdbcWishRepository wishRepositoryJDBC;
+
     @Test
     void createWishlist() {
         boolean expectedResult = true;
@@ -19,30 +23,9 @@ class JdbcWishlistRepositoryTest {
         assertEquals(expectedResult, actualResult);
     }
 
-    @Test
-    void addWish() {
-        boolean expectedResult = true;
-        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
-//        testWish.setWishlistId(1);
-        long wishlistId = wishlistJDBC.createWishlist("test", "picturelink","test");
-        System.out.println("wishlistId in test: " + wishlistId);
-        testWish.setWishlistId(wishlistId);
-        long wishId = wishlistJDBC.addWish(testWish);
-        System.out.println(wishId);
-        boolean actualResult = wishId > -1;
 
-        assertEquals(expectedResult, actualResult);
-    }
 
-    @Test
-    void addWishToANoneExistingWishlist() {
-        boolean expectedResult = false;
-        Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
 
-        boolean actualResult = 0 < wishlistJDBC.addWish(testWish);
-
-        assertEquals(expectedResult, actualResult);
-    }
 
     @Test
     void getWishlistById() {
@@ -50,7 +33,7 @@ class JdbcWishlistRepositoryTest {
         long wishlistId = wishlistJDBC.createWishlist("test1", "picturelink","test");
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         testWish.setWishlistId(wishlistId);
-        wishlistJDBC.addWish(testWish);
+        wishRepositoryJDBC.addWish(testWish);
         int actualLength = wishlistJDBC.getWishlistById(wishlistId).getWishes().size();
 
         assertEquals(expectedLength, actualLength);
@@ -71,9 +54,9 @@ class JdbcWishlistRepositoryTest {
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         long wishlistId = wishlistJDBC.createWishlist("test1", "picturelink", "test");
         testWish.setWishlistId(wishlistId);
-        long wishId = wishlistJDBC.addWish(testWish);
+        long wishId = wishRepositoryJDBC.addWish(testWish);
 
-        boolean actualResult = wishlistJDBC.deleteWish(wishId);
+        boolean actualResult = wishRepositoryJDBC.deleteWish(wishId);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -82,7 +65,7 @@ class JdbcWishlistRepositoryTest {
     void deleteWishThatDoesNotExist() {
         boolean expectedResult = false;
 
-        boolean actualResult = wishlistJDBC.deleteWish(-1);
+        boolean actualResult = wishRepositoryJDBC.deleteWish(-1);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -105,7 +88,7 @@ class JdbcWishlistRepositoryTest {
     void getAllWishlistsData() {
         Wish wish = new Wish("item","desc",20,"link","pic-link");
         wishlistJDBC.createWishlist("test", "link","test");
-        wishlistJDBC.addWish(wish);
+        wishRepositoryJDBC.addWish(wish);
 
         String addedWishlistName = wishlistJDBC.getAllWishlists("test").get(0).getName();
         assertEquals("test", addedWishlistName);
@@ -118,10 +101,10 @@ class JdbcWishlistRepositoryTest {
         wishlistJDBC.createWishlist("test", "picturelink","test");
         Wish editedWish = new Wish("name", "description", 2, "link", "picturelink");
         editedWish.setWishlistId(1);
-        long wishId = wishlistJDBC.addWish(editedWish);
+        long wishId = wishRepositoryJDBC.addWish(editedWish);
         editedWish.setWishId(wishId);
         editedWish.setName("editedName");
-        boolean actualResult = wishlistJDBC.editWish(editedWish);
+        boolean actualResult = wishRepositoryJDBC.editWish(editedWish);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -130,7 +113,7 @@ class JdbcWishlistRepositoryTest {
     void getWishFromWishId() {
         long expectedWishId = 1;
 
-        Wish returnedWish = wishlistJDBC.getWishFromWishId(1);
+        Wish returnedWish = wishRepositoryJDBC.getWish(1);
         long actualWishId = returnedWish.getWishId();
 
         assertEquals(expectedWishId, actualWishId);
