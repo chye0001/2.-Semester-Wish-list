@@ -125,4 +125,14 @@ class WishlistJDBCTest {
 
         assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    void getWishFromWishId() {
+        long expectedWishId = 1;
+
+        Wish returnedWish = wishlistJDBC.getWishFromWishId(1);
+        long actualWishId = returnedWish.getWishId();
+
+        assertEquals(expectedWishId, actualWishId);
+    }
 }
