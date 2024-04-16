@@ -20,8 +20,8 @@ public class WishlistService {
         return wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
     }
 
-    public List<Wish> getWishes(long wishlistId) {
-        return wishlistJDBC.getWishes(wishlistId);
+    public Wishlist getWishlistById(long id) {
+        return wishlistJDBC.getWishlistById(id);
     }
 
     public Wish getWishFromWishId(long wishId) {
