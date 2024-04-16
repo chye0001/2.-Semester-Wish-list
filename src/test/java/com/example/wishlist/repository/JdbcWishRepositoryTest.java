@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class JdbcWishRepositoryTest {
@@ -20,7 +23,6 @@ public class JdbcWishRepositoryTest {
     void addWish() {
         boolean expectedResult = true;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
-//        testWish.setWishlistId(1);
         long wishlistId = jdbcWishlistRepository.createWishlist("test", "picturelink","test");
         System.out.println("wishlistId in test: " + wishlistId);
         testWish.setWishlistId(wishlistId);
@@ -33,11 +35,7 @@ public class JdbcWishRepositoryTest {
 
     @Test
     void addWishToANoneExistingWishlist() {
-        boolean expectedResult = false;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
-
-        boolean actualResult = 0 < jdbcWishRepository.addWish(testWish);
-
-        assertEquals(expectedResult, actualResult);
+        assertThrows(RuntimeException.class, () -> jdbcWishRepository.addWish(testWish));
     }
 }
