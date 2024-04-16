@@ -15,4 +15,6 @@ public interface WishlistRepository {
 
     boolean deleteWishlist(int wishlistId);
 
+    boolean checkIdAndUsernameMatches(long id,String username);
+
 }
