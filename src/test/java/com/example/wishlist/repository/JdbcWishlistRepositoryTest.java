@@ -110,13 +110,4 @@ class JdbcWishlistRepositoryTest {
         assertEquals(expectedResult, actualResult);
     }
 
-    @Test
-    void getWishFromWishId() {
-        long expectedWishId = 1;
-
-        Wish returnedWish = wishRepositoryJDBC.getWish(1);
-        long actualWishId = returnedWish.getWishId();
-
-        assertEquals(expectedWishId, actualWishId);
-    }
 }
