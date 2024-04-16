@@ -2,7 +2,6 @@ package com.example.wishlist.controller;
 
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
-import com.example.wishlist.repository.WishlistJDBC;
 import com.example.wishlist.service.WishlistService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
