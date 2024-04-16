@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class WishlistJDBC {
+public class JdbcWishlistRepository implements WishlistRepository {
 
     private DataSource dataSource;
 
-    public WishlistJDBC(DataSource dataSource) {
+    public JdbcWishlistRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-
+    @Override
     public long createWishlist(String wishlistTitle, String pictureLink, String username) {
         long wishlistId = -1;
 
@@ -41,7 +41,7 @@ public class WishlistJDBC {
 
         return wishlistId;
     }
-
+    @Override
     public Wishlist getWishlistById(long wishlistId) {
         Wishlist wishlist = null;
         List<Wish> wishes = new ArrayList<>();
@@ -83,7 +83,7 @@ public class WishlistJDBC {
 
         return wishlist;
     }
-
+    @Override
     public List<Wishlist> getAllWishlists(String username) {
 
         List<Wishlist> wishlists = new ArrayList<>();
@@ -111,7 +111,7 @@ public class WishlistJDBC {
         return wishlists;
 
     }
-
+    @Override
     public boolean deleteWishlist(int wishlistId) {
         boolean isDeleted = false;
 
@@ -140,29 +140,8 @@ public class WishlistJDBC {
         return isDeleted;
     }
 
-    public boolean deleteSelectedWishes(List<Integer> wishIdList) {
-        boolean madeChanges = false;
-        if (wishIdList.isEmpty()) {return madeChanges;}
 
-        String idsString = wishIdList.get(0).toString();
-        for (int i = 1; i < wishIdList.size(); i++) {
-            idsString += ("," + wishIdList.get(i).toString());
-        }
-        try (Connection connection = dataSource.getConnection()) {
-            String deleteWish = "DELETE FROM wish WHERE wish_id IN (?)";
-            PreparedStatement pstmt = connection.prepareStatement(deleteWish);
-            pstmt.setString(1, idsString);
-
-            madeChanges = pstmt.executeUpdate() > 0;
-
-
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-
-        return madeChanges;
-    }
-
+    //UserService move.
     public boolean checkIdAndUsernameMatches(long id,String username) {
         String SQL = """
                 SELECT wishlist.*, wish.*
