@@ -35,7 +35,7 @@ public class WishController {
         model.addAttribute("addWish", newWish);
         model.addAttribute("wishlistName", wishlistName);
         model.addAttribute("wishlistId", wishlistId);
-        return "wishlist/addWish";
+        return "wish/addWish";
     }
 
     @PostMapping("/add") //wishlistId bliver automatisk på wishlistId attributten i Wish-klassen, da det hedder det samme.
@@ -58,7 +58,7 @@ public class WishController {
         System.out.println("WishID " + wish.getWishId());
         model.addAttribute("wishToEdit", wish);
 
-        return "/wishlist/editWish";
+        return "/wish/editWish";
     }
 
     @PostMapping("/{wishId}/edit")
