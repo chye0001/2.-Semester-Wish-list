@@ -38,4 +38,14 @@ public class JdbcWishRepositoryTest {
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         assertThrows(RuntimeException.class, () -> jdbcWishRepository.addWish(testWish));
     }
+
+     @Test
+    void getWishFromWishId() {
+        long expectedWishId = 1;
+
+        Wish returnedWish = jdbcWishRepository.getWish(1);
+        long actualWishId = returnedWish.getWishId();
+
+        assertEquals(expectedWishId, actualWishId);
+    }
 }
