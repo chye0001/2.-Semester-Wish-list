@@ -141,7 +141,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
     }
 
 
-    //UserService move.
+    @Override
     public boolean checkIdAndUsernameMatches(long id,String username) {
         String SQL = """
                 SELECT wishlist.*, wish.*
