@@ -3,6 +3,7 @@ package com.example.wishlist.service;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.repository.WishlistRepository;
 import com.example.wishlist.repository.JdbcWishlistRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class WishlistService {
         return wishlistRepository.createWishlist(wishlistTitle, pictureLink, username);
     }
 
+    @PreAuthorize("@authz.hasPermission(#id,authentication)")
     public Wishlist getWishlistById(long id) {
         return wishlistRepository.getWishlistById(id);
     }
@@ -27,6 +29,7 @@ public class WishlistService {
         return wishlistRepository.getAllWishlists(username);
     }
 
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public String getWishlistNameFromWishlistId(String username, long wishlistId) {
         String wishlistName = "";
 
@@ -41,7 +44,7 @@ public class WishlistService {
         return wishlistName;
     }
 
-
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public void deleteWishlist(int wishlistId) {
         wishlistRepository.deleteWishlist(wishlistId);
     }
