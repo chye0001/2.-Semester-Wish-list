@@ -66,11 +66,11 @@ public class WishlistController {
 //        return "redirect:/wishlist";
 //    }
 
+
     @GetMapping("/{wishlistId}")
-    public String viewWishlistByName(@PathVariable long wishlistId, Model model, Authentication authentication) {
+    public String viewWishlistById(@PathVariable long wishlistId, Model model) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
-        String username = authentication.getName();
-        String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
+
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
 

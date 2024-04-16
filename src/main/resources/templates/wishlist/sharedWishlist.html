@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${wishlistName}">WishlistName</title>
+</head>
+<body>
+
+<h1 th:text="${wishlistName}">Wishlist name</h1>
+<h2>Wishes</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Picture</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Hyperlink</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="wish : ${wishes}">
+            <td th:text="${wish.name}">Wish name</td>
+            <td th:text="${wish.picture}">Wish name</td> <!-- TODO Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
+            <td th:text="${wish.description}">Wish description</td>
+            <td th:text="${wish.price}">Wish price</td>
+            <td th:text="${wish.link}">Wish link</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
