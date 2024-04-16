@@ -31,9 +31,6 @@ class WishlistControllerTest {
     @MockBean
     private WishlistService wishlistService;
 
-    @MockBean
-    private WishlistJDBC wishlistJDBC;
-
     @Test
     @WithMockUser(username = "user1")
     void testGetWishlistMainPageByDefault() throws Exception {
