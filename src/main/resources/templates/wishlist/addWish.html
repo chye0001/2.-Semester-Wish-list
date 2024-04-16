@@ -9,7 +9,7 @@
 
 <h2 th:text="${wishlistName}"></h2>
 
-<form th:action="@{/wishlist/{wishlistId}/addwish(wishlistId = ${wishlistId})}" method="post" th:object="${addWish}">
+<form th:action="@{/wishlist/{wishlistId}/wish/add(wishlistId = ${wishlistId})}" method="post" th:object="${addWish}">
 
     <p>
         <label for="wishName">Name: </label>
