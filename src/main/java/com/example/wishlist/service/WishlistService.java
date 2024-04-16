@@ -57,4 +57,7 @@ public class WishlistService {
     public void editWish(Wish editedWish) {
         wishlistJDBC.editWish(editedWish);
     }
+    public void deleteWishlist(int wishlistId) {
+        wishlistJDBC.deleteWishlist(wishlistId);
+    }
 }
