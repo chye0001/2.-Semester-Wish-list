@@ -67,10 +67,9 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}")
-    public String viewWishlistByName(@PathVariable long wishlistId, Model model, Authentication authentication) {
+    public String viewWishlistByName(@PathVariable long wishlistId, Model model) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
-        String username = authentication.getName();
-        String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
+
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
 
@@ -94,7 +93,6 @@ public class WishlistController {
     @GetMapping("/{wishlistId}/wish/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
         Wish wish = wishlistService.getWishFromWishId(wishId);
-//        System.out.println("WishID " + wish.getWishId());
         model.addAttribute("wishToEdit", wish);
 
         return "/wishlist/editWish";
