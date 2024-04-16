@@ -36,7 +36,7 @@ public class WishlistService {
         return wishlistJDBC.getAllWishlists(username);
     }
 
-    public String getWishlistFromWishlistId (String username, long wishlistId) {
+    public String getWishlistNameFromWishlistId(String username, long wishlistId) {
         String wishlistName = "";
 
         List<Wishlist> wishlists = wishlistJDBC.getAllWishlists(username);
