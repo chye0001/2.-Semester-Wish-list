@@ -9,13 +9,17 @@ public interface CRUDOperations {
 
     long createWishlist(String wishlistTitle, String pictureLink, String username);
 
-    List<Wish> getWishes (long id);
+    List<Wish> getWishes (long wishlistId);
+
+    Wish getWishFromWishId(long wishId);
 
     List<Wishlist> getAllWishlists (String username);
 
-    boolean addWish(Wish newWish);
+    long addWish(Wish newWish);
 
-    boolean deleteWish(String wishName);
+    boolean deleteWish(long wishId);
+
+    boolean editWish(Wish editedWish);
 
     boolean deleteWishlist(int wishlistId);
 

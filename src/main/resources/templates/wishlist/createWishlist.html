@@ -6,16 +6,18 @@
 </head>
 <body>
 
-<form th:action="@{/wishlist/create}" method="post">
+<form th:action="@{/wishlist/create}" method="post" th:object="${wishlist}">
 
     <label for="title">Title: </label>
-    <input id="title" name="title" type="text" required>
+    <input id="title" type="text" th:field="*{wishlistName}" required>
 
     <label for="pictureLink">Picture link: </label>
-    <input id="pictureLink" name="pictureLink" type="text" required>
+    <input id="pictureLink" type="text" th:field="*{pictureLink}" required>
 
     <button type="submit">Create</button>
 </form>
+
+<a th:href="@{/wishlist/wishlistOverview.html}"><button>Cancel</button></a>
 
 </body>
 </html>
