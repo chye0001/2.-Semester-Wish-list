@@ -25,4 +25,6 @@ public interface CRUDOperations {
     boolean deleteWishlist(int wishlistId);
 
     boolean deleteSelectedWishes(List<Integer> wishIdList);
+
+    void setWishlistToPublic(long wishlistId);
 }

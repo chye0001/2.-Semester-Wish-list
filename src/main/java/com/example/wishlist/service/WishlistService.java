@@ -60,4 +60,8 @@ public class WishlistService {
     public void deleteWishlist(int wishlistId) {
         wishlistJDBC.deleteWishlist(wishlistId);
     }
+
+    public void setWishlistToPublic(long wishlistId) {
+        wishlistJDBC.setWishlistToPublic(wishlistId);
+    }
 }
