@@ -1,8 +1,7 @@
 package com.example.wishlist.service;
 
-import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
-import com.example.wishlist.repository.CRUDOperations;
+import com.example.wishlist.repository.WishlistRepository;
 import com.example.wishlist.repository.WishlistJDBC;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.List;
 @Service
 public class WishlistService {
 
-    private final CRUDOperations wishlistJDBC;
+    private final WishlistRepository wishlistJDBC;
     public WishlistService(WishlistJDBC wishlistJDBC){
         this.wishlistJDBC = wishlistJDBC;
     }
@@ -22,14 +21,6 @@ public class WishlistService {
 
     public Wishlist getWishlistById(long id) {
         return wishlistJDBC.getWishlistById(id);
-    }
-
-    public Wish getWishFromWishId(long wishId) {
-        return wishlistJDBC.getWishFromWishId(wishId);
-    }
-
-    public void addWish(Wish newWish) {
-        wishlistJDBC.addWish(newWish);
     }
 
     public List<Wishlist> getAllWishlists(String username) {
@@ -50,13 +41,7 @@ public class WishlistService {
         return wishlistName;
     }
 
-    public void deleteWish(long wishId) {
-        wishlistJDBC.deleteWish(wishId);
-    }
 
-    public void editWish(Wish editedWish) {
-        wishlistJDBC.editWish(editedWish);
-    }
     public void deleteWishlist(int wishlistId) {
         wishlistJDBC.deleteWishlist(wishlistId);
     }
