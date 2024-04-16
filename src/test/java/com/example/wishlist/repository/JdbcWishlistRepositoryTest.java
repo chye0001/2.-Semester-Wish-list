@@ -87,7 +87,8 @@ class JdbcWishlistRepositoryTest {
     @Test
     void getAllWishlistsData() {
         Wish wish = new Wish("item","desc",20,"link","pic-link");
-        wishlistJDBC.createWishlist("test", "link","test");
+        long id = wishlistJDBC.createWishlist("test", "link","test");
+        wish.setWishlistId(id);
         wishRepositoryJDBC.addWish(wish);
 
         String addedWishlistName = wishlistJDBC.getAllWishlists("test").get(0).getName();
