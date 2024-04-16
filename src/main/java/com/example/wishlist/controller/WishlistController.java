@@ -78,7 +78,7 @@ public class WishlistController {
         boolean isPublic = wishlist.getIsPublic();
 
         if (isPublic) {
-            String wishlistLink = "/wishlist/" + wishlistId + "/share";
+            String wishlistLink = "localhost:8080/wishlist/" + wishlistId + "/share"; //bør nok ændres i fremtiden
             model.addAttribute("wishlistLink", wishlistLink);
         }
 
