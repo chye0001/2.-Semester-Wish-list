@@ -66,7 +66,8 @@ public class JdbcWishRepository implements WishRepository {
                         rs.getString("description"),
                         rs.getDouble("price"),
                         rs.getString("link"),
-                        rs.getString("picture"));
+                        rs.getString("picture"),
+                        rs.getBoolean("reserved"));
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -146,8 +147,7 @@ public class JdbcWishRepository implements WishRepository {
     }
 
     @Override
-    public boolean reserveWish(long wishId) {
-        boolean isReserved = false;
+    public void reserveWish(long wishId) {
 
         try (Connection connection = dataSource.getConnection()){
             boolean reserved = false;
@@ -161,14 +161,11 @@ public class JdbcWishRepository implements WishRepository {
                 reserved = rs.getBoolean("reserved");
             }
 
-            int affectedRows = updateReserveStatusOnWish(connection, wishId, reserved);
-            isReserved = affectedRows > 0;
+          updateReserveStatusOnWish(connection, wishId, reserved);
 
         }catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-
-        return isReserved;
     }
 
     private int updateReserveStatusOnWish(Connection connection, long wishId, boolean reserved) throws SQLException {
