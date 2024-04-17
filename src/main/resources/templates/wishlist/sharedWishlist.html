@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
-    <title th:text="${wishlistName}">WishlistName</title>
+    <title>Login</title>
 </head>
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
 
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
@@ -30,6 +33,6 @@
         </tr>
     </tbody>
 </table>
-
+</div>
 </body>
 </html>
