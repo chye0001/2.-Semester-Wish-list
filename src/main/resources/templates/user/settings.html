@@ -6,6 +6,19 @@
 </head>
 <body>
 <h1 th:text="${user} + ' | Settings'"></h1>
+
+<a th:href="@{/wishlist}">
+    <button type="submit">View Wishlist</button>
+</a>
+
+<br><br>
+
+<a th:href="@{/user/edit-password}">
+    <button type="submit">Change Password</button>
+</a>
+
+<br><br>
+
 <form th:action="@{/user/logout}" method="post">
     <button type="submit">Log Out</button>
 </form>
