@@ -10,4 +10,5 @@ public interface WishRepository {
     boolean deleteWish(long id);
     boolean editWish(Wish wish);
     boolean deleteSelectedWishes(List<Integer> wishIdList);
+    boolean reserveWish(long wishId);
 }
