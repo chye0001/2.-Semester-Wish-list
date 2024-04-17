@@ -19,7 +19,7 @@
     </p>
 
     <button type="submit">edit</button>
-    <a th:href="@{/wishlist}"><button type="button">cancel</button></a>
+    <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistToEdit.wishlistId})}"><button type="button">cancel</button></a>
 </form>
 
 </body>
