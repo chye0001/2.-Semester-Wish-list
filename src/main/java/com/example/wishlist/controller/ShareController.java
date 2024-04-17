@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/wishlist/{wishlistId}/share")
 public class ShareController {
 
-    private WishlistService wishlistService;
+    private final WishlistService wishlistService;
     public ShareController (WishlistService wishlistService) {
         this.wishlistService = wishlistService;
     }
@@ -23,6 +23,12 @@ public class ShareController {
     @GetMapping("")
     public String viewSharedWishlist(Model model, @PathVariable long wishlistId) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        boolean isPublic = wishlist.isPublic();
+
+        if (!isPublic) {
+            return "/error/403";
+        }
+
         String wishlistName = wishlist.getName();
         List<Wish> wishes = wishlist.getWishes();
 
