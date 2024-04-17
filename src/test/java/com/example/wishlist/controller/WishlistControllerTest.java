@@ -122,5 +122,12 @@ class WishlistControllerTest {
                 .andExpect(view().name("redirect:/wishlist/1"));
     }
 
-
+    @Test
+    void viewSharedWishlist() throws Exception {
+        when(wishlistService.getWishlistById(1))
+                .thenReturn(new Wishlist(1, "testName", "testPicture", new ArrayList<>()));
+        mockMvc.perform(get("/wishlist/{wishlistId}/share", 1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/wishlist/viewSharedWishlist"));
+    }
 }
