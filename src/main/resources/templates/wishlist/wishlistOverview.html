@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Login</title>
 </head>
 <body>
-
+<div class="container">
+<header th:replace="~{fragments/header :: header}"></header>
 <table>
     <thead>
     <tr>
@@ -28,6 +30,6 @@
 <a href="wishlist/create">
     <button type="button">Create new wishlist</button>
 </a>
-
+</div>
 </body>
 </html>
