@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
-    <title>Edit Wish</title>
+    <title>Login</title>
 </head>
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
 
 <form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
 
@@ -36,6 +39,6 @@
     <button type="submit">edit</button>
     <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishToEdit.wishlistId})}"><button type="button">cancel</button></a>
 </form>
-
+</div>
 </body>
 </html>
