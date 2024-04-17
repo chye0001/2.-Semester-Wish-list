@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-@WebMvcTest({WishlistController.class, WishController.class})
+@WebMvcTest({WishlistController.class, WishController.class, ShareController.class})
 class WishlistControllerTest {
 
     @Autowired
@@ -121,4 +121,6 @@ class WishlistControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/wishlist/1"));
     }
+
+
 }
