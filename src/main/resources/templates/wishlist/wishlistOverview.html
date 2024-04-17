@@ -7,29 +7,51 @@
 </head>
 <body>
 <div class="container">
-<header th:replace="~{fragments/header :: header}"></header>
-<table>
-    <thead>
-    <tr>
-        <th>Wishlist</th>
-        <th>Picture</th>
-    </tr>
-    </thead>
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div class?="bg-dark shadow-lg rounded p-3 mt-5">
+        <table class="table table-dark"
+               data-toggle="table"
+               data-search="true"
+               data-search-selector="#tableSearch">
+            <thead>
+            <tr class="">
+                <th scope="col">Wishlist</th>
+                <th scope="col">Picture</th>
+                <th scope="col"><input type="search" id="tableSearch" class="form-control input-dark my-border"
+                                       placeholder="Search.."></th>
+                <!--                <th scope="col"></th>-->
+            </tr>
+            </thead>
 
-    <tbody>
-    <tr th:each="wishlist : ${wishlists}">
-        <td th:text="${wishlist.name}"></td>
-        <td th:text="${wishlist.picture}"></td>
-        <td th:text="${wishlist.wishlistId}"></td>
-        <td> <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}"> <button>view</button> </a> </td>
-        <td> <a th:href="@{/wishlist/{wishlistId}/delete (wishlistId=${wishlist.wishlistId})}"> <button>delete</button> </a> </td>
-    </tr>
-    </tbody>
-</table>
+            <tbody>
+            <tr th:each="wishlist : ${wishlists}">
 
-<a href="wishlist/create">
-    <button type="button">Create new wishlist</button>
-</a>
+                <td class="align-middle" th:text="${wishlist.name}"></td>
+                <td class="align-middle" th:text="${wishlist.picture}"></td>
+                <!--                <td class=align-middle th:text="${wishlist.wishlistId}"></td>-->
+                <td class="align-middle">
+                    <a class="btn btn-dark darker"
+                       th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}">
+                        View
+                    </a>
+<!--                    th:href="@{/wishlist/{wishlistId}/edit (wishlistId=${wishlist.wishlistId})}"-->
+                    <a class="btn btn-warning white" href="#" > }"
+                        Edit
+                    </a>
+                    <a class="btn btn-danger white"
+                       th:href="@{/wishlist/{wishlistId}/delete (wishlistId=${wishlist.wishlistId})}">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-2">
+        <a class="btn btn-lg fw-bold btn-success" href="wishlist/create">
+            Create Wishlist
+        </a>
+    </div>
 </div>
 </body>
 </html>
