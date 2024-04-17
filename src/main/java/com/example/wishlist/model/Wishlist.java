@@ -7,6 +7,7 @@ public class Wishlist {
     private long wishlistId;
     private String name;
     private String picture;
+    private boolean isPublic;
     private List<Wish> wishes;
 
     public Wishlist() {}
@@ -45,5 +46,13 @@ public class Wishlist {
     }
     public void setWishes(List<Wish> wishes) {
         this.wishes = wishes;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }
