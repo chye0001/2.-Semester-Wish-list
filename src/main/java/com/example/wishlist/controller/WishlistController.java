@@ -53,7 +53,14 @@ public class WishlistController {
 
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
+        model.addAttribute("wishlist", wishlist);
 
+        boolean isPublic = wishlist.isPublic();
+
+        if (isPublic) {
+            String wishlistLink = "localhost:8080/wishlist/" + wishlistId + "/share"; //bør nok ændres i fremtiden
+            model.addAttribute("wishlistLink", wishlistLink);
+        }
         return "wishlist/viewWishlist";
     }
 
