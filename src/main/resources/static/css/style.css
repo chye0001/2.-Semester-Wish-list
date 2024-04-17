@@ -1,3 +1,18 @@
-* {
-    background-color: #222222 !important;
+body {
+    background-color: #0f0f0f !important;
+    color: #fff !important;
+}
+
+
+.bold {
+    font-weight: bold !important;
+}
+
+.my-active {
+    background-color: darkslategrey !important;
+    color: white !important;
+}
+
+.my-margin {
+    margin-left: 250px !important;
 }
