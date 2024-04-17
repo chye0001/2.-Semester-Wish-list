@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-<div>
+<div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
     <form th:action="@{/user/login}" method="post">
         <label for="username" class="col-sm-2 col-form-label">Username</label>
         <input type="text" id="username" name="username" class="form-control"
