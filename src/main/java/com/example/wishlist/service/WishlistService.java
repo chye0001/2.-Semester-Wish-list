@@ -1,9 +1,9 @@
 package com.example.wishlist.service;
 
-import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
-import com.example.wishlist.repository.CRUDOperations;
-import com.example.wishlist.repository.WishlistJDBC;
+import com.example.wishlist.repository.WishlistRepository;
+import com.example.wishlist.repository.JdbcWishlistRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,35 +11,29 @@ import java.util.List;
 @Service
 public class WishlistService {
 
-    private final CRUDOperations wishlistJDBC;
-    public WishlistService(WishlistJDBC wishlistJDBC){
-        this.wishlistJDBC = wishlistJDBC;
+    private final WishlistRepository wishlistRepository;
+    public WishlistService(WishlistRepository wishlistRepository){
+        this.wishlistRepository = wishlistRepository;
     }
 
     public long createWishlist(String wishlistTitle, String pictureLink, String username){
-        return wishlistJDBC.createWishlist(wishlistTitle, pictureLink, username);
+        return wishlistRepository.createWishlist(wishlistTitle, pictureLink, username);
     }
 
+    @PreAuthorize("@authz.hasPermission(#id,authentication)")
     public Wishlist getWishlistById(long id) {
-        return wishlistJDBC.getWishlistById(id);
-    }
-
-    public Wish getWishFromWishId(long wishId) {
-        return wishlistJDBC.getWishFromWishId(wishId);
-    }
-
-    public void addWish(Wish newWish) {
-        wishlistJDBC.addWish(newWish);
+        return wishlistRepository.getWishlistById(id);
     }
 
     public List<Wishlist> getAllWishlists(String username) {
-        return wishlistJDBC.getAllWishlists(username);
+        return wishlistRepository.getAllWishlists(username);
     }
 
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public String getWishlistNameFromWishlistId(String username, long wishlistId) {
         String wishlistName = "";
 
-        List<Wishlist> wishlists = wishlistJDBC.getAllWishlists(username);
+        List<Wishlist> wishlists = wishlistRepository.getAllWishlists(username);
         for (Wishlist wishlist : wishlists) {
             if (wishlist.getWishlistId() == wishlistId) {
                 wishlistName = wishlist.getName();
@@ -50,14 +44,8 @@ public class WishlistService {
         return wishlistName;
     }
 
-    public void deleteWish(long wishId) {
-        wishlistJDBC.deleteWish(wishId);
-    }
-
-    public void editWish(Wish editedWish) {
-        wishlistJDBC.editWish(editedWish);
-    }
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public void deleteWishlist(int wishlistId) {
-        wishlistJDBC.deleteWishlist(wishlistId);
+        wishlistRepository.deleteWishlist(wishlistId);
     }
 }

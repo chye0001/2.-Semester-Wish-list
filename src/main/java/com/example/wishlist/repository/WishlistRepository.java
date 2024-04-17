@@ -5,24 +5,16 @@ import com.example.wishlist.model.Wishlist;
 
 import java.util.List;
 
-public interface CRUDOperations {
+public interface WishlistRepository {
 
     long createWishlist(String wishlistTitle, String pictureLink, String username);
 
     Wishlist getWishlistById(long wishlistId);
 
-    Wish getWishFromWishId(long wishId);
-
-
     List<Wishlist> getAllWishlists (String username);
-
-    long addWish(Wish newWish);
-
-    boolean deleteWish(long wishId);
-
-    boolean editWish(Wish editedWish);
 
     boolean deleteWishlist(int wishlistId);
 
-    boolean deleteSelectedWishes(List<Integer> wishIdList);
+    boolean checkIdAndUsernameMatches(long id,String username);
+
 }

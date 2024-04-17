@@ -1,19 +1,22 @@
 package com.example.wishlist.config;
 
-import com.example.wishlist.repository.WishlistJDBC;
+import com.example.wishlist.repository.JdbcWishlistRepository;
+import com.example.wishlist.repository.WishlistRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 @Component("authz")
 public class AuthorizationLogic {
 
-    private WishlistJDBC wishlistJDBC;
+    private WishlistRepository wishlistRepository;
 
-    public AuthorizationLogic(WishlistJDBC wishlistJDBC) {
-        this.wishlistJDBC = wishlistJDBC;
+    public AuthorizationLogic(WishlistRepository wishlistRepository) {
+        this.wishlistRepository = wishlistRepository;
     }
 
 
-    public boolean hasPermission(long id,String username) {
-        return wishlistJDBC.checkIdAndUsernameMatches(id,username);
+    public boolean hasPermission(long id, Authentication authentication) {
+        String username = authentication.getName();
+        return wishlistRepository.checkIdAndUsernameMatches(id,username);
     }
 }
