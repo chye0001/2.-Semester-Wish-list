@@ -33,3 +33,31 @@ body {
 .my-border {
     border: 1px solid #4D5154 !important;
 }
+
+/* bootstrap table overrides START */
+/*.search > input {*/
+/*    background-color: #212529;*/
+/*    color: #999999;*/
+/*    border: 1px solid #4D5154;*/
+/*    float: left !important;*/
+/*}*/
+
+/*.search > input:focus {*/
+/*    background-color: #212529 !important;*/
+/*    !*color: #999999 !important;*!*/
+/*    color: white !important;*/
+/*}*/
+
+#tableSearch::placeholder {
+  color: #999999 !important;
+  opacity: 1 !important; /* Firefox */
+}
+
+/*.search > input::-ms-input-placeholder,*/
+/*input::-ms-input-placeholder.form-control{ !* Edge 12 -18 *!*/
+/*  color: #999999 !important;*/
+/*}*/
+
+.my-border {
+    border: 1px solid #4D5154 !important;
+}
