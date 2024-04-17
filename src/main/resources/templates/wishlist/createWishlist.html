@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
-    <title>Create</title>
+    <title>Login</title>
 </head>
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
 
 <form th:action="@{/wishlist/create}" method="post" th:object="${wishlist}">
 
@@ -18,6 +21,6 @@
 </form>
 
 <a th:href="@{/wishlist/wishlistOverview.html}"><button>Cancel</button></a>
-
+</div>
 </body>
 </html>
