@@ -24,10 +24,8 @@ public class JdbcWishRepositoryTest {
         boolean expectedResult = true;
         Wish testWish = new Wish("name", "description", 2, "link", "picturelink");
         long wishlistId = jdbcWishlistRepository.createWishlist("test", "picturelink","test");
-        System.out.println("wishlistId in test: " + wishlistId);
         testWish.setWishlistId(wishlistId);
         long wishId = jdbcWishRepository.addWish(testWish);
-        System.out.println(wishId);
         boolean actualResult = wishId > -1;
 
         assertEquals(expectedResult, actualResult);
@@ -47,5 +45,34 @@ public class JdbcWishRepositoryTest {
         long actualWishId = returnedWish.getWishId();
 
         assertEquals(expectedWishId, actualWishId);
+    }
+
+    //H2 får testen til at fejle? Virker når den bliver kørt isoleret
+    @Test
+    void undoReserveWish() {
+        boolean expectedResult = false;
+
+        jdbcWishRepository.reserveWish(1); // set reserve to true
+        System.out.println(jdbcWishRepository.getWish(1).isReserved());
+
+        jdbcWishRepository.reserveWish(1); // set reserve to false
+        System.out.println(jdbcWishRepository.getWish(1).isReserved());
+
+        Wish wish = jdbcWishRepository.getWish(1);
+        boolean actualResult = wish.isReserved();
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void reserveWish() {
+        boolean expectedResult = true;
+
+        jdbcWishRepository.reserveWish(1); // set reserve to true
+
+        Wish wish = jdbcWishRepository.getWish(1);
+        boolean actualResult = wish.isReserved();
+
+        assertEquals(expectedResult, actualResult);
     }
 }
