@@ -90,11 +90,11 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}/edit")
-    public String createEditWishForm(Model model, @PathVariable long wishlistId) {
+    public String createEditWishlistForm(Model model, @PathVariable long wishlistId) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         model.addAttribute("wishlistToEdit", wishlist);
 
-        return "/editWishlist";
+        return "wishlist/editWishlist";
     }
 
     @PostMapping("/{wishlistId}/edit")
