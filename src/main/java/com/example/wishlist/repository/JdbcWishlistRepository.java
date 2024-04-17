@@ -48,7 +48,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
         try (Connection connection = dataSource.getConnection()) {
             String getWishesOnWishlistName = """
-                    SELECT wishlist.name as wl_name, wishlist.picture as wl_pic, wish.name as w_name, wish.wish_id as w_id, wish.description as w_desc, wish.link as w_link, wish.price as w_price, wish.picture as w_pic, wish.reserved as w_res
+                    SELECT wishlist.name as wl_name, wishlist.picture as wl_pic, wishlist.isPublic as wl_public, wish.name as w_name, wish.wish_id as w_id, wish.description as w_desc, wish.link as w_link, wish.price as w_price, wish.picture as w_pic, wish.reserved as w_res
                     FROM wishlist
                     JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                     WHERE wishlist.wishlist_id = ?
@@ -61,10 +61,13 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
             String wlName = null;
             String wlPic = null;
+            boolean wLPublic = false;
 
             while (wishesResultSet.next()) {
                 if (wlName == null) {wlName = wishesResultSet.getString("wl_name");}
                 if (wlPic == null) {wlPic = wishesResultSet.getString("wl_pic");}
+                wLPublic = wishesResultSet.getBoolean("wl_public");
+
                 Wish newWish = new Wish(
                         wishesResultSet.getInt("w_id"),
                         wishesResultSet.getString("w_name"),
@@ -76,7 +79,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
                 wishes.add(newWish);
             }
             wishlist = new Wishlist(wishlistId, wlName, wlPic, wishes);
-
+            wishlist.setPublic(wLPublic);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -188,6 +191,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
                 newWishlist.setWishlistId(wishlistId);
                 newWishlist.setName(rs.getString("wishlist.name"));
                 newWishlist.setPicture(wishListPicture);
+                newWishlist.setPublic(rs.getBoolean("wishlist.isPublic"));
 
                 wishes = new ArrayList<>();
                 wishlists.add(newWishlist);
@@ -215,11 +219,12 @@ public class JdbcWishlistRepository implements WishlistRepository {
     public boolean setWishlistToPublic(long wishlistId) {
         boolean isUpdated = false;
         try (Connection connection = dataSource.getConnection()){
-            String setWishlistToPublic = "UPDATE wishlist SET isPublic = TRUE WHERE wishlist_id = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(setWishlistToPublic);
-            preparedStatement.setLong(1, wishlistId);
-            int affectedRows = preparedStatement.executeUpdate();
+            String setWishlistToPublic = "UPDATE wishlist SET isPublic = 1 WHERE wishlist_id = ?;";
+            PreparedStatement pstmt = connection.prepareStatement(setWishlistToPublic);
+            pstmt.setLong(1, wishlistId);
+            int affectedRows = pstmt.executeUpdate();
 
+            System.out.println("affected rows: " + affectedRows);
             isUpdated = affectedRows > 0;
         }catch (SQLException sqlException) {
             sqlException.printStackTrace();
