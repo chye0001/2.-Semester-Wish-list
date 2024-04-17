@@ -14,7 +14,9 @@ public class AuthorizationLogic {
         this.wishlistRepository = wishlistRepository;
     }
 
-
+    //important check, since in theory a logged-in user could manipulate a request with another id,
+    //and therefor, create/delete wish/wishlist for another user.
+    //this checks makes sure, that the given id is 'owned' by the logged-in user.
     public boolean hasPermission(long id, Authentication authentication) {
         String username = authentication.getName();
         return wishlistRepository.checkIdAndUsernameMatches(id,username);
