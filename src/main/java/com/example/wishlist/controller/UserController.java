@@ -42,5 +42,16 @@ public class UserController {
         return "user/settings";
     }
 
+    @GetMapping("/editPassword")
+    public String editUserPassword(Authentication authentication, Model model) {
+        model.addAttribute("user", new UserDto("Username","Old Password"));
+        model.addAttribute("userEdited", new UserDto("Username","New Password"));
+        return "user/editPassword";
+    }
 
+    @PostMapping("/editPassword")
+    public String editUserPassword(UserDto user, UserDto userEdited) {
+        userService.editUserPassword(user.password(),userEdited.password());
+        return "redirect:/user/settings";
+    }
 }
