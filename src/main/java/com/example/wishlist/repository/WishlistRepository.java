@@ -17,4 +17,6 @@ public interface WishlistRepository {
 
     boolean checkIdAndUsernameMatches(long id,String username);
 
+    boolean setWishlistToPublic(long wishlistId);
+
 }
