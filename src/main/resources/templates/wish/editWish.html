@@ -8,37 +8,38 @@
 <body>
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
-
+<div class="bg-dark shadow-lg rounded p-3 mt-3">
 <form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
 
-    <p>
-        <label for="wishName">Name:</label>
-        <input id="wishName" type="text" th:field="*{name}">
-    </p>
+    <div class="form-group">
+        <label class="form-label" for="wishName">Name:</label>
+        <input class="form-control input-dark my-border" id="wishName" type="text" th:field="*{name}">
+    </div>
 
-    <p>
-        <label for="wishPicture">Picture:</label>
-        <input id="wishPicture" type="text" th:field="*{picture}">
-    </p>
+    <div class="form-group">
+        <label class="form-label" for="wishPicture">Picture:</label>
+        <input class="form-control input-dark my-border" id="wishPicture" type="text" th:field="*{picture}">
+    </div>
 
-    <p>
-        <label for="wishDescription">Description:</label>
-        <input id="wishDescription" type="text" th:field="*{description}">
-    </p>
+    <div class="form-group">
+        <label class="form-label" for="wishDescription">Description:</label>
+        <input class="form-control input-dark my-border" id="wishDescription" type="text" th:field="*{description}">
+    </div>
 
-    <p>
-        <label for="wishPrice">Price:</label>
-        <input id="wishPrice" type="number" th:field="*{price}">
-    </p>
+    <div class="form-group">
+        <label class="form-label" for="wishPrice">Price:</label>
+        <input class="form-control input-dark my-border" id="wishPrice" type="number" th:field="*{price}">
+    </div>
 
-    <p>
-        <label for="wishLink">Link:</label>
-        <input id="wishLink" type="text" th:field="*{link}">
-    </p>
+    <div class="form-group">
+        <label class="form-label" for="wishLink">Link:</label>
+        <input class="form-control input-dark my-border" id="wishLink" type="text" th:field="*{link}">
+    </div>
 
     <button type="submit">edit</button>
     <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishToEdit.wishlistId})}"><button type="button">cancel</button></a>
 </form>
+    </div>
 </div>
 </body>
 </html>
