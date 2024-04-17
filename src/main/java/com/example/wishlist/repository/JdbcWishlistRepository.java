@@ -117,7 +117,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
         boolean isEdited = false;
 
         try (Connection connection = dataSource.getConnection()) {
-            String editWishlist = "UPDATE wishlist SET name = ?, picture = ? WHERE wish_id = ?;";
+            String editWishlist = "UPDATE wishlist SET name = ?, picture = ? WHERE wishlist_id = ?;";
 
             PreparedStatement preparedStatement = connection.prepareStatement(editWishlist);
             preparedStatement.setLong(3, wishlist.getWishlistId());
