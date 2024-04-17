@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wishToEdit.wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
+<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishToEdit.wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
 
     <p>
         <label for="wishName">Name:</label>
