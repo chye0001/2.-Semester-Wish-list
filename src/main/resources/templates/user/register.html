@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<div>
-  <form th:action="@{/user/register}" method="post" th:object="${user}">
-    <label for="username">Username:</label>
-    <input id="username" type="text" th:field="*{username}">
-    <label for="password">Password:</label>
-    <input id="password" type="password" th:field="*{password}">
-    <button type="submit">Create</button>
-  </form>
+<div class="container">
+<header th:replace="~{fragments/header :: header}"></header>
+
+
+    <form th:action="@{/user/register}" method="post" th:object="${user}">
+        <label for="username">Username:</label>
+        <input id="username" type="text" th:field="*{username}">
+        <label for="password">Password:</label>
+        <input id="password" type="password" th:field="*{password}">
+        <button type="submit">Create</button>
+    </form>
 </div>
 </body>
 </html>
