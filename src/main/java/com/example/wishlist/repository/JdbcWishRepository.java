@@ -145,4 +145,39 @@ public class JdbcWishRepository implements WishRepository {
         return isEdited;
     }
 
+    @Override
+    public boolean reserveWish(long wishId) {
+        boolean isReserved = false;
+
+        try (Connection connection = dataSource.getConnection()){
+            boolean reserved = false;
+
+            String getWishReserveStatus = "SELECT wish.reserved FROM wish WHERE wish_id = ?";
+            PreparedStatement pstmtSelect = connection.prepareStatement(getWishReserveStatus);
+            pstmtSelect.setLong(1, wishId);
+            ResultSet rs = pstmtSelect.executeQuery();
+
+            if (rs.next()) {
+                reserved = rs.getBoolean("reserved");
+            }
+
+            int affectedRows = updateReserveStatusOnWish(connection, wishId, reserved);
+            isReserved = affectedRows > 0;
+
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isReserved;
+    }
+
+    private int updateReserveStatusOnWish(Connection connection, long wishId, boolean reserved) throws SQLException {
+        String reserveWish = "UPDATE wish SET reserved = ? WHERE wish_id = ?";
+        PreparedStatement pstmtUpdate = connection.prepareStatement(reserveWish);
+
+        pstmtUpdate.setBoolean(1, !reserved);
+        pstmtUpdate.setLong(2, wishId);
+
+        return pstmtUpdate.executeUpdate();
+    }
 }
