@@ -57,7 +57,12 @@ public class WishlistController {
         return "wishlist/viewWishlist";
     }
 
+    @PostMapping("/{wishlistId}/share")
+    public String setIsPublicToTrueForWishlist(@PathVariable long wishlistId) {
+        wishlistService.setWishlistToPublic(wishlistId);
 
+        return "redirect:/wishlist/" + wishlistId;
+    }
 
     @GetMapping("/{wishlistId}/delete")
     public String deleteWishlistOnId(@PathVariable int wishlistId) {
