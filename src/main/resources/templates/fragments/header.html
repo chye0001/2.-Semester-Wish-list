@@ -15,10 +15,13 @@
             <div class="d-flex">
                 <nav>
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a href="/" class="nav-link my-active bold" aria-current="page">Home</a>
+                        <li class="nav-item"><a href="/" class="nav-link nav-link-color"
+                                                th:classappend="${activeLink == 'home' ? 'my-active':''}">Home</a>
                         </li>
-                        <li class="nav-item"><a href="/wishlist" class="nav-link">Wishlist</a></li>
-                        <li class="nav-item"><a href="/user/settings" class="nav-link">Settings</a></li>
+                        <li class="nav-item"><a href="/wishlist" class="nav-link nav-link-color"
+                                                th:classappend="${activeLink == 'wishlist' ? 'my-active':''}">Wishlist</a></li>
+                        <li class="nav-item"><a href="/user/settings" class="nav-link nav-link-color"
+                                                th:classappend="${activeLink == 'settings' ? 'my-active':''}">Settings</a></li>
                     </ul>
                 </nav>
             </div>
