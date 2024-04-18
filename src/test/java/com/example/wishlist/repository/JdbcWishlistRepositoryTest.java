@@ -1,6 +1,7 @@
 package com.example.wishlist.repository;
 
 import com.example.wishlist.model.Wish;
+import com.example.wishlist.model.Wishlist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -110,4 +111,14 @@ class JdbcWishlistRepositoryTest {
         assertEquals(expectedResult, actualResult);
     }
 
+    @Test
+    void setWishlistToPublic() {
+        boolean expectedResult = true;
+
+        wishlistJDBC.setWishlistToPublic(1);
+        Wishlist wishlist = wishlistJDBC.getWishlistById(1);
+        boolean actualResult = wishlist.isPublic();
+
+        assertEquals(expectedResult, actualResult);
+    }
 }
