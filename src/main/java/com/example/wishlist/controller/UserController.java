@@ -1,6 +1,7 @@
 package com.example.wishlist.controller;
 
 import com.example.wishlist.dto.UserDto;
+import com.example.wishlist.dto.UserPasswordsDto;
 import com.example.wishlist.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -44,14 +45,14 @@ public class UserController {
 
     @GetMapping("/editPassword")
     public String editUserPassword(Model model) {
-        model.addAttribute("oldPassword","Old Password");
-        model.addAttribute("newPassword", "New Password");
+        model.addAttribute("userPasswords",
+                new UserPasswordsDto("old password","new password"));
         return "user/editPassword";
     }
 
     @PostMapping("/editPassword")
-    public String editUserPassword(String oldPassword, String newPassword) {
-        userService.editUserPassword(oldPassword,newPassword);
+    public String editUserPassword(UserPasswordsDto userPasswordsDto) {
+        userService.editUserPassword(userPasswordsDto.oldPassword(),userPasswordsDto.newPassword());
         return "redirect:/user/settings";
     }
 }
