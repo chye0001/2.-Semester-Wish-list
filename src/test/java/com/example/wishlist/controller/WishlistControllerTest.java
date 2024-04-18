@@ -14,6 +14,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -132,9 +133,9 @@ class WishlistControllerTest {
 
     //ShareController
     @Test
-    @WithMockUser(username = "user1")
+//    @WithMockUser(username = "user1")
     void viewSharedWishlist() throws Exception {
-        when(wishlistService.getWishlistById(1))
+        when(wishlistService.getWishlistByIdUnauthorized(1))
                 .thenReturn(new Wishlist(1, "testName", "testPicture", true, new ArrayList<>()));
         mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
                 .andExpect(status().isOk())
@@ -142,9 +143,9 @@ class WishlistControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user1")
+//    @WithMockUser(username = "user1")
     void viewWishlistThatHaveNotBeenShared() throws Exception {
-        when(wishlistService.getWishlistById(1))
+        when(wishlistService.getWishlistByIdUnauthorized(1))
                 .thenReturn(new Wishlist(1, "testName", "testPicture", false, new ArrayList<>()));
         mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
                 .andExpect(status().isOk())
@@ -152,12 +153,16 @@ class WishlistControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user1")
+//    @WithMockUser(username = "user1")
     void reserveWish() throws Exception {
-        mockMvc.perform(post("/wishlist/{wishlistId}/shared/wish/{wishId}/reserve)", 1, 1)
+        List<Wish> wishes = new ArrayList<>(List.of( new Wish(1, 1, "testName", "testDescription", 10.0, "testLink", "testPicture", false)));
+       
+        when(wishlistService.getWishlistByIdUnauthorized(1))
+                .thenReturn(new Wishlist(1, "testName", "testPicture", true, wishes));
+        mockMvc.perform(post("/wishlist/{wishlistId}/shared/wish/{wishId}/reserve", 1, 1)
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/wishlist/1/share/"));
+                .andExpect(view().name("redirect:/wishlist/viewSharedWishlist"));
 
     }
 }
