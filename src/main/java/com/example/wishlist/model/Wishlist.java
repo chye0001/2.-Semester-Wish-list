@@ -7,14 +7,16 @@ public class Wishlist {
     private long wishlistId;
     private String name;
     private String picture;
+    private boolean isPublic;
     private List<Wish> wishes;
 
     public Wishlist() {}
 
-    public Wishlist(long wishlistId, String name, String picture, List<Wish> wishes) {
+    public Wishlist(long wishlistId, String name, String picture, boolean isPublic, List<Wish> wishes) {
         this.wishlistId = wishlistId;
         this.name = name;
         this.picture = picture;
+        this.isPublic = isPublic;
         this.wishes = wishes;
     }
 
@@ -45,5 +47,13 @@ public class Wishlist {
     }
     public void setWishes(List<Wish> wishes) {
         this.wishes = wishes;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 }

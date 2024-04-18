@@ -6,6 +6,11 @@
     <title th:text="${wishlistName}"></title>
 </head>
 
+<form th:action="@{/wishlist/{wishlistId}/share (wishlistId=${wishlistId})}" method="post" th:object="${wishlist}">
+    <button type="submit">Share wishlist</button>
+</form>
+<label for="wishlistLink">WishlistLink</label>
+<input id="wishlistLink" th:text="wishlistLink">
 
 <body>
 

@@ -64,7 +64,6 @@ public class WishController {
     @GetMapping("/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
         Wish wish = wishService.getWishFromWishId(wishId);
-        System.out.println("WishID " + wish.getWishId());
         model.addAttribute("wishToEdit", wish);
 
         return "/wish/editWish";

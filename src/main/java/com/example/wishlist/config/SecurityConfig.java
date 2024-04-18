@@ -24,6 +24,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/user/settings").hasRole("USER")
+                        .requestMatchers("/wishlist/*/shared").permitAll()
                         .requestMatchers("/wishlist/**").hasRole("USER")
                         .anyRequest().permitAll()
                 )
@@ -47,6 +48,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }
