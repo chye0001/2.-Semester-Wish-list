@@ -41,6 +41,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
         return wishlistId;
     }
+
     @Override
     public Wishlist getWishlistById(long wishlistId) {
         Wishlist wishlist = null;
@@ -50,7 +51,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
             String getWishesOnWishlistName = """
                     SELECT wishlist.name as wl_name, wishlist.picture as wl_pic, wish.name as w_name, wish.wish_id as w_id, wish.description as w_desc, wish.link as w_link, wish.price as w_price, wish.picture as w_pic, wish.reserved as w_res
                     FROM wishlist
-                    JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
+                    LEFT JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                     WHERE wishlist.wishlist_id = ?
                     """;
 
@@ -63,17 +64,21 @@ public class JdbcWishlistRepository implements WishlistRepository {
             String wlPic = null;
 
             while (wishesResultSet.next()) {
-                if (wlName == null) {wlName = wishesResultSet.getString("wl_name");}
-                if (wlPic == null) {wlPic = wishesResultSet.getString("wl_pic");}
-                Wish newWish = new Wish(
-                        wishesResultSet.getInt("w_id"),
-                        wishesResultSet.getString("w_name"),
-                        wishesResultSet.getString("w_desc"),
-                        wishesResultSet.getDouble("w_price"),
-                        wishesResultSet.getString("w_link"),
-                        wishesResultSet.getString("w_pic"),
-                        wishesResultSet.getBoolean("w_res"));
-                wishes.add(newWish);
+                if (wlName == null) { wlName = wishesResultSet.getString("wl_name"); }
+                if (wlPic == null) { wlPic = wishesResultSet.getString("wl_pic"); }
+
+                if (wishesResultSet.getString("w_name") != null) {
+                    Wish newWish = new Wish(
+                            wishesResultSet.getLong("w_id"),
+                            wishesResultSet.getString("w_name"),
+                            wishesResultSet.getString("w_desc"),
+                            wishesResultSet.getDouble("w_price"),
+                            wishesResultSet.getString("w_link"),
+                            wishesResultSet.getString("w_pic"),
+                            wishesResultSet.getBoolean("w_res"));
+
+                    wishes.add(newWish);
+                }
             }
             wishlist = new Wishlist(wishlistId, wlName, wlPic, wishes);
 
@@ -83,6 +88,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
         return wishlist;
     }
+
     @Override
     public List<Wishlist> getAllWishlists(String username) {
 
@@ -113,7 +119,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
     }
 
     @Override
-    public boolean editWishlist(Wishlist wishlist){
+    public boolean editWishlist(Wishlist wishlist) {
         boolean isEdited = false;
 
         try (Connection connection = dataSource.getConnection()) {
@@ -143,7 +149,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
             pstmt.setLong(1, wishlistId);
             pstmt.executeUpdate();
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
@@ -155,7 +161,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
             isDeleted = affectedRows > 0;
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
@@ -164,7 +170,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
 
     @Override
-    public boolean checkIdAndUsernameMatches(long id,String username) {
+    public boolean checkIdAndUsernameMatches(long id, String username) {
         String SQL = """
                 SELECT wishlist.*, wish.*
                 FROM wishlist
@@ -172,13 +178,13 @@ public class JdbcWishlistRepository implements WishlistRepository {
                 WHERE wishlist.username = ?
                 AND (wish.wish_id = ? OR wishlist.wishlist_id = ?)
                 """;
-        try(Connection con = dataSource.getConnection()) {
+        try (Connection con = dataSource.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(SQL);
             pstmt.setString(1, username);
             pstmt.setLong(2, id);
             pstmt.setLong(3, id);
             ResultSet rs = pstmt.executeQuery();
-            if(!rs.isBeforeFirst()) {
+            if (!rs.isBeforeFirst()) {
                 return false;
             }
         } catch (SQLException e) {

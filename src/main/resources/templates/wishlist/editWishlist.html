@@ -10,16 +10,16 @@
 
     <p>
         <label for="wishlistName">Name:</label>
-        <input id="wishlistName" type="text" th:field="*{name}">
+        <input id="wishlistName" type="text" th:field="*{name}" required>
     </p>
 
     <p>
         <label for="wishlistPicture">Picture:</label>
-        <input id="wishlistPicture" type="text" th:field="*{picture}">
+        <input id="wishlistPicture" type="text" th:field="*{picture}" required>
     </p>
 
     <button type="submit">edit</button>
-    <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistToEdit.wishlistId})}"><button type="button">cancel</button></a>
+    <a th:href="@{/wishlist}"><button type="button">cancel</button></a>
 </form>
 
 </body>

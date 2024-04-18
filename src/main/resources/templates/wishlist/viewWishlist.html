@@ -24,7 +24,7 @@
     </thead>
     <tbody>
     <tr th:each="wish : ${wishes}">
-        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
+
         <td th:text="${wish.name}">Wish name</td>
         <td th:text="${wish.picture}">Wish name</td> <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
         <td th:text="${wish.description}">Wish description</td>
@@ -32,7 +32,7 @@
         <td th:text="${wish.link}">Wish link</td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>edit</button></a></td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
-
+        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
 
     </tr>
     </tbody>
