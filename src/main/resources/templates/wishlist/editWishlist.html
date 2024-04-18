@@ -9,26 +9,37 @@
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <div style="width: 800px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
+    <div style="width: 600px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
 
 
         <form th:action="@{/wishlist/{wishlistId}/edit(wishlistId=${wishlistId})}" method="post"
               th:object="${wishlistToEdit}">
 
-            <p>
-                <label for="wishlistName">Name:</label>
-                <input id="wishlistName" type="text" th:field="*{name}">
-            </p>
+            <div class="form-group">
+                <label class="form-label" for="wishlistName">Name:</label>
+                <input class="form-control input-dark" id="wishlistName" type="text" th:field="*{name}">
+            </div>
 
-            <p>
-                <label for="wishlistPicture">Picture:</label>
-                <input id="wishlistPicture" type="text" th:field="*{picture}">
-            </p>
+            <div class="form-group">
+                <label class="form-label" for="wishlistPicture">Picture:</label>
+                <input class="form-control input-dark" id="wishlistPicture" type="text" th:field="*{picture}">
+            </div>
+            <div class="form-group mt-2">
+                <div class="d-flex justify-content-between">
+                    <div style="width: 100px;"></div>
+                    <div class="d-flex">
 
-            <button type="submit">edit</button>
-            <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistToEdit.wishlistId})}">
-                <button type="button">cancel</button>
-            </a>
+                        <button class="btn btn-success fw-bold" type="submit">Edit</button>
+                    </div>
+                    <div style="width: 100px;" class="d-flex">
+                        <a class="btn btn-warning fw-bold" th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistToEdit.wishlistId})}">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
         </form>
     </div>
 </div>
