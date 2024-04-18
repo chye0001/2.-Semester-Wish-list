@@ -89,6 +89,13 @@ public class WishlistController {
         return "redirect:/wishlist";
     }
 
+    @GetMapping("/{wishlistId}/deleteWishes")
+    public String deleteAllWishesOnWishlistId(@PathVariable long wishlistId) {
+        wishlistService.deleteAllWishes(wishlistId);
+
+        return "redirect:/wishlist";
+    }
+
     @GetMapping("/{wishlistId}/edit")
     public String createEditWishlistForm(Model model, @PathVariable long wishlistId) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);

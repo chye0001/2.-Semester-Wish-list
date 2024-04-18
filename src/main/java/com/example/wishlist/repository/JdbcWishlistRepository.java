@@ -162,6 +162,25 @@ public class JdbcWishlistRepository implements WishlistRepository {
         return isDeleted;
     }
 
+    @Override
+    public boolean deleteAllWishes(long wishlistId) {
+        boolean isDeleted = false;
+
+        try (Connection connection = dataSource.getConnection()) {
+            String deleteWishlist = "DELETE FROM wish WHERE wishlist_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(deleteWishlist);
+            pstmt.setLong(1, wishlistId);
+            int affectedRows = pstmt.executeUpdate();
+
+            isDeleted = affectedRows > 0;
+
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isDeleted;
+    }
+
 
     @Override
     public boolean checkIdAndUsernameMatches(long id,String username) {
