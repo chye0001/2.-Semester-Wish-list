@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/user/settings").hasRole("USER")
+                        .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/wishlist/*/shared").permitAll()
                         .requestMatchers("/wishlist/**").hasRole("USER")
                         .anyRequest().permitAll()
