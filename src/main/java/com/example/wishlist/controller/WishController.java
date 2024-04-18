@@ -55,7 +55,7 @@ public class WishController {
 
     @PostMapping("/deleteselected")
     public String deleteWishFromWishlist(@ModelAttribute WishSelectedDto selectedWishes, @PathVariable long wishlistId) {
-//        System.out.println("##### IDS: " + selectedWishes);
+        System.out.println("##### IDS: " + selectedWishes);
 //        System.out.println(selectedWishes.selectedWishIds().getClass());
         if (selectedWishes.selectedWishIds() != null) wishService.deleteSelecetedWishes(selectedWishes.selectedWishIds());
         return "redirect:/wishlist/"+wishlistId;
