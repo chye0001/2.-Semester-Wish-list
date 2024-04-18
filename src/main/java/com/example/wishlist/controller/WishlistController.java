@@ -23,6 +23,7 @@ public class WishlistController {
 
     @GetMapping("")
     public String wishlistMainPage(Model model, Authentication authentication) {
+        model.addAttribute("activeLink","wishlist");
         String username = authentication.getName();
         List<Wishlist> wishlistList = wishlistService.getAllWishlists(username);
         model.addAttribute("wishlists", wishlistList);
@@ -31,6 +32,7 @@ public class WishlistController {
 
     @GetMapping("/create")
     public String createWishlist(Model model) {
+        model.addAttribute("activeLink","wishlist");
         WishlistFormDto emptyWishlist = new WishlistFormDto("wishlistName", "pictureLink");
         model.addAttribute("wishlist", emptyWishlist);
 
@@ -49,6 +51,7 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}")
     public String viewWishlistById(@PathVariable long wishlistId, Model model) {
+        model.addAttribute("activeLink","wishlist");
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         WishSelectedDto selectedWishes = new WishSelectedDto(List.of());
         model.addAttribute("wishes", wishlist.getWishes());
@@ -82,6 +85,7 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}/deleteWishes")
     public String deleteAllWishesOnWishlistId(@PathVariable long wishlistId) {
+
         wishlistService.deleteAllWishes(wishlistId);
 
         return "redirect:/wishlist";
@@ -89,6 +93,7 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}/edit")
     public String createEditWishlistForm(Model model, @PathVariable long wishlistId) {
+        model.addAttribute("activeLink","wishlist");
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         model.addAttribute("wishlistToEdit", wishlist);
 
