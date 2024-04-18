@@ -66,7 +66,8 @@ public class JdbcWishRepository implements WishRepository {
                         rs.getString("description"),
                         rs.getDouble("price"),
                         rs.getString("link"),
-                        rs.getString("picture"));
+                        rs.getString("picture"),
+                        rs.getBoolean("reserved"));
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -95,23 +96,29 @@ public class JdbcWishRepository implements WishRepository {
     }
 
     @Override
-    public boolean deleteSelectedWishes(List<Integer> wishIdList) {
+    public boolean deleteSelectedWishes(List<Long> wishIdList) {
         boolean madeChanges = false;
         if (wishIdList.isEmpty()) {
             return madeChanges;
         }
 
-        String idsString = wishIdList.get(0).toString();
-        for (int i = 1; i < wishIdList.size(); i++) {
-            idsString += ("," + wishIdList.get(i).toString());
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < wishIdList.size(); i++) {
+            placeholders.append("?");
+            if (i < wishIdList.size() - 1) { //sæt komma hvis det IKKE er sidste tal i rækken
+                placeholders.append(",");
+            }
         }
+
         try (Connection connection = dataSource.getConnection()) {
-            String deleteWish = "DELETE FROM wish WHERE wish_id IN (?)";
+            String deleteWish = "DELETE FROM wish WHERE wish_id IN (" + placeholders + ")";
             PreparedStatement pstmt = connection.prepareStatement(deleteWish);
-            pstmt.setString(1, idsString);
+
+            for (int i = 0; i < wishIdList.size(); i++) {
+                pstmt.setLong(i + 1, wishIdList.get(i));
+            }
 
             madeChanges = pstmt.executeUpdate() > 0;
-
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -145,4 +152,35 @@ public class JdbcWishRepository implements WishRepository {
         return isEdited;
     }
 
+    @Override
+    public void reserveWish(long wishId) {
+
+        try (Connection connection = dataSource.getConnection()) {
+            boolean reserved = false;
+
+            String getWishReserveStatus = "SELECT wish.reserved FROM wish WHERE wish_id = ?";
+            PreparedStatement pstmtSelect = connection.prepareStatement(getWishReserveStatus);
+            pstmtSelect.setLong(1, wishId);
+            ResultSet rs = pstmtSelect.executeQuery();
+
+            if (rs.next()) {
+                reserved = rs.getBoolean("reserved");
+            }
+
+            updateReserveStatusOnWish(connection, wishId, reserved);
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    private int updateReserveStatusOnWish(Connection connection, long wishId, boolean reserved) throws SQLException {
+        String reserveWish = "UPDATE wish SET reserved = ? WHERE wish_id = ?";
+        PreparedStatement pstmtUpdate = connection.prepareStatement(reserveWish);
+
+        pstmtUpdate.setBoolean(1, !reserved);
+        pstmtUpdate.setLong(2, wishId);
+
+        return pstmtUpdate.executeUpdate();
+    }
 }

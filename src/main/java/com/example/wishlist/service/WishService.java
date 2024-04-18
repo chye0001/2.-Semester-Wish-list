@@ -35,7 +35,7 @@ public class WishService {
         return wishRepository.editWish(wish);
     }
 
-    public boolean deleteSelecetedWishes(List<Integer> ids) {
+    public boolean deleteSelecetedWishes(List<Long> ids) {
         return wishRepository.deleteSelectedWishes(ids);
     }
 
@@ -44,5 +44,7 @@ public class WishService {
         return wishRepository.getWish(wishId);
     }
 
-
+    public void reserveWish(long wishId) {
+        wishRepository.reserveWish(wishId);
+    }
 }

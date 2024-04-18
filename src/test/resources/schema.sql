@@ -19,6 +19,7 @@ CREATE TABLE wishlist(
                          name VARCHAR(250) NOT NULL,
                          picture VARCHAR(250),
                          username VARCHAR(50),
+                         isPublic BOOLEAN DEFAULT FALSE,
                          PRIMARY KEY (wishlist_id),
                          FOREIGN KEY (username) REFERENCES users(username)
 );

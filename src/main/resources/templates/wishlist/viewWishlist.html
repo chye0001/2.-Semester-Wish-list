@@ -6,10 +6,21 @@
     <title th:text="${wishlistName}"></title>
 </head>
 
+<form th:action="@{/wishlist/{wishlistId}/share (wishlistId=${wishlistId})}" method="post" th:object="${wishlist}">
+    <button type="submit">Share wishlist</button>
+</form>
+<label for="wishlistLink">WishlistLink</label>
+<input id="wishlistLink" th:text="wishlistLink">
 
 <body>
+
+<a style="float: right" href="/user/settings">
+    <button type="button">Account</button>
+</a>
+
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
+<form th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }" method="post" th:object="${selectedWishes}">
 <table>
     <thead>
     <tr>
@@ -23,7 +34,7 @@
     </thead>
     <tbody>
     <tr th:each="wish : ${wishes}">
-
+        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
         <td th:text="${wish.name}">Wish name</td>
         <td th:text="${wish.picture}">Wish name</td> <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
         <td th:text="${wish.description}">Wish description</td>
@@ -31,15 +42,21 @@
         <td th:text="${wish.link}">Wish link</td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>edit</button></a></td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
-<!--        TODO checkbox for multiple delete-->
+
 
     </tr>
     </tbody>
 </table>
-
-<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
+    <button type="submit">Delete Selected</button>
+</form>
 <br>
-<a th:href="@{/wishlist}"> <button>return</button></a>
+<a th:href="@{/wishlist/{wishlistId}/deleteWishes (wishlistId=${wishlistId})}"> <button>Delete All</button></a>
+<br>
+<br>
+<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>Add</button></a>
+<br>
+<br>
+<a th:href="@{/wishlist}"> <button>Return</button></a>
 
 
 </body>

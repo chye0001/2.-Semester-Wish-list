@@ -43,6 +43,17 @@ public class Wish {
         this.isReserved = false;
     }
 
+    public Wish(long wishlistId, long wishId, String name, String description, double price, String link, String picture, boolean isReserved) {
+        this.wishlistId = wishlistId;
+        this.wishId = wishId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.link = link;
+        this.picture = picture;
+        this.isReserved = isReserved;
+    }
+
     public long getWishlistId() {
         return wishlistId;
     }
