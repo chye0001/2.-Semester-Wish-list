@@ -23,12 +23,14 @@ public class WishController {
 
     @GetMapping("")
     public String wish(Model model, @PathVariable int wishlistId) {
+        model.addAttribute("activeLink","wishlist");
         System.out.println("id: " + wishlistId);
         return "This is a tesT: " + wishlistId;
     }
 
     @GetMapping("/add")
     public String showPageForAddingWish(Model model, @PathVariable long wishlistId, Authentication authentication) {
+        model.addAttribute("activeLink","wishlist");
         Wish newWish = new Wish();
         String username = authentication.getName();
         String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
@@ -63,6 +65,7 @@ public class WishController {
 
     @GetMapping("/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
+        model.addAttribute("activeLink","wishlist");
         Wish wish = wishService.getWishFromWishId(wishId);
         model.addAttribute("wishToEdit", wish);
 
