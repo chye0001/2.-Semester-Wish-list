@@ -4,6 +4,14 @@
     <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
     <title>Login</title>
+    <script>
+        function myFunction() {
+            var copyText = document.getElementById("myInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -57,21 +65,43 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-between mt-3">
-            <button class="d-inline btn btn-danger fw-bold" type="submit">Delete Selected</button>
-            <!--            <div class="d-inline text-center justify-content-center mt-4">-->
-            <a class="d-inline btn btn-success fw-bold text-center"
-               th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}">
-                Add
-            </a>
-            <!--            </div>-->
-            <!--            <div class="d-inline text-end justify-content-end mt-4">-->
-            <a class="d-inline btn btn-dark darker text-end" th:href="@{/wishlist}">
-                return
-            </a>
-                </div>
+                <button class="d-inline btn btn-danger fw-bold" type="submit">Delete Selected</button>
+                <!--            <div class="d-inline text-center justify-content-center mt-4">-->
+                <a class="d-inline btn btn-success fw-bold text-center"
+                   th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}">
+                    Add
+                </a>
+                <!--            </div>-->
+                <!--            <div class="d-inline text-end justify-content-end mt-4">-->
+                <a class="d-inline btn btn-dark darker text-end" th:href="@{/wishlist}">
+                    return
+                </a>
+            </div>
             <!--            </div>-->
         </form>
 
+    </div>
+    <div class="text-center mt-2">
+        <a th:if="${!wishlist.isPublic()}" class="btn btn-lg btn-success fw-bold"
+           th:href="@{/wishlist/{wishlistId}/share (wishlistId=${wishlist.wishlistId})}">
+            Make Public
+        </a>
+        <a th:if="${wishlist.isPublic()}" class="btn btn-lg btn-warning fw-bold"
+           th:href="@{/wishlist/{wishlistId}/hide (wishlistId=${wishlist.wishlistId})}">
+            Make Private
+        </a>
+    </div>
+    <div class="d-flex justify-content-center align-middle" th:if="${wishlist.isPublic()}">
+        <div style="width: 400px;" class="d-flex mt-2 align-middle">
+            <input id="myInput" class="form-control input-dark my-border" type="text" th:value="${wishlistLink}"
+                   readonly>
+        </div>
+        <div class="d-flex ms-2 mt-auto">
+                <button onclick="myFunction()" class="btn btn-dark btn-md darker align-middle">
+                    Copy
+                </button>
+
+        </div>
     </div>
 </div>
 </body>
