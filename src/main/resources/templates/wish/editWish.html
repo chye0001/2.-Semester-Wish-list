@@ -10,7 +10,7 @@
 
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
-    <div class="bg-dark shadow-lg rounded p-3 mt-3">
+    <div style="width: 600px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
         <form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishToEdit.wishlistId}, wishId=${wishId})}"
               method="post" th:object="${wishToEdit}">
 
