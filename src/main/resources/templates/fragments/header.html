@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -18,9 +19,17 @@
         </nav>
 
 
-        <div class="my-margin" style="">
+        <div class="my-margin" sec:authorize="isAnonymous()">
             <a href="/user/login" class="btn btn-outline-light me-2">Login</a>
             <a href="/user/register" class="btn btn-warning">Sign-up</a>
+        </div>
+        <div class="d-inline my-margin" sec:authorize="isAuthenticated()">
+            <form class="d-inline" th:action="@{/user/settings}" method="get">
+                <button sec:authentication="principal.username" class="btn btn-dark darker fw-bold"></button>
+            </form>
+            <form class="d-inline" th:action="@{/user/logout}" method="post">
+                <button type="submit" class="btn btn-danger fw-bold">Logout</button>
+            </form>
         </div>
     </header>
 </div>
