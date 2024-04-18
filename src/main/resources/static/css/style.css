@@ -53,6 +53,11 @@ body {
   opacity: 1 !important; /* Firefox */
 }
 
+input::placeholder {
+  color: #999999 !important;
+  opacity: 1 !important; /* Firefox */
+}
+
 /*.search > input::-ms-input-placeholder,*/
 /*input::-ms-input-placeholder.form-control{ !* Edge 12 -18 *!*/
 /*  color: #999999 !important;*/
