@@ -26,7 +26,7 @@ public class ShareController {
 
     @GetMapping("")
     public String viewSharedWishlist(Model model, @PathVariable long wishlistId) {
-        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        Wishlist wishlist = wishlistService.getWishlistByIdUnauthorized(wishlistId);
         boolean isPublic = wishlist.isPublic();
 
         if (!isPublic) {
@@ -45,7 +45,7 @@ public class ShareController {
     @PostMapping("/wish/{wishId}/reserve")
     public String reserveWish(Model model, @PathVariable long wishlistId, @PathVariable long wishId) {
         wishService.reserveWish(wishId);
-        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        Wishlist wishlist = wishlistService.getWishlistByIdUnauthorized(wishlistId);
 
         String wishlistName = wishlist.getName();
         List<Wish> wishes = wishlist.getWishes();
