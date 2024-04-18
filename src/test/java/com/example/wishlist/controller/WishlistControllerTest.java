@@ -150,4 +150,14 @@ class WishlistControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("/error/403"));
     }
+
+    @Test
+    @WithMockUser(username = "user1")
+    void reserveWish() throws Exception {
+        mockMvc.perform(post("/wishlist/{wishlistId}/shared/wish/{wishId}/reserve)", 1, 1)
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/wishlist/1/share/"));
+
+    }
 }
