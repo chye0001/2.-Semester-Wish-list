@@ -31,7 +31,7 @@
         <td th:text="${wish.link}">Wish link</td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>edit</button></a></td>
-<!--        TODO checkbox for multiple delete-->
+
 
     </tr>
     </tbody>

@@ -1,7 +1,6 @@
 package com.example.wishlist.controller;
 
 import com.example.wishlist.dto.WishlistFormDto;
-import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
 import org.springframework.security.core.Authentication;
