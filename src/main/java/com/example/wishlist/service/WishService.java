@@ -44,5 +44,7 @@ public class WishService {
         return wishRepository.getWish(wishId);
     }
 
-
+    public void reserveWish(long wishId) {
+        wishRepository.reserveWish(wishId);
+    }
 }

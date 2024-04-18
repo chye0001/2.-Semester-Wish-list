@@ -2,7 +2,6 @@ package com.example.wishlist.service;
 
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.repository.WishlistRepository;
-import com.example.wishlist.repository.JdbcWishlistRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,10 @@ public class WishlistService {
 
     @PreAuthorize("@authz.hasPermission(#id,authentication)")
     public Wishlist getWishlistById(long id) {
+        return wishlistRepository.getWishlistById(id);
+    }
+
+    public Wishlist getWishlistByIdUnauthorized(long id) {
         return wishlistRepository.getWishlistById(id);
     }
 
@@ -52,5 +55,15 @@ public class WishlistService {
     @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public void deleteWishlist(long wishlistId) {
         wishlistRepository.deleteWishlist(wishlistId);
+    }
+
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
+    public void setWishlistToPublic(long wishlistId) {
+        wishlistRepository.setWishlistToPublic(wishlistId);
+    }
+
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
+    public void deleteAllWishes(long wishlistId) {
+        wishlistRepository.deleteAllWishes(wishlistId);
     }
 }

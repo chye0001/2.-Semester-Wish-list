@@ -6,8 +6,18 @@
     <title th:text="${wishlistName}"></title>
 </head>
 
+<form th:action="@{/wishlist/{wishlistId}/share (wishlistId=${wishlistId})}" method="post" th:object="${wishlist}">
+    <button type="submit">Share wishlist</button>
+</form>
+<label for="wishlistLink">WishlistLink</label>
+<input id="wishlistLink" th:text="wishlistLink">
 
 <body>
+
+<a style="float: right" href="/user/settings">
+    <button type="button">Account</button>
+</a>
+
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
 <form th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }" method="post" th:object="${selectedWishes}">
@@ -37,13 +47,16 @@
     </tr>
     </tbody>
 </table>
-
     <button type="submit">Delete Selected</button>
 </form>
-
-<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
 <br>
-<a th:href="@{/wishlist}"> <button>return</button></a>
+<a th:href="@{/wishlist/{wishlistId}/deleteWishes (wishlistId=${wishlistId})}"> <button>Delete All</button></a>
+<br>
+<br>
+<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>Add</button></a>
+<br>
+<br>
+<a th:href="@{/wishlist}"> <button>Return</button></a>
 
 
 </body>
