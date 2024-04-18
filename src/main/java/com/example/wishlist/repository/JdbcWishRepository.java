@@ -149,7 +149,7 @@ public class JdbcWishRepository implements WishRepository {
     @Override
     public void reserveWish(long wishId) {
 
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             boolean reserved = false;
 
             String getWishReserveStatus = "SELECT wish.reserved FROM wish WHERE wish_id = ?";
@@ -161,9 +161,9 @@ public class JdbcWishRepository implements WishRepository {
                 reserved = rs.getBoolean("reserved");
             }
 
-          updateReserveStatusOnWish(connection, wishId, reserved);
+            updateReserveStatusOnWish(connection, wishId, reserved);
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
