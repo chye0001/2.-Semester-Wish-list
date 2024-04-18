@@ -96,23 +96,29 @@ public class JdbcWishRepository implements WishRepository {
     }
 
     @Override
-    public boolean deleteSelectedWishes(List<Integer> wishIdList) {
+    public boolean deleteSelectedWishes(List<Long> wishIdList) {
         boolean madeChanges = false;
         if (wishIdList.isEmpty()) {
             return madeChanges;
         }
 
-        String idsString = wishIdList.get(0).toString();
-        for (int i = 1; i < wishIdList.size(); i++) {
-            idsString += ("," + wishIdList.get(i).toString());
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < wishIdList.size(); i++) {
+            placeholders.append("?");
+            if (i < wishIdList.size() - 1) { //sæt komma hvis det IKKE er sidste tal i rækken
+                placeholders.append(",");
+            }
         }
+
         try (Connection connection = dataSource.getConnection()) {
-            String deleteWish = "DELETE FROM wish WHERE wish_id IN (?)";
+            String deleteWish = "DELETE FROM wish WHERE wish_id IN (" + placeholders + ")";
             PreparedStatement pstmt = connection.prepareStatement(deleteWish);
-            pstmt.setString(1, idsString);
+
+            for (int i = 0; i < wishIdList.size(); i++) {
+                pstmt.setLong(i + 1, wishIdList.get(i));
+            }
 
             madeChanges = pstmt.executeUpdate() > 0;
-
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

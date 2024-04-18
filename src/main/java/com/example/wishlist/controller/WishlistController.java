@@ -1,7 +1,7 @@
 package com.example.wishlist.controller;
 
+import com.example.wishlist.dto.WishSelectedDto;
 import com.example.wishlist.dto.WishlistFormDto;
-import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
 import org.springframework.security.core.Authentication;
@@ -50,9 +50,11 @@ public class WishlistController {
     @GetMapping("/{wishlistId}")
     public String viewWishlistById(@PathVariable long wishlistId, Model model) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
-
+        WishSelectedDto selectedWishes = new WishSelectedDto(List.of());
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
+        model.addAttribute("selectedWishes", selectedWishes);
+        model.addAttribute("wishlistId", wishlist.getWishlistId());
         model.addAttribute("wishlist", wishlist);
 
         boolean isPublic = wishlist.isPublic();
@@ -72,8 +74,30 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}/delete")
-    public String deleteWishlistOnId(@PathVariable int wishlistId) {
+    public String deleteWishlistOnId(@PathVariable long wishlistId) {
         wishlistService.deleteWishlist(wishlistId);
+
+        return "redirect:/wishlist";
+    }
+
+    @GetMapping("/{wishlistId}/deleteWishes")
+    public String deleteAllWishesOnWishlistId(@PathVariable long wishlistId) {
+        wishlistService.deleteAllWishes(wishlistId);
+
+        return "redirect:/wishlist";
+    }
+
+    @GetMapping("/{wishlistId}/edit")
+    public String createEditWishlistForm(Model model, @PathVariable long wishlistId) {
+        Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
+        model.addAttribute("wishlistToEdit", wishlist);
+
+        return "wishlist/editWishlist";
+    }
+
+    @PostMapping("/{wishlistId}/edit")
+    public String editWish(@ModelAttribute Wishlist editedWishlist, @PathVariable long wishlistId) {
+        wishlistService.editWishlist(editedWishlist);
 
         return "redirect:/wishlist";
     }

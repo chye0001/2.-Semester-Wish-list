@@ -47,13 +47,23 @@ public class WishlistService {
         return wishlistName;
     }
 
+    @PreAuthorize("@authz.hasPermission(#wishlist.getWishlistId(),authentication)")
+    public void editWishlist(Wishlist wishlist) {
+        wishlistRepository.editWishlist(wishlist);
+    }
+
     @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
-    public void deleteWishlist(int wishlistId) {
+    public void deleteWishlist(long wishlistId) {
         wishlistRepository.deleteWishlist(wishlistId);
     }
 
     @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public void setWishlistToPublic(long wishlistId) {
         wishlistRepository.setWishlistToPublic(wishlistId);
+    }
+
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
+    public void deleteAllWishes(long wishlistId) {
+        wishlistRepository.deleteAllWishes(wishlistId);
     }
 }

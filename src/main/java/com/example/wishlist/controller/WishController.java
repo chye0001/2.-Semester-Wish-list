@@ -1,5 +1,6 @@
 package com.example.wishlist.controller;
 
+import com.example.wishlist.dto.WishSelectedDto;
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.service.WishService;
 import com.example.wishlist.service.WishlistService;
@@ -51,6 +52,14 @@ public class WishController {
 
         return "redirect:/wishlist";
     }
+
+    @PostMapping("/deleteselected")
+    public String deleteWishFromWishlist(@ModelAttribute WishSelectedDto selectedWishes, @PathVariable long wishlistId) {
+//        System.out.println("##### IDS: " + selectedWishes);
+//        System.out.println(selectedWishes.selectedWishIds().getClass());
+        if (selectedWishes.selectedWishIds() != null) wishService.deleteSelecetedWishes(selectedWishes.selectedWishIds());
+        return "redirect:/wishlist/"+wishlistId;
+        }
 
     @GetMapping("/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
