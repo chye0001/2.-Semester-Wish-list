@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/wishlist/{wishlistId}/share")
+@RequestMapping("/wishlist/{wishlistId}/shared")
 public class ShareController {
 
     private final WishlistService wishlistService;
