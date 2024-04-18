@@ -1,57 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
     <title>Login</title>
+    <script>
+        function myFunction2() {
+            var copyText = document.getElementById("myCopy");
+            console.log("hello")
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
-    <div class="bg-dark shadow-lg rounded p-3 mt-5">
-        <table class="table table-dark"
-               data-toggle="table"
-               data-search="true"
-               data-search-selector="#tableSearch">
-            <thead>
-            <tr class="">
-                <th data-sortable="true" scope="col">Wishlist</th>
-                <th scope="col">Picture</th>
-                <th scope="col"><input type="search" id="tableSearch" class="form-control input-dark my-border"
-                                       placeholder="Search.."></th>
-                <!--                <th scope="col"></th>-->
-            </tr>
-            </thead>
+    <div class="bg-dark shadow-lg rounded p-3 mt-3">
+    <table class="table table-dark"
+           data-toggle="table"
+           data-search="true"
+           data-search-selector="#tableSearch">
+        <thead>
+        <tr class="">
+            <th data-sortable="true" scope="col">Wishlist</th>
+            <th scope="col">Picture</th>
+            <th scope="col"><input type="search" id="tableSearch" class="form-control input-dark my-border"
+                                   placeholder="Search.."></th>
+            <!--                <th scope="col"></th>-->
+        </tr>
+        </thead>
 
-            <tbody>
-            <tr th:each="wishlist : ${wishlists}">
+        <tbody>
+        <tr th:each="wishlist : ${wishlists}">
 
-                <td class="align-middle" th:text="${wishlist.name}"></td>
-                <td class="align-middle" th:text="${wishlist.picture}"></td>
-                <!--                <td class=align-middle th:text="${wishlist.wishlistId}"></td>-->
-                <td class="align-middle">
-                    <a class="btn btn-dark darker"
-                       th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}">
-                        View
-                    </a>
-<!--                    th:href="@{/wishlist/{wishlistId}/edit (wishlistId=${wishlist.wishlistId})}"-->
-                    <a th:href="@{/wishlist/{wishlistId}/edit (wishlistId=${wishlist.wishlistId})}" class="btn btn-warning white" href="#" >
-                        Edit
-                    </a>
-                    <a class="btn btn-danger white"
-                       th:href="@{/wishlist/{wishlistId}/delete (wishlistId=${wishlist.wishlistId})}">
-                        Delete
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="text-center mt-2">
-        <a class="btn btn-lg fw-bold btn-success" href="wishlist/create">
-            Create Wishlist
-        </a>
-    </div>
+            <td class="align-middle" th:text="${wishlist.name}"></td>
+            <td class="align-middle" th:text="${wishlist.picture}"></td>
+            <!--                <td class=align-middle th:text="${wishlist.wishlistId}"></td>-->
+            <td class="align-middle">
+                <a class="btn btn-dark darker fw-bold"
+                   th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlist.wishlistId})}">
+                    View
+                </a>
+                <a th:if="${!wishlist.isPublic()}" class="btn btn-success fw-bold"
+                   th:href="@{/wishlist/{wishlistId}/share (wishlistId=${wishlist.wishlistId})}">
+                    Make Public
+                </a>
+                <a th:if="${wishlist.isPublic()}" class="btn btn-warning fw-bold"
+                   th:href="@{/wishlist/{wishlistId}/hide (wishlistId=${wishlist.wishlistId})}">
+                    Make Private
+                </a>
+                <div class="d-inline" th:if="${wishlist.isPublic()}">
+                    <button onclick="myFunction2()" class="btn btn-dark darker align-middle" id="myCopy"
+                    th:value="${baseUrl}+'/wishlist/'+${wishlist.wishlistId}+'/shared'">
+                        Copy Share Link
+                    </button>
+                </div>
+                <!--                    th:href="@{/wishlist/{wishlistId}/edit (wishlistId=${wishlist.wishlistId})}"-->
+                <a th:href="@{/wishlist/{wishlistId}/edit (wishlistId=${wishlist.wishlistId})}"
+                   class="btn btn-warning fw-bold" href="#">
+                    Edit
+                </a>
+                <a class="btn btn-danger fw-bold"
+                   th:href="@{/wishlist/{wishlistId}/delete (wishlistId=${wishlist.wishlistId})}">
+                    Delete
+                </a>
+
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text-center mt-2">
+    <a class="btn btn-lg fw-bold btn-success" href="wishlist/create">
+        Create Wishlist
+    </a>
+</div>
 </div>
 </body>
 </html>
