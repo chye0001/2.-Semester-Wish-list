@@ -66,4 +66,9 @@ public class WishlistService {
     public void deleteAllWishes(long wishlistId) {
         wishlistRepository.deleteAllWishes(wishlistId);
     }
+
+
+    public void deleteAllUserWishlists(String usermane) {
+        wishlistRepository.deleteAllUserWishlist(usermane);
+    }
 }

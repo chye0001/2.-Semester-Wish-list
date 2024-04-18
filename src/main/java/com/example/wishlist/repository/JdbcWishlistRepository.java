@@ -65,9 +65,15 @@ public class JdbcWishlistRepository implements WishlistRepository {
             boolean wlPublic = false;
 
             while (wishesResultSet.next()) {
-                if (wlName == null) { wlName = wishesResultSet.getString("wl_name"); }
-                if (wlPic == null) { wlPic = wishesResultSet.getString("wl_pic"); }
-                if (!wlPublic) { wlPublic = wishesResultSet.getBoolean("wl_public"); }
+                if (wlName == null) {
+                    wlName = wishesResultSet.getString("wl_name");
+                }
+                if (wlPic == null) {
+                    wlPic = wishesResultSet.getString("wl_pic");
+                }
+                if (!wlPublic) {
+                    wlPublic = wishesResultSet.getBoolean("wl_public");
+                }
 
                 if (wishesResultSet.getString("w_name") != null) {
                     Wish newWish = new Wish(
@@ -164,7 +170,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
             isDeleted = affectedRows > 0;
 
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
@@ -265,7 +271,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
     @Override
     public boolean setWishlistToPublic(long wishlistId) {
         boolean isUpdated = false;
-        try (Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             String setWishlistToPublic = "UPDATE wishlist SET isPublic = 1 WHERE wishlist_id = ?;";
             PreparedStatement pstmt = connection.prepareStatement(setWishlistToPublic);
             pstmt.setLong(1, wishlistId);
@@ -273,11 +279,63 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
             System.out.println("affected rows: " + affectedRows);
             isUpdated = affectedRows > 0;
-        }catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
         return isUpdated;
     }
 
+    @Override
+    public boolean deleteAllUserWishlist(String username) {
+        int affectedRows = 0;
+        boolean isDeleted = false;
+        List<Long> wishlistIdsToDelete = getWishlistIdsByUsername(username);
+
+
+        try (Connection connection = dataSource.getConnection()) { //delete wishlist wishes
+            String deleteWishlistWishes = "DELETE FROM wish WHERE wishlist_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(deleteWishlistWishes);
+            for (Long wishlistId : wishlistIdsToDelete) {
+                pstmt.setLong(1, wishlistId);
+                affectedRows += pstmt.executeUpdate();
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        try (Connection connection = dataSource.getConnection()) { // delete users wishlists
+            String deleteUserWishlist = "DELETE FROM wishlist WHERE username = ?";
+            PreparedStatement pstmt = connection.prepareStatement(deleteUserWishlist);
+            pstmt.setString(1, username);
+            affectedRows += pstmt.executeUpdate();
+
+            isDeleted = affectedRows > 0;
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isDeleted;
+    }
+
+    private List<Long> getWishlistIdsByUsername(String username) {
+        List<Long> wishlistIds = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            String getUserWishlists = "SELECT wishlist_id FROM wishlist WHERE username = ?";
+            PreparedStatement pstmt = connection.prepareStatement(getUserWishlists);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                wishlistIds.add(rs.getLong("wishlist_id"));
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return wishlistIds;
+    }
 }

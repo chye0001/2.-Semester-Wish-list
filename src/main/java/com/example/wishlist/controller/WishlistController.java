@@ -84,7 +84,7 @@ public class WishlistController {
     public String deleteAllWishesOnWishlistId(@PathVariable long wishlistId) {
         wishlistService.deleteAllWishes(wishlistId);
 
-        return "redirect:/wishlist";
+        return "redirect:/wishlist/" + wishlistId;
     }
 
     @GetMapping("/{wishlistId}/edit")
