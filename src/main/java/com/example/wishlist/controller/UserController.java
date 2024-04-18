@@ -43,15 +43,15 @@ public class UserController {
     }
 
     @GetMapping("/editPassword")
-    public String editUserPassword(Authentication authentication, Model model) {
-        model.addAttribute("user", new UserDto("Username","Old Password"));
-        model.addAttribute("userEdited", new UserDto("Username","New Password"));
+    public String editUserPassword(Model model) {
+        model.addAttribute("oldPassword","Old Password");
+        model.addAttribute("newPassword", "New Password");
         return "user/editPassword";
     }
 
     @PostMapping("/editPassword")
-    public String editUserPassword(UserDto user, UserDto userEdited) {
-        userService.editUserPassword(user.password(),userEdited.password());
+    public String editUserPassword(String oldPassword, String newPassword) {
+        userService.editUserPassword(oldPassword,newPassword);
         return "redirect:/user/settings";
     }
 }
