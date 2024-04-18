@@ -12,10 +12,11 @@ public class Wishlist {
 
     public Wishlist() {}
 
-    public Wishlist(long wishlistId, String name, String picture, List<Wish> wishes) {
+    public Wishlist(long wishlistId, String name, String picture, boolean isPublic, List<Wish> wishes) {
         this.wishlistId = wishlistId;
         this.name = name;
         this.picture = picture;
+        this.isPublic = isPublic;
         this.wishes = wishes;
     }
 
