@@ -133,7 +133,7 @@ class WishlistControllerTest {
 
     //ShareController
     @Test
-//    @WithMockUser(username = "user1")
+    @WithMockUser(username = "user1")
     void viewSharedWishlist() throws Exception {
         when(wishlistService.getWishlistByIdUnauthorized(1))
                 .thenReturn(new Wishlist(1, "testName", "testPicture", true, new ArrayList<>()));
@@ -143,7 +143,7 @@ class WishlistControllerTest {
     }
 
     @Test
-//    @WithMockUser(username = "user1")
+    @WithMockUser(username = "user1")
     void viewWishlistThatHaveNotBeenShared() throws Exception {
         when(wishlistService.getWishlistByIdUnauthorized(1))
                 .thenReturn(new Wishlist(1, "testName", "testPicture", false, new ArrayList<>()));
@@ -153,7 +153,7 @@ class WishlistControllerTest {
     }
 
     @Test
-//    @WithMockUser(username = "user1")
+    @WithMockUser(username = "user1")
     void reserveWish() throws Exception {
         List<Wish> wishes = new ArrayList<>(List.of( new Wish(1, 1, "testName", "testDescription", 10.0, "testLink", "testPicture", false)));
        

@@ -58,6 +58,8 @@ public class JdbcWishRepositoryTest {
         jdbcWishRepository.reserveWish(1); // set reserve to false
         System.out.println(jdbcWishRepository.getWish(1).isReserved());
 
+        jdbcWishRepository.reserveWish(1); // set reserve to false
+
         Wish wish = jdbcWishRepository.getWish(1);
         boolean actualResult = wish.isReserved();
 
