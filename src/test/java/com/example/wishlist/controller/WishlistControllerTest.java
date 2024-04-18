@@ -86,7 +86,7 @@ class WishlistControllerTest {
     @WithMockUser(username = "user1")
     void viewWishlistById() throws Exception {
         when(wishlistService.getWishlistById(1))
-                .thenReturn(new Wishlist(1, "testName", "testPicture", new ArrayList<>()));
+                .thenReturn(new Wishlist(1, "testName", "testPicture", false, new ArrayList<>()));
         mockMvc.perform(get("/wishlist/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wishlist/viewWishlist"));
@@ -132,13 +132,22 @@ class WishlistControllerTest {
 
     //ShareController
     @Test
+    @WithMockUser(username = "user1")
     void viewSharedWishlist() throws Exception {
         when(wishlistService.getWishlistById(1))
-                .thenReturn(new Wishlist(1, "testName", "testPicture", new ArrayList<>()));
-        mockMvc.perform(get("/wishlist/{wishlistId}/share", 1))
+                .thenReturn(new Wishlist(1, "testName", "testPicture", true, new ArrayList<>()));
+        mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/wishlist/viewSharedWishlist"));
     }
 
-
+    @Test
+    @WithMockUser(username = "user1")
+    void viewWishlistThatHaveNotBeenShared() throws Exception {
+        when(wishlistService.getWishlistById(1))
+                .thenReturn(new Wishlist(1, "testName", "testPicture", false, new ArrayList<>()));
+        mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/error/403"));
+    }
 }
