@@ -9,46 +9,59 @@
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <h2 th:text="${wishlistName}"></h2>
+    <div style="width: 800px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
+        <h2 th:text="${wishlistName}"></h2>
 
-    <form th:action="@{/wishlist/{wishlistId}/wish/add(wishlistId = ${wishlistId})}" method="post"
-          th:object="${addWish}">
+        <form th:action="@{/wishlist/{wishlistId}/wish/add(wishlistId = ${wishlistId})}" method="post"
+              th:object="${addWish}">
 
-        <p>
-            <label for="wishName">Name: </label>
-            <input id="wishName" type="text" name="wishName" th:field="*{name}" required>
-        </p>
+            <div class="form-group">
+                <label class="form-label" for="wishName">Name: </label>
+                <input class="form-control input-dark darker my-border" id="wishName" type="text" name="wishName"
+                       th:field="*{name}" required>
+            </div>
 
-        <p>
-            <label for="wishDescription">Description: </label>
-            <input id="wishDescription" type="text" th:field="*{description}" required>
-        </p>
+            <div class="form-group">
+                <label class="form-label" for="wishDescription">Description: </label>
+                <input class="form-control input-dark darker my-border" id="wishDescription" type="text"
+                       th:field="*{description}" required>
+            </div>
 
-        <p>
-            <label for="wishPrice">Price: </label>
-            <input id="wishPrice" type="number" th:field="*{price}" required>
-        </p>
+            <div class="form-group">
+                <label class="form-label" for="wishPrice">Price: </label>
+                <input class="form-control input-dark darker my-border" id="wishPrice" type="number" th:field="*{price}"
+                       required>
+            </div>
 
-        <p>
-            <label for="wishLink">Link: </label>
-            <input id="wishLink" type="text" th:field="*{link}" required>
-        </p>
+            <div class="form-group">
+                <label class="form-label" for="wishLink">Link: </label>
+                <input class="form-control input-dark darker my-border" id="wishLink" type="text" th:field="*{link}"
+                       required>
+            </div>
 
-        <p>
-            <label for="wishPictureLink">Picture Link: </label>
-            <input id="wishPictureLink" type="text" name="pictureLink" th:field="*{picture}" required>
-        </p>
+            <div class="form-group">
+                <label class="form-label" for="wishPictureLink">Picture Link: </label>
+                <input class="form-control input-dark darker my-border" id="wishPictureLink" type="text"
+                       name="pictureLink" th:field="*{picture}" required>
+            </div>
 
-        <p>
-            <button type="submit">Add wish</button>
-        </p>
-    </form>
+            <div class="form-group mt-2">
+                <div class="d-flex">
+                <div class="mx-auto">
+                <button class="btn btn-success fw-bold" type="submit">Add wish</button>
+                    </div>
+                <div class="">
+                    <a class="btn btn-warning fw-bold" th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
+                        Cancel
+                    </a>
+                </div>
+                    </div>
 
-    <p>
-        <a th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
-            <button>Cancel</button>
-        </a>
-    </p>
+
+            </div>
+        </form>
+
+    </div>
     <!--TODO lav et endpoint som viser samtlige ønskelister-->
     <!--TODO cancel knappen skal fører en hen på endpoint hvor man står på den given ønskeliste man ønsker at tilføje ønsker til-->
 
