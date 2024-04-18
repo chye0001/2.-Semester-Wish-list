@@ -2,8 +2,6 @@ package com.example.wishlist.controller;
 
 import com.example.wishlist.model.Wish;
 import com.example.wishlist.model.Wishlist;
-import com.example.wishlist.repository.JdbcWishRepository;
-import com.example.wishlist.repository.JdbcWishlistRepository;
 import com.example.wishlist.service.WishService;
 import com.example.wishlist.service.WishlistService;
 import org.junit.jupiter.api.Test;
@@ -24,23 +22,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
+//Generelt kan man ikke unit-test controller med sin egen SecurityConfig klasse, da denne også bliver mocket.
+//Når den mockes bliver alle endpoints secured som default og man kan ikke udmiddelbart costume configure denne til at anvende sin egen SecurityConfig klasse.
+//Med andre ord vil testene altid fejl påtrods af at man har PermitAll på et bestemt endpoint.
+//Som udmiddelbart løsning, bliver man nødt til at lave en integrations test af controller, med disse annotationer og derefter autowire JdbcRepository klasserne som skal testes på.:
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@AutoConfigureMockMvc
+
 @WebMvcTest({WishlistController.class, WishController.class, ShareController.class})
 class WishlistControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+//    @Autowired
+//    private JdbcWishlistRepository jdbcWishlistRepository;
+//
+//    @Autowired JdbcWishRepository jdbcWishRepository;
+
     @MockBean
     private WishlistService wishlistService;
 
     @MockBean
     private WishService wishService;
-
-    @MockBean
-    private JdbcWishRepository JdbcWishRepository;
-
-    @MockBean
-    private JdbcWishlistRepository wishlistJDBC;
 
     @Test
     @WithMockUser(username = "user1")
