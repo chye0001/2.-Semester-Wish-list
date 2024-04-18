@@ -9,7 +9,7 @@
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
 
-    <div style="width: 800px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
+    <div style="width: 600px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3">
         <h2 th:text="${wishlistName}"></h2>
 
         <form th:action="@{/wishlist/{wishlistId}/wish/add(wishlistId = ${wishlistId})}" method="post"
@@ -46,16 +46,18 @@
             </div>
 
             <div class="form-group mt-2">
-                <div class="d-flex">
-                <div class="mx-auto">
-                <button class="btn btn-success fw-bold" type="submit">Add wish</button>
+                <div class="d-flex justify-content-between">
+                    <div style="width: 100px;" class="d-flex"></div>
+                    <div class="d-flex">
+                        <button class="btn btn-success fw-bold" type="submit">Add wish</button>
                     </div>
-                <div class="">
-                    <a class="btn btn-warning fw-bold" th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
-                        Cancel
-                    </a>
+                    <div style="width: 100px;" class="d-flex">
+                        <a class="btn btn-warning fw-bold"
+                           th:href="@{/wishlist/{wishlistId} (wishlistId=${wishlistId})}">
+                            Cancel
+                        </a>
+                    </div>
                 </div>
-                    </div>
 
 
             </div>
