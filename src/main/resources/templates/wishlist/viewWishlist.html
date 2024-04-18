@@ -41,13 +41,15 @@
 
     </tr>
     </tbody>
-    <a th:href="@{/wishlist/{wishlistId}/deleteWishes (wishlistId=${wishlistId})}"> <button>Delete All</button></a>
 </table>
-
     <button type="submit">Delete Selected</button>
 </form>
-
-<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
+<br>
+<a th:href="@{/wishlist/{wishlistId}/deleteWishes (wishlistId=${wishlistId})}"> <button>Delete All</button></a>
+<br>
+<br>
+<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>Add</button></a>
+<br>
 <br>
 <a th:href="@{/wishlist}"> <button>Return</button></a>
 
