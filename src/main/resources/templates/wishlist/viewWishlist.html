@@ -8,45 +8,71 @@
 <body>
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
-<h1 th:text="${wishlistName}">Wishlist name</h1>
-<h2>Wishes</h2>
-<form th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }" method="post" th:object="${selectedWishes}">
-<table>
-    <thead>
-    <tr>
-        <th>Item</th>
-        <th>Picture</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Hyperlink</th>
+    <div class="bg-dark shadow-lg rounded p-3 mt-3">
+        <h4 th:text="${wishlistName}">Wishlist name</h4>
+        <h5>Wishes</h5>
+        <form class="" th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }"
+              method="post"
+              th:object="${selectedWishes}">
+            <table class="table table-dark"
+                   data-toggle="table"
+                   data-search="true"
+                   data-search-selector="#tableSearch">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th data-sortable="true" scope="col">Item</th>
+                    <th scope="col">Picture</th>
+                    <th scope="col">Description</th>
+                    <th data-sortable="true" scope="col">Price</th>
+                    <th scope="col">Product link</th>
+                    <th scope="col"><input type="search" id="tableSearch" class="form-control input-dark my-border"
+                                           placeholder="Search.."></th>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="wish : ${wishes}">
-        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
-        <td th:text="${wish.name}">Wish name</td>
-        <td th:text="${wish.picture}">Wish name</td> <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
-        <td th:text="${wish.description}">Wish description</td>
-        <td th:text="${wish.price}">Wish price</td>
-        <td th:text="${wish.link}">Wish link</td>
-        <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>edit</button></a></td>
-        <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="wish : ${wishes}">
+                    <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"></td>
+                    <td th:text="${wish.name}">Wish name</td>
+                    <td th:text="${wish.picture}">Wish name</td>
+                    <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
+                    <td th:text="${wish.description}">Wish description</td>
+                    <td th:text="${wish.price}">Wish price</td>
+                    <td th:text="${wish.link}">Wish link</td>
+                    <td>
+                        <a class="btn btn-dark darker"
+                           th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}">
+                            edit
+                        </a>
+                        <a class="btn btn-danger fw-bold"
+                           th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}">
+                            delete
+                        </a></td>
 
 
-<!--        TODO checkbox for multiple delete-->
+                    <!--        TODO checkbox for multiple delete-->
 
-    </tr>
-    </tbody>
-</table>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between mt-3">
+            <button class="d-inline btn btn-danger fw-bold" type="submit">Delete Selected</button>
+            <!--            <div class="d-inline text-center justify-content-center mt-4">-->
+            <a class="d-inline btn btn-success fw-bold text-center"
+               th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}">
+                Add
+            </a>
+            <!--            </div>-->
+            <!--            <div class="d-inline text-end justify-content-end mt-4">-->
+            <a class="d-inline btn btn-dark darker text-end" th:href="@{/wishlist}">
+                return
+            </a>
+                </div>
+            <!--            </div>-->
+        </form>
 
-    <button type="submit">Delete Selected</button>
-</form>
-
-<a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
-<br>
-<a th:href="@{/wishlist}"> <button>return</button></a>
-
+    </div>
 </div>
 </body>
 </html>
