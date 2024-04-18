@@ -44,8 +44,13 @@ public class WishlistService {
         return wishlistName;
     }
 
+    @PreAuthorize("@authz.hasPermission(#wishlist.getWishlistId(),authentication)")
+    public void editWishlist(Wishlist wishlist) {
+        wishlistRepository.editWishlist(wishlist);
+    }
+
     @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
-    public void deleteWishlist(int wishlistId) {
+    public void deleteWishlist(long wishlistId) {
         wishlistRepository.deleteWishlist(wishlistId);
     }
 }

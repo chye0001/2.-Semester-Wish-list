@@ -10,6 +10,7 @@
     <header th:replace="~{fragments/header :: header}"></header>
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
+<form th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }" method="post" th:object="${selectedWishes}">
 <table>
     <thead>
     <tr>
@@ -23,19 +24,24 @@
     </thead>
     <tbody>
     <tr th:each="wish : ${wishes}">
-
+        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
         <td th:text="${wish.name}">Wish name</td>
         <td th:text="${wish.picture}">Wish name</td> <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
         <td th:text="${wish.description}">Wish description</td>
         <td th:text="${wish.price}">Wish price</td>
         <td th:text="${wish.link}">Wish link</td>
-        <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
         <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/edit (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>edit</button></a></td>
+        <td> <a th:href="@{/wishlist/{wishlistId}/wish/{wishId}/delete (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"><button>delete</button></a></td>
+
+
 <!--        TODO checkbox for multiple delete-->
 
     </tr>
     </tbody>
 </table>
+
+    <button type="submit">Delete Selected</button>
+</form>
 
 <a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
 <br>

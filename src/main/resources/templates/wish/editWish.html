@@ -6,10 +6,12 @@
     <title>Login</title>
 </head>
 <body>
+
+
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
 <div class="bg-dark shadow-lg rounded p-3 mt-3">
-<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
+<form th:action="@{/wishlist/{wishlistId}/wish/{wishId}/edit(wishlistId=${wishToEdit.wishlistId}, wishId=${wishId})}" method="post" th:object="${wishToEdit}">
 
     <div class="form-group">
         <label class="form-label" for="wishName">Name:</label>

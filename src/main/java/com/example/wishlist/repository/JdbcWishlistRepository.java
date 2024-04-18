@@ -111,14 +111,36 @@ public class JdbcWishlistRepository implements WishlistRepository {
         return wishlists;
 
     }
+
     @Override
-    public boolean deleteWishlist(int wishlistId) {
+    public boolean editWishlist(Wishlist wishlist){
+        boolean isEdited = false;
+
+        try (Connection connection = dataSource.getConnection()) {
+            String editWishlist = "UPDATE wishlist SET name = ?, picture = ? WHERE wishlist_id = ?;";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(editWishlist);
+            preparedStatement.setLong(3, wishlist.getWishlistId());
+            preparedStatement.setString(1, wishlist.getName());
+            preparedStatement.setString(2, wishlist.getPicture());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            isEdited = affectedRows > 0;
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return isEdited;
+    }
+
+    @Override
+    public boolean deleteWishlist(long wishlistId) {
         boolean isDeleted = false;
 
         try (Connection connection = dataSource.getConnection()) {
             String deleteWishlist = "DELETE FROM wish WHERE wishlist_id = ?";
             PreparedStatement pstmt = connection.prepareStatement(deleteWishlist);
-            pstmt.setInt(1, wishlistId);
+            pstmt.setLong(1, wishlistId);
             pstmt.executeUpdate();
 
         }catch (SQLException sqlException) {
@@ -128,7 +150,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
         try (Connection connection = dataSource.getConnection()) {
             String deleteWishlist = "DELETE FROM wishlist WHERE wishlist_id = ?";
             PreparedStatement pstmt = connection.prepareStatement(deleteWishlist);
-            pstmt.setInt(1, wishlistId);
+            pstmt.setLong(1, wishlistId);
             int affectedRows = pstmt.executeUpdate();
 
             isDeleted = affectedRows > 0;
