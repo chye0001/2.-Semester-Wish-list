@@ -7,23 +7,21 @@
 </head>
 <body>
 <div class="container">
-<header th:replace="~{fragments/header :: header}"></header>
-<h1 th:text="${user} + ' | Settings'"></h1>
-
-<a th:href="@{/wishlist}">
-    <button type="submit">View Wishlist</button>
-</a>
-
-<br><br>
-
-<a th:href="@{/user/editPassword}">
-    <button type="submit">Change Password</button>
-</a>
-
-<br><br>
-
-<form th:action="@{/user/logout}" method="post">
-    <button type="submit">Log Out</button>
-</form>
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div style="width: 600px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-5 text-center">
+        <h4>Settings</h4>
+        <h5 th:text="'Username: ' + ${user}"/>
+        <div class="mt-2">
+            <a class="btn btn-dark darker" th:href="@{/user/editPassword}">
+                Change Password
+            </a>
+        </div>
+        <div class="mt-2">
+            <form th:action="@{/user/logout}" method="post">
+                <button class="btn btn-danger fw-bold" type="submit">Log Out</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
