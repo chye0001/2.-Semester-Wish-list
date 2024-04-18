@@ -10,6 +10,7 @@
 <body>
 <h1 th:text="${wishlistName}">Wishlist name</h1>
 <h2>Wishes</h2>
+<form th:action="@{/wishlist/{wishlistId}/wish/deleteselected(wishlistId = ${wishlistId}) }" method="post" th:object="${selectedWishes}">
 <table>
     <thead>
     <tr>
@@ -23,7 +24,7 @@
     </thead>
     <tbody>
     <tr th:each="wish : ${wishes}">
-
+        <td><input type="checkbox" th:field="*{selectedWishIds}" th:value="${wish.wishId}"> </td>
         <td th:text="${wish.name}">Wish name</td>
         <td th:text="${wish.picture}">Wish name</td> <!-- Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
         <td th:text="${wish.description}">Wish description</td>
@@ -36,6 +37,9 @@
     </tr>
     </tbody>
 </table>
+
+    <button type="submit">Delete Selected</button>
+</form>
 
 <a th:href="@{/wishlist/{wishlistId}/wish/add (wishlistId=${wishlistId})}"> <button>add</button></a>
 <br>

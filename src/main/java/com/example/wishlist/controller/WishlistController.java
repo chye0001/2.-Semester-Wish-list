@@ -1,5 +1,6 @@
 package com.example.wishlist.controller;
 
+import com.example.wishlist.dto.WishSelectedDto;
 import com.example.wishlist.dto.WishlistFormDto;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
@@ -69,9 +70,11 @@ public class WishlistController {
     @GetMapping("/{wishlistId}")
     public String viewWishlistById(@PathVariable long wishlistId, Model model) {
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
-
+        WishSelectedDto selectedWishes = new WishSelectedDto(List.of());
         model.addAttribute("wishes", wishlist.getWishes());
         model.addAttribute("wishlistName", wishlist.getName());
+        model.addAttribute("selectedWishes", selectedWishes);
+        model.addAttribute("wishlistId", wishlist.getWishlistId());
 
         return "wishlist/viewWishlist";
     }
