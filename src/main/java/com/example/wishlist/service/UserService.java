@@ -27,7 +27,8 @@ public class UserService {
     }
 
     public void editUserPassword(String oldPassword, String newPassword) {
-        userDetailsManager.changePassword(oldPassword, newPassword);
+        userDetailsManager.changePassword(passwordEncoder.encode(oldPassword),
+                passwordEncoder.encode(newPassword));
     }
 
 
