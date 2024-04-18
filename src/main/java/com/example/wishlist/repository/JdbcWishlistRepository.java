@@ -50,7 +50,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
             String getWishesOnWishlistName = """
                     SELECT wishlist.name as wl_name, wishlist.picture as wl_pic, wishlist.isPublic as wl_public, wish.name as w_name, wish.wish_id as w_id, wish.description as w_desc, wish.link as w_link, wish.price as w_price, wish.picture as w_pic, wish.reserved as w_res
                     FROM wishlist
-                    JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
+                    LEFT JOIN wish ON wishlist.wishlist_id = wish.wishlist_id
                     WHERE wishlist.wishlist_id = ?
                     """;
 
@@ -66,7 +66,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
             while (wishesResultSet.next()) {
                 if (wlName == null) {wlName = wishesResultSet.getString("wl_name");}
                 if (wlPic == null) {wlPic = wishesResultSet.getString("wl_pic");}
-                wlPublic = wishesResultSet.getBoolean("wl_public");
+                if(!wlPublic) {wlPublic = wishesResultSet.getBoolean("wl_public");}
 
                 Wish newWish = new Wish(
                         wishesResultSet.getInt("w_id"),
