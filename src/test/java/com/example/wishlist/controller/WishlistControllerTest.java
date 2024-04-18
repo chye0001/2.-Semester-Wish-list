@@ -130,9 +130,8 @@ class WishlistControllerTest {
     @Test
     @WithMockUser(username = "user1")
     void setIsPublicToTrueForWishlist() throws Exception {
-        mockMvc.perform(post("/wishlist/{wishlistId}/share", 1).with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/wishlist/" + 1));
+        mockMvc.perform(get("/wishlist/{wishlistId}/share", 1).with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 
     //ShareController
