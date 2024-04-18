@@ -27,6 +27,7 @@
             <td th:text="${wish.description}">Wish description</td>
             <td th:text="${wish.price}">Wish price</td>
             <td th:text="${wish.link}">Wish link</td>
+            <td th:text="${wish.isReserved()}">reserved status</td>
             <td>
                <form th:action="@{/wishlist/{wishlistId}/share/wish/{wishId}/reserve (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}" method="post">
                     <button type="submit">reserve</button>
