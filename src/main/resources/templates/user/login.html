@@ -9,6 +9,7 @@
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
     <div style="width: 400px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-3 text-center">
+        <h3>Login</h3>
         <form th:action="@{/user/login}" method="post">
             <div class="form-group">
                 <label class="form-label" for="username">Username</label>
