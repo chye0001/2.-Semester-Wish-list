@@ -61,12 +61,12 @@ public class JdbcWishlistRepository implements WishlistRepository {
 
             String wlName = null;
             String wlPic = null;
-            boolean wLPublic = false;
+            boolean wlPublic = false;
 
             while (wishesResultSet.next()) {
                 if (wlName == null) {wlName = wishesResultSet.getString("wl_name");}
                 if (wlPic == null) {wlPic = wishesResultSet.getString("wl_pic");}
-                wLPublic = wishesResultSet.getBoolean("wl_public");
+                wlPublic = wishesResultSet.getBoolean("wl_public");
 
                 Wish newWish = new Wish(
                         wishesResultSet.getInt("w_id"),
@@ -78,8 +78,7 @@ public class JdbcWishlistRepository implements WishlistRepository {
                         wishesResultSet.getBoolean("w_res"));
                 wishes.add(newWish);
             }
-            wishlist = new Wishlist(wishlistId, wlName, wlPic, wishes);
-            wishlist.setPublic(wLPublic);
+            wishlist = new Wishlist(wishlistId, wlName, wlPic, wlPublic, wishes);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
