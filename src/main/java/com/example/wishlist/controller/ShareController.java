@@ -26,12 +26,14 @@ public class ShareController {
 
     @GetMapping("")
     public String viewSharedWishlist(Model model, @PathVariable long wishlistId) {
+        System.out.println("######### YO");
         Wishlist wishlist = wishlistService.getWishlistByIdUnauthorized(wishlistId);
         boolean isPublic = wishlist.isPublic();
-
+        System.out.println("########## before");
         if (!isPublic) {
-            return "/error/403";
+            return "error/403";
         }
+        model.addAttribute("############ after");
 
         String wishlistName = wishlist.getName();
         List<Wish> wishes = wishlist.getWishes();
@@ -39,7 +41,7 @@ public class ShareController {
         model.addAttribute("wishlistName", wishlistName);
         model.addAttribute("wishes", wishes);
 
-        return "/wishlist/viewSharedWishlist";
+        return "wishlist/viewSharedWishlist";
     }
 
     @PostMapping("/wish/{wishId}/reserve")

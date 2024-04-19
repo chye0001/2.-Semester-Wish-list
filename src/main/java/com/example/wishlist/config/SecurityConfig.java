@@ -16,11 +16,12 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity()
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("### CHAINING ####");
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/user/register").permitAll()
