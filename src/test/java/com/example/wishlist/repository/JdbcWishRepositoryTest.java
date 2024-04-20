@@ -82,6 +82,21 @@ public class JdbcWishRepositoryTest {
     }
 
     @Test
+    void editWish() {
+        boolean expectedResult = true;
+
+        jdbcWishlistRepository.createWishlist("test", "picturelink","test");
+        Wish editedWish = new Wish("name", "description", 2, "link", "picturelink");
+        editedWish.setWishlistId(1);
+        long wishId = jdbcWishRepository.addWish(editedWish);
+        editedWish.setWishId(wishId);
+        editedWish.setName("editedName");
+        boolean actualResult = jdbcWishRepository.editWish(editedWish);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void deleteMultipleWithNoSelected() {
         List<Long> emptyWishIdList = new ArrayList<>();
 

@@ -97,21 +97,6 @@ class JdbcWishlistRepositoryTest {
     }
 
     @Test
-    void editWish() {
-        boolean expectedResult = true;
-
-        wishlistJDBC.createWishlist("test", "picturelink","test");
-        Wish editedWish = new Wish("name", "description", 2, "link", "picturelink");
-        editedWish.setWishlistId(1);
-        long wishId = wishRepositoryJDBC.addWish(editedWish);
-        editedWish.setWishId(wishId);
-        editedWish.setName("editedName");
-        boolean actualResult = wishRepositoryJDBC.editWish(editedWish);
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
     void setWishlistToPublic() {
         boolean expectedResult = true;
 
