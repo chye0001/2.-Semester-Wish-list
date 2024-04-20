@@ -130,9 +130,8 @@ class WishlistControllerTest {
     @Test
     @WithMockUser(username = "user1")
     void setIsPublicToTrueForWishlist() throws Exception {
-        mockMvc.perform(post("/wishlist/{wishlistId}/share", 1).with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/wishlist/" + 1));
+        mockMvc.perform(get("/wishlist/{wishlistId}/share", 1).with(csrf()))
+                .andExpect(status().is3xxRedirection());
     }
 
     //ShareController
@@ -143,7 +142,7 @@ class WishlistControllerTest {
                 .thenReturn(new Wishlist(1, "testName", "testPicture", true, new ArrayList<>()));
         mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/wishlist/viewSharedWishlist"));
+                .andExpect(view().name("wishlist/viewSharedWishlist"));
     }
 
     @Test
@@ -153,7 +152,7 @@ class WishlistControllerTest {
                 .thenReturn(new Wishlist(1, "testName", "testPicture", false, new ArrayList<>()));
         mockMvc.perform(get("/wishlist/{wishlistId}/shared", 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/error/403"));
+                .andExpect(view().name("error/403"));
     }
 
     @Test

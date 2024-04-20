@@ -39,12 +39,14 @@ public class UserController {
 
     @GetMapping("/settings")
     public String settings(Authentication authentication, Model model) {
+        model.addAttribute("activeLink","settings");
         model.addAttribute("user", authentication.getName());
         return "user/settings";
     }
 
     @GetMapping("/editPassword")
     public String editUserPassword(Model model) {
+        model.addAttribute("activeLink","settings");
         model.addAttribute("userPasswords",
                 new UserPasswordsDto("old password","new password"));
         return "user/editPassword";

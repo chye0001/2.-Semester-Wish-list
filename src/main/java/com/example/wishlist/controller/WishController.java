@@ -23,12 +23,14 @@ public class WishController {
 
     @GetMapping("")
     public String wish(Model model, @PathVariable int wishlistId) {
+        model.addAttribute("activeLink","wishlist");
         System.out.println("id: " + wishlistId);
         return "This is a tesT: " + wishlistId;
     }
 
     @GetMapping("/add")
     public String showPageForAddingWish(Model model, @PathVariable long wishlistId, Authentication authentication) {
+        model.addAttribute("activeLink","wishlist");
         Wish newWish = new Wish();
         String username = authentication.getName();
         String wishlistName = wishlistService.getWishlistNameFromWishlistId(username, wishlistId);
@@ -55,7 +57,7 @@ public class WishController {
 
     @PostMapping("/deleteselected")
     public String deleteWishFromWishlist(@ModelAttribute WishSelectedDto selectedWishes, @PathVariable long wishlistId) {
-//        System.out.println("##### IDS: " + selectedWishes);
+        System.out.println("##### IDS: " + selectedWishes);
 //        System.out.println(selectedWishes.selectedWishIds().getClass());
         if (selectedWishes.selectedWishIds() != null) wishService.deleteSelecetedWishes(selectedWishes.selectedWishIds());
         return "redirect:/wishlist/"+wishlistId;
@@ -63,6 +65,7 @@ public class WishController {
 
     @GetMapping("/{wishId}/edit")
     public String createEditWishForm(Model model, @PathVariable long wishId) {
+        model.addAttribute("activeLink","wishlist");
         Wish wish = wishService.getWishFromWishId(wishId);
         model.addAttribute("wishToEdit", wish);
 

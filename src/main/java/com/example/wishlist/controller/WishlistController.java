@@ -4,6 +4,7 @@ import com.example.wishlist.dto.WishSelectedDto;
 import com.example.wishlist.dto.WishlistFormDto;
 import com.example.wishlist.model.Wishlist;
 import com.example.wishlist.service.WishlistService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,15 +23,19 @@ public class WishlistController {
     }
 
     @GetMapping("")
-    public String wishlistMainPage(Model model, Authentication authentication) {
+    public String wishlistMainPage(Model model, Authentication authentication, HttpServletRequest request) {
+        model.addAttribute("activeLink","wishlist");
         String username = authentication.getName();
         List<Wishlist> wishlistList = wishlistService.getAllWishlists(username);
         model.addAttribute("wishlists", wishlistList);
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.addAttribute("baseUrl", baseUrl);
         return "wishlist/wishlistOverview";
     }
 
     @GetMapping("/create")
     public String createWishlist(Model model) {
+        model.addAttribute("activeLink","wishlist");
         WishlistFormDto emptyWishlist = new WishlistFormDto("wishlistName", "pictureLink");
         model.addAttribute("wishlist", emptyWishlist);
 
@@ -48,7 +53,8 @@ public class WishlistController {
     }
 
     @GetMapping("/{wishlistId}")
-    public String viewWishlistById(@PathVariable long wishlistId, Model model) {
+    public String viewWishlistById(@PathVariable long wishlistId, Model model, HttpServletRequest request) {
+        model.addAttribute("activeLink","wishlist");
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         WishSelectedDto selectedWishes = new WishSelectedDto(List.of());
         model.addAttribute("wishes", wishlist.getWishes());
@@ -56,21 +62,28 @@ public class WishlistController {
         model.addAttribute("selectedWishes", selectedWishes);
         model.addAttribute("wishlistId", wishlist.getWishlistId());
         model.addAttribute("wishlist", wishlist);
-
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
         boolean isPublic = wishlist.isPublic();
 
         if (isPublic) {
-            String wishlistLink = "localhost:8080/wishlist/" + wishlistId + "/shared"; //bør nok ændres i fremtiden
+            String wishlistLink = baseUrl + "/wishlist/" + wishlistId + "/shared"; //bør nok ændres i fremtiden
             model.addAttribute("wishlistLink", wishlistLink);
         }
         return "wishlist/viewWishlist";
     }
 
-    @PostMapping("/{wishlistId}/share")
-    public String setIsPublicToTrueForWishlist(@PathVariable long wishlistId) {
+    @GetMapping("/{wishlistId}/share")
+    public String setIsPublicToTrueForWishlist(@PathVariable long wishlistId, HttpServletRequest request) {
         wishlistService.setWishlistToPublic(wishlistId);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
+    }
 
-        return "redirect:/wishlist/" + wishlistId;
+    @GetMapping("/{wishlistId}/hide")
+    public String setIsPublicToFalseForWishlist(@PathVariable long wishlistId, HttpServletRequest request) {
+        wishlistService.setWishlistToPrivate(wishlistId);
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     @GetMapping("/{wishlistId}/delete")
@@ -82,6 +95,7 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}/deleteWishes")
     public String deleteAllWishesOnWishlistId(@PathVariable long wishlistId) {
+
         wishlistService.deleteAllWishes(wishlistId);
 
         return "redirect:/wishlist";
@@ -89,6 +103,7 @@ public class WishlistController {
 
     @GetMapping("/{wishlistId}/edit")
     public String createEditWishlistForm(Model model, @PathVariable long wishlistId) {
+        model.addAttribute("activeLink","wishlist");
         Wishlist wishlist = wishlistService.getWishlistById(wishlistId);
         model.addAttribute("wishlistToEdit", wishlist);
 

@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <th:block th:insert="~{fragments/head :: headerFiles}"></th:block>
     <meta charset="UTF-8">
-    <title th:text="${wishlistName}">WishlistName</title>
+    <title>Login</title>
 </head>
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div class="bg-dark shadow-lg rounded p-3 mt-5">
+        <h1 th:text="${wishlistName}">Wishlist name</h1>
+        <h2>Wishes</h2>
+        <table class="table table-dark"
+               data-toggle="table"
+               data-search="true"
+               data-search-selector="#tableSearch">
+            <thead>
+            <tr>
+                <th  scope="col">Item</th>
+                <th  scope="col">Picture</th>
+                <th  scope="col">Description</th>
+                <th data-sortable="true" scope="col">Price</th>
+                <th  scope="col">Hyperlink</th>
+                <th  scope="col">Reserved</th>
+                <th  scope="col"><input type="search" id="tableSearch" class="form-control input-dark my-border"
+                                       placeholder="Search.."></th>
 
-<h1 th:text="${wishlistName}">Wishlist name</h1>
-<h2>Wishes</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Item</th>
-            <th>Picture</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Hyperlink</th>
+            </tr>
+            </thead>
 
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr th:each="wish : ${wishes}">
-            <td th:text="${wish.name}">Wish name</td>
-            <td th:text="${wish.picture}">Wish name</td> <!-- TODO Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
-            <td th:text="${wish.description}">Wish description</td>
-            <td th:text="${wish.price}">Wish price</td>
-            <td th:text="${wish.link}">Wish link</td>
-            <td th:text="${wish.isReserved()}">reserved status</td>
-            <td>
-               <form th:action="@{/wishlist/{wishlistId}/share/wish/{wishId}/reserve (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}" method="post">
-                    <button type="submit">reserve</button>
-               </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+            <tbody>
+            <tr th:each="wish : ${wishes}">
+                <td th:text="${wish.name}">Wish name</td>
+                <td th:text="${wish.picture}">Wish name</td>
+                <!-- TODO Skal konverteres fra billed-link til billede. Nemt, siger Lars -->
+                <td th:text="${wish.description}">Wish description</td>
+                <td th:text="${wish.price}">Wish price</td>
+                <td th:text="${wish.link}">Wish link</td>
+                <td th:text="${wish.isReserved()}">reserved status</td>
+                <td>
+                    <form th:action="@{/wishlist/{wishlistId}/share/wish/{wishId}/reserve (wishlistId=${wish.wishlistId}, wishId=${wish.wishId})}"
+                          method="post">
+                        <button class="btn btn-dark darker fw-bold" type="submit">reserve</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
