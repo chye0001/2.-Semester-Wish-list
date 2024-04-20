@@ -13,9 +13,13 @@
 
 <br><br>
 
-<a th:href="@{/user/deleteAllWishlists}">
+<!--<div th:if="${conformationMessage.size() != 0}">Do nothing</div>-->
+<!--<div th:unless="${conformationMessage.size() == 0}">-->
+<!--    <p>All your wishlists have been deleted.</p>-->
+<!--</div>-->
+<form th:action="@{/wishlist/deleteAllWishlists}" method="post" >
     <button type="submit">Delete All Wishlists</button>
-</a>
+</form>
 
 <br><br>
 
