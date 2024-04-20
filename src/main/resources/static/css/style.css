@@ -1,0 +1,112 @@
+body {
+    background-color: #0f0f0f !important;
+    color: #fff !important;
+}
+
+.white-text {
+    color: #fff !important;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+.darker {
+    background-color: #1F1F1F !important;
+}
+
+
+.my-active {
+    background-color: darkslategrey !important;
+    color: white !important;
+}
+
+.my-margin {
+    margin-left: 250px !important;
+}
+
+.input-dark {
+    background-color: #1F1F1F !important;
+    color: white !important;
+}
+
+.my-border {
+    border: 1px solid #4D5154 !important;
+}
+
+.nav-link-color {
+    color: white !important;
+}
+
+/* bootstrap table overrides START */
+/*.search > input {*/
+/*    background-color: #212529;*/
+/*    color: #999999;*/
+/*    border: 1px solid #4D5154;*/
+/*    float: left !important;*/
+/*}*/
+
+/*.search > input:focus {*/
+/*    background-color: #212529 !important;*/
+/*    !*color: #999999 !important;*!*/
+/*    color: white !important;*/
+/*}*/
+
+#tableSearch::placeholder {
+  color: #999999 !important;
+  opacity: 1 !important; /* Firefox */
+}
+
+input::placeholder {
+  color: #999999 !important;
+  opacity: 1 !important; /* Firefox */
+}
+
+/*.search > input::-ms-input-placeholder,*/
+/*input::-ms-input-placeholder.form-control{ !* Edge 12 -18 *!*/
+/*  color: #999999 !important;*/
+/*}*/
+
+.my-border {
+    border: 1px solid #4D5154 !important;
+}
+
+
+/* copy to clipboard tooltip css  */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

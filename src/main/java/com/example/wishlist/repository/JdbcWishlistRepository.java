@@ -287,6 +287,24 @@ public class JdbcWishlistRepository implements WishlistRepository {
     }
 
     @Override
+    public boolean setWishlistToPrivate(long wishlistId) {
+        boolean isUpdated = false;
+        try (Connection connection = dataSource.getConnection()){
+            String setWishlistToPublic = "UPDATE wishlist SET isPublic = 0 WHERE wishlist_id = ?;";
+            PreparedStatement pstmt = connection.prepareStatement(setWishlistToPublic);
+            pstmt.setLong(1, wishlistId);
+            int affectedRows = pstmt.executeUpdate();
+
+            System.out.println("affected rows: " + affectedRows);
+            isUpdated = affectedRows > 0;
+        }catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return isUpdated;
+    }
+
+    @Override
     public boolean deleteAllUserWishlist(String username) {
         int affectedRows = 0;
         boolean isDeleted = false;

@@ -63,6 +63,11 @@ public class WishlistService {
     }
 
     @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
+    public void setWishlistToPrivate(long wishlistId) {
+        wishlistRepository.setWishlistToPrivate(wishlistId);
+    }
+
+    @PreAuthorize("@authz.hasPermission(#wishlistId,authentication)")
     public void deleteAllWishes(long wishlistId) {
         wishlistRepository.deleteAllWishes(wishlistId);
     }
