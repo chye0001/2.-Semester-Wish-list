@@ -101,4 +101,12 @@ public class WishlistController {
 
         return "redirect:/wishlist";
     }
+
+    @PostMapping("/deleteAllWishlists")
+    public String deleteAllWishlistsOnUsername(Authentication authentication) {
+        String username = authentication.getName();
+        wishlistService.deleteAllUserWishlists(username);
+
+        return "redirect:/user/settings";
+    }
 }
