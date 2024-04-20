@@ -98,7 +98,7 @@ public class WishlistController {
 
         wishlistService.deleteAllWishes(wishlistId);
 
-        return "redirect:/wishlist";
+        return "redirect:/wishlist/" + wishlistId;
     }
 
     @GetMapping("/{wishlistId}/edit")
@@ -115,5 +115,13 @@ public class WishlistController {
         wishlistService.editWishlist(editedWishlist);
 
         return "redirect:/wishlist";
+    }
+
+    @PostMapping("/deleteAllWishlists")
+    public String deleteAllWishlistsOnUsername(Authentication authentication) {
+        String username = authentication.getName();
+        wishlistService.deleteAllUserWishlists(username);
+
+        return "redirect:/user/settings";
     }
 }

@@ -166,6 +166,13 @@ class WishlistControllerTest {
                         .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/wishlist/viewSharedWishlist"));
+    }
 
+    @Test
+    @WithMockUser(username = "user1")
+    void deleteAllWishlistOnUsername() throws Exception {
+        mockMvc.perform(post("/wishlist/deleteAllWishlist").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/user/settings"));
     }
 }

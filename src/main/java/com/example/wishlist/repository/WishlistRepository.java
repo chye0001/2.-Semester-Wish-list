@@ -25,4 +25,5 @@ public interface WishlistRepository {
 
     boolean setWishlistToPrivate(long wishlistId);
 
+    boolean deleteAllUserWishlist(String username);
 }

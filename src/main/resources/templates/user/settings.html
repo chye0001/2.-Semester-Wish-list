@@ -6,6 +6,33 @@
     <title>Account Settings</title>
 </head>
 <body>
+<h1 th:text="${user} + ' | Settings'"></h1>
+
+<a th:href="@{/wishlist}">
+    <button type="submit">View Wishlist</button>
+</a>
+
+<br><br>
+
+<!--<div th:if="${conformationMessage.size() != 0}">Do nothing</div>-->
+<!--<div th:unless="${conformationMessage.size() == 0}">-->
+<!--    <p>All your wishlists have been deleted.</p>-->
+<!--</div>-->
+<form th:action="@{/wishlist/deleteAllWishlists}" method="post" >
+    <button type="submit">Delete All Wishlists</button>
+</form>
+
+<br><br>
+
+<a th:href="@{/user/editPassword}">
+    <button type="submit">Change Password</button>
+</a>
+
+<br><br>
+
+<form th:action="@{/user/logout}" method="post">
+    <button type="submit">Log Out</button>
+</form>
 <div class="container">
     <header th:replace="~{fragments/header :: header}"></header>
     <div style="width: 600px; margin: auto" class="bg-dark shadow-lg rounded p-3 mt-5 text-center">
