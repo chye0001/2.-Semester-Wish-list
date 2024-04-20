@@ -124,7 +124,7 @@ class JdbcWishlistRepositoryTest {
 
     @Test
     void tete() {
-        long wishlist1Id = wishlistJDBC.createWishlist("testTitle123", "picLink123","test");
+        long wishlist1Id = wishlistJDBC.createWishlist("testTitle123", "picLink123","test2");
         Wish wish1 = new Wish("testName1", "testDescription1", 1, "link1", "picturelink1");
         Wish wish2 = new Wish("testName2", "testDescription2", 2, "link2", "picturelink2");
         Wish wish3 = new Wish("testName3", "testDescription3", 3, "link3", "picturelink3");
@@ -135,7 +135,7 @@ class JdbcWishlistRepositoryTest {
         wishRepositoryJDBC.addWish(wish2);
         wishRepositoryJDBC.addWish(wish3);
 
-        long wishlist2Id = wishlistJDBC.createWishlist("testTitle456", "picLink456","test");
+        long wishlist2Id = wishlistJDBC.createWishlist("testTitle456", "picLink456","test2");
         Wish wish4 = new Wish("testName4", "testDescription4", 4, "link4", "picturelink4");
         Wish wish5 = new Wish("testName5", "testDescription5", 5, "link5", "picturelink5");
         Wish wish6 = new Wish("testName6", "testDescription6", 6, "link6", "picturelink6");
@@ -146,7 +146,7 @@ class JdbcWishlistRepositoryTest {
         wishRepositoryJDBC.addWish(wish5);
         wishRepositoryJDBC.addWish(wish6);
 
-        long wishlist3Id = wishlistJDBC.createWishlist("testTitle789", "picLink789","test");
+        long wishlist3Id = wishlistJDBC.createWishlist("testTitle789", "picLink789","test2");
         Wish wish7 = new Wish("testName7", "testDescription7", 7, "link7", "picturelink7");
         Wish wish8 = new Wish("testName8", "testDescription8", 8, "link8", "picturelink8");
         Wish wish9 = new Wish("testName9", "testDescription9", 9, "link9", "picturelink9");
@@ -159,10 +159,10 @@ class JdbcWishlistRepositoryTest {
 
 
         boolean expectedResult = true;
-        boolean actualResult = wishlistJDBC.deleteAllUserWishlist("test");
+        boolean actualResult = wishlistJDBC.deleteAllUserWishlist("test2");
         assertEquals(expectedResult, actualResult);
 
-        int numberOfWishlistsAfterDeleteAll = wishlistJDBC.getAllWishlists("test").size();
+        int numberOfWishlistsAfterDeleteAll = wishlistJDBC.getAllWishlists("test2").size();
         assertEquals(0, numberOfWishlistsAfterDeleteAll);
 
     }
